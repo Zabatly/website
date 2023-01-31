@@ -16,18 +16,22 @@
   "contributors": [
     {
       "name": "Youssef Fathy",
+      "email": "youssef.marakshy@gmail.com",
       "url": "https://github.com/Carbowix"
     },
     {
       "name": "Taha Hesham",
+      "email": "tahahesham@hotmail.com",
       "url": "https://github.com/tahahesham"
     },
     {
       "name": "Mohammed Effat",
+      "email": "no-reply@zabatly.app",
       "url": "https://github.com/bondo2boy"
     },
     {
       "name": "Mostafa Awara",
+      "email": "no-reply@zabatly.app",
       "url": "https://github.com/mostafavic"
     }
   ],
@@ -36,7 +40,8 @@
     "url": "https://github.com/Zabatly/website.git"
   },
   "bugs": {
-    "url": "https://github.com/Zabatly/website/issues"
+    "url": "https://github.com/Zabatly/website/issues",
+    "email": "no-reply@zabatly.app"
   },
   "type": "module",
   "scripts": {
