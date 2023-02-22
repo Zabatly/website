@@ -41,27 +41,28 @@ const VenueCard = () => {
                 onClick={() => likeVenue()}
               >
                 {like ? (
-                  <AiOutlineHeart />
+                  <AiFillStar />
                 ) : (
-                  <AiFillHeart
+                  <AiFillStar
                     className={Style.VenueCard_box_update_left_like_icon}
                   />
                 )}
-                {""} 22
+                {""} 4.8
               </div>
             </div>
 
-            <div className={Style.VenueCard_box_update_right}>
+            {/*<div className={Style.VenueCard_box_update_right}>
               <div className={Style.VenueCard_box_update_right_info}>
                 <AiFillStar />
                 <AiFillStar/>
                 <AiFillStar />
                 <AiFillStar />
                 <AiFillStar />
-                {/*<small>Remaining time</small>
-                <p>3h : 15m : 20s</p>*/}
+                <small>Remaining time</small>
+                <p>3h : 15m : 20s</p>
               </div>
             </div>
+            */}
           </div>
 
           <div className={Style.VenueCard_box_update_details}>

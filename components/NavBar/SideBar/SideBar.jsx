@@ -25,32 +25,20 @@ const SideBar = ({ setOpenSideMenu }) => {
   //--------DISCOVER NAVIGATION MENU
   const discover = [
     {
-      name: "Collection",
-      link: "collection",
+      name: "Engagment",
+      link: "engagement",
     },
     {
-      name: "Search",
-      link: "search",
+      name: "Wedding",
+      link: "wedding",
     },
     {
-      name: "Author Profile",
-      link: "author-profile",
+      name: "Birthday",
+      link: "birthday",
     },
     {
-      name: "NFT Details",
-      link: "NFT-details",
-    },
-    {
-      name: "Account Setting",
-      link: "account-setting",
-    },
-    {
-      name: "Connect Wallet",
-      link: "connect-wallet",
-    },
-    {
-      name: "Blog",
-      link: "blog",
+      name: "Sports",
+      link: "sports",
     },
   ];
   //------HELP CNTEER
@@ -64,16 +52,8 @@ const SideBar = ({ setOpenSideMenu }) => {
       link: "contact-us",
     },
     {
-      name: "Sign Up",
-      link: "sign-up",
-    },
-    {
-      name: "Sign In",
-      link: "sign-in",
-    },
-    {
-      name: "Subscription",
-      link: "subscription",
+      name: "FAQs",
+      link: "faqs",
     },
   ];
 
@@ -105,23 +85,17 @@ const SideBar = ({ setOpenSideMenu }) => {
       />
 
       <div className={Style.sideBar_box}>
-        <Image src={images.logo} alt="logo" width={150} height={150} />
-        <p>
-          Discover the most outstanding articles on all topices of NFT & write
-          your own stories and share them
-        </p>
+        <div className={Style.sideBar_box_main}>
+        <div>
+          <Image src={images.zlogo} alt="logo" height={45} width={150} />
+        </div>
+        <div>
+          with Zabatly, it's simply done!
+        </div>
+        </div>
         <div className={Style.sideBar_social}>
-          <a href="#">
+          <a href="https://www.facebook.com/zabatlyapp" target="_blank">
             <TiSocialFacebook />
-          </a>
-          <a href="#">
-            <TiSocialLinkedin />
-          </a>
-          <a href="#">
-            <TiSocialTwitter />
-          </a>
-          <a href="#">
-            <TiSocialYoutube />
           </a>
           <a href="#">
             <TiSocialInstagram />
@@ -172,8 +146,8 @@ const SideBar = ({ setOpenSideMenu }) => {
       </div>
 
       <div className={Style.sideBar_button}>
-        <Button btnName="Create" handleClick={() => {}} />
-        <Button btnName="Connect Wallet" handleClick={() => {}} />
+        <Button btnName="List Venue" handleClick={() => {}} />
+        <Button btnName="Sign Up" handleClick={() => {}} />
       </div>
     </div>
   );

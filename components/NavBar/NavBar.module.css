@@ -111,7 +111,7 @@
 .sideBar{
     position: fixed;
     top: 0;
-    width: 24rem;
+    width: 26.5rem;
     background-color: var(--main-bg-color);
     box-shadow: var(--box-shadow);
     height: 100vh;

@@ -1,7 +1,17 @@
 .sideBar_box{
+    
     padding: 2rem;
     border-bottom: 1px solid var(--icons-color);
     background-color:  var(--main-bg-color);
+}
+
+.sideBar_box_main {
+    width: 90%;
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    margin-bottom: 4vh;
 }
 
 .sideBar_closeBtn{

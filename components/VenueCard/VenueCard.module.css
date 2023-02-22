@@ -106,15 +106,16 @@
 }
 
 .VenueCard_box_update_details_price{
+    width: 13rem;
     background-color: var(--shadow-light-color);
     margin-left: -3rem;
-    padding: 0rem 0 .5rem 0;
-    transform: skewX(45deg);
+    padding: 0rem 0 .3rem 0;
+    transform: skewX(0deg);
     border-top-right-radius: 1rem;
 }
 
 .VenueCard_box_update_details_price_box{
-    transform: skewX(-45deg);
+    transform: skewX(0deg);
     padding-left: 3rem;
 }
 
