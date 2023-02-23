@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 
 //INTRNAL IMPORT
-import { NavBar , Footer, VenueCard, Slider, Service, Filter } from "../components/componentsindex";
+import { NavBar , Footer, VenueCard, Slider, Service, Filter, VenueCategory } from "../components/componentsindex";
 
 
 
@@ -12,7 +12,7 @@ const MyApp = ({ Component, pageProps }) => (
     <Slider />
     {/*<Filter />
     <Service />*/}
-    <VenueCard />
+    <VenueCategory />
     <Component {...pageProps} />
     <Footer />
   </div>

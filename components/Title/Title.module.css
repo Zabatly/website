@@ -1,0 +1,17 @@
+.title{
+    width: 80%;
+}
+
+.title_box{
+    width: 100%;
+    margin: 0 auto;
+}
+
+
+@media screen and (min-device-width: 320px) and (max-device-width: 425px) {
+    .title_box{
+        padding: 1rem;
+        width: 90%;
+        font-size: 1rem;
+    }
+}
