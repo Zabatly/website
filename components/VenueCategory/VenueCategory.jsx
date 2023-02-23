@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { TiArrowLeftThick, TiArrowRightThick } from "react-icons/ti";
-import { BsCircleFill } from "react-icons/bs";
-import Image from "next/image";
 import Style from "./VenueCategory.module.css";
 import { motion } from "framer-motion";
 import { Title } from "../componentsindex";
+import Slider from "../Slider/Slider";
+import CategoryCard from "./CategoryCard";
 
 const categoryColors = ['red', 'purple', 'green', 'orange']
 const venueActivities = [
@@ -57,13 +56,15 @@ const VenueCategory = () => {
     const dragSlider = useRef();
 
     useEffect(() => {
-        setWidth(dragSlider.current.scrollWidth - dragSlider.current.offsetWidth);
-    });
+        console.log(dragSlider.current)
+
+        // setWidth(dragSlider.current.scrollWidth - dragSlider.current.offsetWidth);
+    }, [dragSlider]);
 
     const handleScroll = (direction) => {
         const { current } = dragSlider;
-        const scrollAmount = 300
-        console.log(current.scrollLeft);
+        const scrollAmount = window.innerWidth > 1800 ? 270 : 210;
+
         if (direction == "left") {
             current.scrollLeft -= scrollAmount;
         } else {
@@ -75,24 +76,7 @@ const VenueCategory = () => {
     return (
         <div className={Style.slider}>
             <div className={Style.slider_box}>
-                <div className={Style.slider_box_button_btn}>
-                    <Title
-                        heading="Browse by category"
-                        paragraph="Explore the Venues in the most featured categories."
-                    />
-                    <div
-                        className={Style.slider_box_button_btn_icon}
-                        onClick={() => handleScroll("left")}
-                    >
-                        <TiArrowLeftThick />
-                    </div>
-                    <div
-                        className={Style.slider_box_button_btn_icon}
-                        onClick={() => handleScroll("right")}
-                    >
-                        <TiArrowRightThick />
-                    </div>
-                </div>
+                <Slider heading="Browse by category" desc="Explore the Venues in the most featured categories." handleScroll={handleScroll} />
                 <motion.div className={Style.slider_box_items} ref={dragSlider}>
                     <motion.div
                         ref={dragSlider}
@@ -100,34 +84,9 @@ const VenueCategory = () => {
                         drag="x"
                         dragConstraints={{ right: 0, left: -width }}
                     >
-                        {venueActivities.map(venue => {
-                            return (
-                                // Todo: Transform into Seperate component
-                                <div className={Style.category_box} key={venue.id}>
-                                    <Image
-                                        src={'/img' + venue.src}
-                                        className={Style.category_box_img}
-                                        alt="Background image"
-                                        width={300}
-                                        height={200}
-                                        objectFit="cover"
-                                    />
-
-                                    <div className={Style.category_box_title}>
-                                        <span>
-                                            <BsCircleFill style={{color: categoryColors[parseInt(venue.id)]}} />
-                                        </span>
-                                        <div className={Style.category_box_title_info}>
-                                            <h4>{venue.name}</h4>
-                                            <small>{venue.capacity}</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                        })}
-                        {/*FollowingArray.map((el, i) => (
-                            <SliderCard key={i + 1} el={el} i={i} />
-                        ))*/}
+                        {venueActivities.map(venue =>
+                            <CategoryCard key={venue.id} title={venue.name} capacity={venue.capacity} imgSrc={'/img' + venue.src} color={categoryColors[parseInt(venue.id)]} />
+                        )}
                     </motion.div>
                 </motion.div>
             </div>
