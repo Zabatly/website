@@ -33,7 +33,7 @@ import youtube from "./youtube.svg";
 import vimeo from "./vimeo.svg";
 import vector from "./VectorHIW.svg";
 import zgcmq from "./zgcmq.svg";
-import hero from "./hero.png";
+import hero from "./Asset 2.svg";
 import nft_1 from "./nft_1.png";
 import getAble from "./getable.png";
 import nft_image_1 from "./nft-image-1.png";
