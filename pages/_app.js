@@ -10,9 +10,12 @@ const MyApp = ({ Component, pageProps }) => (
   <div>
     <NavBar />
     <Hero />
-    {/*<Filter />
-    <Service />*/}
+    <Service />
     <VenueCategory />
+    {/*<Filter />
+    
+    <VenueCategory />
+    */}
     <Component {...pageProps} />
     <Footer />
   </div>
