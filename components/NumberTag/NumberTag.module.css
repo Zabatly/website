@@ -1,0 +1,57 @@
+/*
+.NumberTag_container {
+    margin-top: 30px;
+    margin-left: .2rem;
+    position: relative;
+    width: auto;
+    height: 5vh; 
+    display: flex;
+    flex-flow: column-reverse;
+    justify-content: center;
+    align-items: center;
+    border:  1px solid var(--icons-color);
+    border-radius: .3rem;
+}
+
+.NumberTag_container p {
+    padding: .1rem;
+    font-size: 1.4rem;
+    color: var(--icons-color)
+}
+
+.NumberTag_container small{
+    position: absolute;
+    top: -25px;
+    margin-bottom: 10px;
+    background-color: var(--icons-color);
+    color: var(--main-bg-color);
+    padding: .3rem;
+    border-radius: .3rem;
+}
+*/
+
+.NumberTag_container {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    line-height: 0;
+}
+
+.NumberTag_box p{
+    width: 100%;
+    white-space: nowrap;
+    border:  1px solid var(--icons-color);
+    padding: 1.5rem 0rem 1rem 0rem;
+    font-size: 1.4rem;
+    margin-top: .5rem;
+    border-radius: .3rem;
+}
+
+.NumberTag_box small{
+    background-color: var(--icons-color);
+    color: var(--main-bg-color);
+    padding: .3rem;
+    border-radius: .3rem;
+    margin-left: 1rem;
+}

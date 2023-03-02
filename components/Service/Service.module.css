@@ -1,5 +1,7 @@
 
 .service{
+    text-align: center;
+    display: block;
     background-color: #1363ff;
     width: 100%;
     padding-bottom: 5vh;
@@ -10,6 +12,7 @@
     grid-template-columns: repeat(3, 1fr);
     display: grid;
     text-align: center;
+    margin: auto;
     color: white;
 }
 
@@ -31,7 +34,7 @@
 
 @media screen and (max-width: 50em) {
     .service_box{
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
         gap: 1rem;
     }
 }

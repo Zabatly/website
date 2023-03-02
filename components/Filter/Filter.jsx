@@ -59,13 +59,14 @@ const Filter = () => {
     <div className={Style.filter}>
       <div className={Style.filter_box}>
         <div className={Style.filter_box_left}>
-          <button onClick={() => {}}>NFTs</button>
-          <button onClick={() => {}}>Arts</button>
-          <button onClick={() => {}}>Musics</button>
+          <button onClick={() => {}}>Engagement</button>
+          <button onClick={() => {}}>Wedding</button>
+          <button onClick={() => {}}>Birthday</button>
           <button onClick={() => {}}>Sports</button>
-          <button onClick={() => {}}>Photography</button>
+          {/*<button onClick={() => {}}>Photography</button>*/}
         </div>
-
+        </div>
+{/*
         <div className={Style.filter_box_right}>
           <div
             className={Style.filter_box_right_box}
@@ -76,7 +77,8 @@ const Filter = () => {
           </div>
         </div>
       </div>
-
+*/}
+{/*
       {filter && (
         <div className={Style.filter_box_items}>
           <div className={Style.filter_box_items_box}>
@@ -123,8 +125,9 @@ const Filter = () => {
             </div>
           </div>
         </div>
-      )}
+      )}    */}
     </div>
+
   );
 };
 

@@ -1,0 +1,312 @@
+.heroSection {
+    text-align: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.heroSection_box {
+    margin: auto;
+    text-align: center;
+    width: 80%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.heroSection_box_left {
+    padding-right: 6rem;
+}
+
+.heroSection_box_left h1 {
+    font-size: 5rem;
+    line-height: 1;
+}
+
+.heroSection_buttons {
+    display: flex;
+    justify-content: center; 
+    gap: 1vw;
+    padding: 1vh
+}
+
+.heroSection_search_container {
+    width: 110%;
+    height: 20vh;
+    background-color: grey;
+}
+
+.heroSection_search_box {
+    background-color: #fff;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    padding-right: 1rem;
+    align-items: center;
+    gap: .4vw;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50px
+}
+
+.heroSection_search_box_btn {
+    position: relative;
+    background-color: #fff;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 40%;
+    border-radius: 50px;
+    color: grey;
+    cursor:pointer;
+}
+
+.heroSection_search_box_btn_dropdown {
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    background-color: #fff;
+    border-radius: 20px;
+    position: relative;
+    z-index: 22;
+    width: 100%;
+    display: block;
+    height: 20vh;
+    position: absolute;
+    bottom: 0;
+    left: 0; 
+    right: 0; 
+    /* top left/right bottom */
+    margin: 0 auto;
+    margin-bottom: -196px;
+    text-align: center;
+}
+
+.dropdown_title {
+    width: 100%;
+    height: auto;
+    color: black;
+    padding: .5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.dropdown_ul {
+    text-align: left;
+    list-style-position:inside;
+    list-style-type:none;
+    width: 100%;
+    height: 80%;
+    overflow-y: auto;
+    text-decoration: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.dropdown_ul li {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding: .3rem;
+    font-size: 1.3rem;
+    transition: all .3s;
+}
+
+.dropdown_ul li:hover {
+    background-color: #e2e6e9;
+    filter: brightness(.8);
+}
+
+.dropdown_prices {
+    display: flex;
+    overflow-y: auto; 
+    width: 100%;
+    height: 50%;
+    padding-top: 1rem
+}
+
+.heroSection_search_box_btn_icon {
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* background-color: rebeccapurple; */
+    width: 30%;
+    height: 100%;
+    padding: .1rem;
+    font-size: 2rem;
+}
+
+.heroSection_search_box_btn_iconSubmit {
+    border-radius: 50%;
+    height: 70%;
+    width: 9%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 2rem;
+    color: white;
+    background-color: #1363ff;
+}
+
+.heroSection_search_box_btn_iconSubmit:hover {
+    filter: brightness(0.9);
+}
+
+.heroSection_search_box_btn_text {
+    position: relative;
+    z-index: 0;
+    display: flex;
+    height: 100%;
+    width: 70%;
+    align-items:self-start;
+    flex-flow: column;
+    /* background-color: orange; */
+    font-size: 0.8rem;
+}
+
+.heroSection_search_box_btn_text p {
+    width: 80%;
+}
+
+.heroSection_search_box_btn_input {
+    appearance: none;
+    outline: none;
+    border: none;
+}
+
+.heroSection_search_box_btn_input::-webkit-search-cancel-button {
+    font-size: 1.2rem;
+    margin-left: .2rem;
+    font-weight: 0;
+    filter: invert(.5); 
+}
+
+.heroSection_search_box_btn_input::placeholder {
+    color: #1F2937;
+    font-weight: bold;
+}
+
+.heroSection_search_box_btn_input {
+    position: relative;
+    z-index: 0;
+    margin-top: 5%;
+    border: none;
+    width: 90%;
+    font-size: 1.2rem;
+    color: #1F2937;
+    cursor:default;
+}
+
+.heroSection_search_box_btn_input[type="search"] {
+    cursor: auto;
+}
+
+.wavesDiv {
+    width: 100%;
+    height: auto;
+}
+
+.wave {
+    display: block;
+}
+
+
+/* The container */
+.container {
+    background-color: red;
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 25px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .container input:checked ~ .checkmark {
+    background-color: #2196F3;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+@media screen and (max-width: 35em) {
+    .heroSection {
+        width: 100%;
+    }
+
+    .heroSection_box {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 55em) {
+    .heroSection_box {
+        margin: auto;
+        width: 100%;
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    .heroSection_box_left {
+        padding-right: 2rem;
+    }
+
+    .heroSection_box_left h1 {
+        line-height: 1;
+        font-size: 3rem;
+    }
+}

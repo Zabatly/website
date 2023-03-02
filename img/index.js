@@ -46,7 +46,10 @@ import male from "./male.png";
 import gouda from "./gouda.jpg";
 import favicon from "./Site Icon.png";
 import venue from "./venue.jpg";
-
+import engagement from "./engagement.jpg";
+import birthday from "./birthday.jpg";
+import sports from "./sports.jpg"
+import hostBrand from "./HostBrand.png"
 export default {
   collection,
   update,
@@ -96,4 +99,8 @@ export default {
   gouda,
   favicon,
   venue,
+  engagement,
+  birthday,
+  sports,
+  hostBrand
 };

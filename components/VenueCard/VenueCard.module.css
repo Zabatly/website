@@ -1,6 +1,5 @@
 
 .VenueCard{
-    
     width: 80%;
     margin: 0 auto;
     display: grid;
@@ -10,13 +9,13 @@
 }
 
 .VenueCard_box{
-    background-color: red;
-   /* background-color: var(--shadow-light-color); */
+    background-color: var(--shadow-light-color);
     padding: 1rem;
     border-radius: 1rem;
+
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr); 
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr); 
     cursor: pointer;
     transition: all .3s ease-in;
     
@@ -28,7 +27,7 @@
 
 
 .VenueCard_box:hover .VenueCard_box_img_img{
-    transform: scale(0.5);
+    transform: scale(1.05);
     border-radius: 1rem;
 }
 

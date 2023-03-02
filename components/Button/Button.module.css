@@ -8,7 +8,7 @@
     color: var(--shadow-light-color);
     cursor: pointer;
     transition:  all .2s ease-in;
-    word-break:keep-all;
+    box-shadow: var(--box-shadow);
 }
 
 .button:hover{

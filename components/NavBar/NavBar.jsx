@@ -75,12 +75,14 @@ const NavBar = () => {
       <div className={Style.navbar_container}>
         <div className={Style.navbar_container_left}>
           <div className={Style.logo}>
+          <a href="/">
             <Image
               src={images.zlogo}
               alt="Zabatly Logo"
               width={130}
               height={40}
             />
+          </a>
           </div>
           <div className={Style.navbar_container_left_box_input}>
             <div className={Style.navbar_container_left_box_input_box}>
