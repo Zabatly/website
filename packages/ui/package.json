@@ -18,14 +18,14 @@
     "clean": "rm -rf dist types"
   },
   "dependencies": {
-    "@tamagui/animations-react-native": "1.0.17",
-    "@tamagui/font-inter": "^1.20.6",
-    "@tamagui/react-native-media-driver": "^1.20.6",
-    "@tamagui/shorthands": "^1.20.6",
-    "@tamagui/theme-base": "^1.20.6",
-    "tamagui": "^1.20.6"
+    "@tamagui/animations-react-native": "1.22.12",
+    "@tamagui/font-inter": "^1.22.12",
+    "@tamagui/react-native-media-driver": "^1.22.12",
+    "@tamagui/shorthands": "^1.22.12",
+    "@tamagui/theme-base": "^1.22.12",
+    "tamagui": "^1.22.12"
   },
   "devDependencies": {
-    "@tamagui/build": "^1.20.6"
+    "@tamagui/build": "^1.22.12"
   }
 }
