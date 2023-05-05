@@ -87,6 +87,7 @@ module.exports = function () {
       'react-native-gesture-handler',
       'react-native-reanimated',
       'react-native-reanimated-carousel',
+      '@shopify/flash-list',
       'js-cookie',
       /*
         leave these here, and enable if installing dependancies causes issues

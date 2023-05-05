@@ -8,11 +8,10 @@ import {
   Stack,
   YStack,
 } from '@my/ui';
-import React, { useRef, useState } from 'react';
+import React, { Children, useRef, useState } from 'react';
 import {
   Dimensions,
   PanResponder,
-  ScrollView,
   StyleSheet,
   Animated,
   Text,
@@ -20,8 +19,9 @@ import {
 } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Carousel from 'react-native-reanimated-carousel';
-import { Platform } from 'react-native';
-const { width: windowWidth } = Dimensions.get('window');
+import { Platform, ScrollView } from 'react-native';
+import { DraggableScrollView } from './draggableScroll';
+import { ReactNode } from 'react';
 // const PAGE_WIDTH = Platform.OS == 'web' ? window.innerWidth : windowWidth;
 const COUNT = 3;
 
@@ -29,20 +29,48 @@ interface CarouselCard {
   title: string;
   desc: string;
   buttonName: string;
-  cardWidth: number;
+  image: string;
 }
 
 function DemoCard(props: CarouselCard) {
   return (
     <Card
-      w={props.cardWidth}
+      w={300}
+      marginRight={'$3'}
+      elevate
+      size="$6"
+      bordered
+      animation={'bouncy'}
+      hoverStyle={{ scale: 0.925 }}
+      pressStyle={{ scale: 0.875 }}
+    >
+      <Card.Header padded>
+        <H2 color={'#1363ff'}>{props.title}</H2>
+        <Paragraph>{props.desc}</Paragraph>
+      </Card.Header>
+      <Card.Footer padded>
+        <XStack flex={1} />
+      </Card.Footer>
+      <Card.Background>
+        <Image
+          width={500}
+          height={300}
+          alignSelf="center"
+          resizeMode="cover"
+          source={props.image as any}
+        />
+      </Card.Background>
+    </Card>
+    /*
+    <Card
+      w={'40%'}
+      marginRight={'1%'}
       animation={'bouncy'}
       hoverStyle={{ scale: 0.925 }}
       pressStyle={{ scale: 0.875 }}
       elevate
-      size="$5"
+      size="$6"
       bordered
-      marginHorizontal={'$6'}
     >
       <Card.Header padded>
         <H2>{props.title}</H2>
@@ -54,62 +82,60 @@ function DemoCard(props: CarouselCard) {
           {props.buttonName}
         </Button>
       </Card.Footer>
-      <Card.Background>
-        <Image
-          resizeMode="cover"
-          alignSelf="center"
-          source={{
-            width: 300,
-            height: 300,
-            uri: 'https://picsum.photos/200/300',
-          }}
-        />
-      </Card.Background>
     </Card>
+    */
   );
 }
-
+interface Item {
+  id: number;
+  title: string;
+  desc: string;
+  source: string;
+}
 const data = [
-  { id: 1, title: 'Item 1', desc: '', buttonName: 'View' },
-  { id: 2, title: 'Item 2', desc: '', buttonName: 'View' },
-  { id: 3, title: 'Item 3', desc: '', buttonName: 'View' },
-  { id: 4, title: 'Item 4', desc: '', buttonName: 'View' },
-  { id: 5, title: 'Item 5', desc: '', buttonName: 'View' },
+  { id: 1, title: 'Party', desc: '', source: require('./img/venue.jpg') },
+  {
+    id: 2,
+    title: 'Engagement',
+    desc: '',
+    source: require('./img/venue.jpg'),
+  },
+  { id: 3, title: 'Sports', desc: '', source: require('./img/venue.jpg') },
+  { id: 4, title: 'Formal', desc: '', source: require('./img/venue.jpg') },
+  { id: 5, title: 'View More', desc: '', source: require('./img/venue.jpg') },
 ];
+interface renderItemProps {
+  item: Item;
+}
+const WebDraggableSlider = () => {
+  return (
+    <DraggableScrollView
+      data={data}
+      // @ts-ignore
+      renderItem={({ item }: any) => (
+        <DemoCard
+          key={item.id}
+          title={item.title}
+          desc=""
+          buttonName="View"
+          image={item.source}
+        />
+      )}
+      // @ts-ignore
+      keyExtractor={(item) => item.id}
+      removeClippedSubviews={true} // Unmount components when outside of window
+      initialNumToRender={2} // Reduce initial render amount
+      maxToRenderPerBatch={1} // Reduce number in each render batch
+      updateCellsBatchingPeriod={100} // Increase time between renders
+      windowSize={7} // Reduce the window size
+    />
+  );
+};
 
 export function CategoriesSlider() {
-  const [containerWidth, setContainerWidth] = useState(0);
-  const renderItem = ({ index }) => (
-    <XStack space={'$2'}>
-      <DemoCard
-        title={data[index].title}
-        desc={data[index].desc}
-        buttonName={data[index].buttonName}
-        cardWidth={250}
-      />
-      <DemoCard
-        title={data[index].title}
-        desc={data[index].desc}
-        buttonName={data[index].buttonName}
-        cardWidth={250}
-      />
-      <DemoCard
-        title={data[index].title}
-        desc={data[index].desc}
-        buttonName={data[index].buttonName}
-        cardWidth={250}
-      />
-    </XStack>
-  );
-
-  const onLayout = (event) => {
-    const { width } = event.nativeEvent.layout;
-    setContainerWidth(width / 3);
-  };
-
-  console.log(containerWidth);
   return (
-    <XStack backgroundColor={'red'} onLayout={onLayout}></XStack>
+    <WebDraggableSlider />
+
     /*
     <XStack>
       <Carousel

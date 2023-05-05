@@ -24,7 +24,7 @@ export const Logo: React.FC<{}> = function () {
 
   return (
     <Image
-      source={require('./logo.png')}
+      source={{ uri: '/images/logo.png' || './assets/icon.png' }}
       resizeMode="contain"
       {...logoMediaQuery(4)}
       {...((media.gtSm || media.gtMd) && {

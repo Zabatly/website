@@ -154,10 +154,17 @@ import {
 } from '@tamagui/lucide-icons';
 import { CategoriesSlider } from '@my/ui/src/components/CategoriesSlider';
 export function HomeScreen() {
+  const { t, i18n } = useTranslation();
+  const langDirection = i18n.dir(i18n.language);
   return (
     <YStack backgroundColor={'$background'} flex={1}>
       <AppBar />
-      <YStack f={1} paddingVertical={10} alignItems="center">
+      <YStack
+        direction={langDirection}
+        f={1}
+        paddingVertical={10}
+        alignItems="center"
+      >
         <YStack
           $gtSm={{
             w: '60%',
@@ -167,7 +174,7 @@ export function HomeScreen() {
           space={'$4'}
         >
           <XStack>
-            <H2>Explore various venues</H2>
+            <H2>{t('latest_venues')}</H2>
           </XStack>
           <XStack
             jc="space-between"
@@ -177,13 +184,14 @@ export function HomeScreen() {
             space={'$2'}
           >
             <Input
+              direction={langDirection}
               theme={'gray'}
               f={1}
               $gtSm={{
                 w: '100%',
               }}
               size={'$4.5'}
-              placeholder={`Search for a venue...`}
+              placeholder={t('search_venues') as any}
             />
             <Button theme={'blue'} size={'$4.5'} icon={<Search />} />
           </XStack>
@@ -210,10 +218,10 @@ export function HomeScreen() {
             </ScrollView>
           </XStack>
           <Separator alignSelf="stretch" outlineColor={'white'} />
-          <XStack>
-            <H2>Featured Categories</H2>
-          </XStack>
+          <H2>{t('featured_categories')}</H2>
           <CategoriesSlider />
+          <Separator alignSelf="stretch" outlineColor={'white'} />
+          <H2>{t('recommended_venues')}</H2>
         </YStack>
       </YStack>
     </YStack>
