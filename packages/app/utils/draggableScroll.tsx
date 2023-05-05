@@ -16,6 +16,8 @@ function mergeRefs<T = any>(
     });
   };
 }
+
+// Credits: https://gist.github.com/nandorojo/92e7301a49a8b9575bb24b3b1ddc19bf#tldr
 type Props<Scrollable extends FlatList = FlatList> = {
   cursor?: string;
   outerRef?: ForwardedRef<Scrollable>;

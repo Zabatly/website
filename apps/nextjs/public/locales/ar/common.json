@@ -8,5 +8,6 @@
   "latest_venues": "تحقق من أحدث الأماكن",
   "search_venues": "ابحث عن اي مكان",
   "featured_categories": "فئات مميزة",
-  "recommended_venues": "الأماكن الموصى بها"
+  "recommended_venues": "الأماكن الموصى بها",
+  "logout": "خروج"
 }

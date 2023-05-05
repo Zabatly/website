@@ -61,29 +61,6 @@ function DemoCard(props: CarouselCard) {
         />
       </Card.Background>
     </Card>
-    /*
-    <Card
-      w={'40%'}
-      marginRight={'1%'}
-      animation={'bouncy'}
-      hoverStyle={{ scale: 0.925 }}
-      pressStyle={{ scale: 0.875 }}
-      elevate
-      size="$6"
-      bordered
-    >
-      <Card.Header padded>
-        <H2>{props.title}</H2>
-        <Paragraph>{props.desc}</Paragraph>
-      </Card.Header>
-      <Card.Footer padded>
-        <XStack flex={1} />
-        <Button theme={'blue'} borderRadius="$10">
-          {props.buttonName}
-        </Button>
-      </Card.Footer>
-    </Card>
-    */
   );
 }
 interface Item {
@@ -107,11 +84,11 @@ const data = [
 interface renderItemProps {
   item: Item;
 }
-const WebDraggableSlider = () => {
+
+export function CategoriesSlider() {
   return (
     <DraggableScrollView
       data={data}
-      // @ts-ignore
       renderItem={({ item }: any) => (
         <DemoCard
           key={item.id}
@@ -121,81 +98,12 @@ const WebDraggableSlider = () => {
           image={item.source}
         />
       )}
-      // @ts-ignore
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item: Item): any => item.id}
       removeClippedSubviews={true} // Unmount components when outside of window
-      initialNumToRender={2} // Reduce initial render amount
-      maxToRenderPerBatch={1} // Reduce number in each render batch
+      initialNumToRender={3} // Render 3 items initially
+      maxToRenderPerBatch={1} // Render 1 item per batch
       updateCellsBatchingPeriod={100} // Increase time between renders
-      windowSize={7} // Reduce the window size
+      windowSize={3} // Set window size to 3
     />
   );
-};
-
-export function CategoriesSlider() {
-  return (
-    <WebDraggableSlider />
-
-    /*
-    <XStack>
-      <Carousel
-        vertical={false}
-        width={1000}
-        height={400}
-        windowSize={4}
-        autoPlay={false}
-        autoPlayInterval={2000}
-        data={[...new Array(12).keys()]}
-        renderItem={({ index }) => (
-          <XStack w={'100%'} gap="$0.75">
-            <DemoCard title="Wedding" desc="" buttonName="Check now!" />
-            <DemoCard title="Crap" desc="" buttonName="Check now!" />
-            <DemoCard title="Crap2" desc="" buttonName="Check now!" />
-            <DemoCard title="Crap3" desc="" buttonName="Check now!" />
-          </XStack>
-        )}
-      />
-    </XStack>
-    */
-  );
-
-  /*
-         <Carousel
-      vertical={false}
-      width={1000}
-      height={400}
-      windowSize={4}
-      autoPlay={false}
-      autoPlayInterval={2000}
-      data={[...new Array(12).keys()]}
-      renderItem={({ index }) => (
-        <XStack w={'100%'} gap="$0.75">
-          <DemoCard
-  
-            title="Wedding"
-            desc=""
-            buttonName="Check now!"
-          />
-          <DemoCard
-  
-            title="Crap"
-            desc=""
-            buttonName="Check now!"
-          />
-          <DemoCard
-  
-            title="Crap2"
-            desc=""
-            buttonName="Check now!"
-          />
-          <DemoCard
-  
-            title="Crap3"
-            desc=""
-            buttonName="Check now!"
-          />
-        </XStack>
-      )}
-    />
-      */
 }

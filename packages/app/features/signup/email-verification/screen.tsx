@@ -1,23 +1,25 @@
 /* this page is just one input for email verification */
-import { useState } from "react";
-import { Button, Input, YStack } from "@my/ui";
-import { useAuth, useSignUp } from "app/utils/clerk";
-import { useRouter } from "solito/router";
-import { trpc } from "app/utils/trpc";
+import { useState } from 'react';
+import { Button, Input, YStack } from '@my/ui';
+import { useAuth, useSignUp } from 'app/utils/clerk';
+import { useRouter } from 'solito/router';
+import { trpc } from 'app/utils/trpc';
 
 export function EmailVerificationScreen() {
   const { push } = useRouter();
-  const [verificationCode, setVerificationCode] = useState("");
+  const [verificationCode, setVerificationCode] = useState('');
   const createUserMutation = trpc.user.create.useMutation();
 
   const { signUp, setSession } = useSignUp();
+  const { isSignedIn } = useAuth();
   if (!signUp) return null;
+  if (isSignedIn) return push('/');
 
   const handleEmailVerificationOnPress = async () => {
     /* verify the email */
     await signUp.attemptEmailAddressVerification({ code: verificationCode });
 
-    if (signUp.status === "complete") {
+    if (signUp.status === 'complete') {
       const { createdSessionId } = signUp;
       if (createdSessionId) {
         await setSession(createdSessionId);
@@ -27,8 +29,8 @@ export function EmailVerificationScreen() {
         id: signUp.createdUserId!,
         email: signUp.emailAddress!,
       });
-      push("/");
-    } else alert("Invalid verification code");
+      push('/');
+    } else alert('Invalid verification code');
   };
   return (
     <YStack f={1} jc="center" ai="center" space>

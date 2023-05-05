@@ -1,12 +1,12 @@
-import { YStack } from "@my/ui";
-import { useSignIn } from "app/utils/clerk";
-import { OAuthStrategy } from "@clerk/types";
-import { useRouter } from "solito/router";
-import { SignUpSignInComponent } from "@my/ui/src/components/SignUpSignIn";
-import { handleOAuthSignIn } from "app/utils/auth";
+import { YStack } from '@my/ui';
+import { useAuth, useSignIn } from 'app/utils/clerk';
+import { OAuthStrategy } from '@clerk/types';
+import { useRouter } from 'solito/router';
+import { SignUpSignInComponent } from '@my/ui/src/components/SignUpSignIn';
+import { handleOAuthSignIn } from 'app/utils/auth';
 
 const getBaseUrl = () => {
-  if (typeof window !== "undefined") return ""; // browser should use relative url
+  if (typeof window !== 'undefined') return ''; // browser should use relative url
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
 
   return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
@@ -14,14 +14,14 @@ const getBaseUrl = () => {
 
 export function SignInScreen() {
   const { push } = useRouter();
-
   const { isLoaded, signIn, setSession } = useSignIn();
+  const { isSignedIn } = useAuth();
   if (!setSession) return null;
   if (!isLoaded) return null;
-
+  if (isSignedIn) return push('/');
   const redirectIfSignedIn = async () => {
-    if (signIn.status == "complete") {
-      push("/");
+    if (signIn.status == 'complete') {
+      push('/');
     }
   };
 

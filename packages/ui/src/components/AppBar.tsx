@@ -1,37 +1,37 @@
-import {
-  Paragraph,
-  XStack,
-  YStack,
-  Separator,
-  Tokens,
-  Button,
-  Popover,
-  PopoverProps,
-  Adapt,
-  Group,
-  ListItem,
-  XGroup,
-  YGroup,
-} from '@my/ui';
+import { XStack, YStack, Separator, Button, H6, YGroup } from '@my/ui';
 import { Platform } from 'react-native';
 import { ThemeContext } from 'app/provider/theme/themeContext';
 import React, { useContext, useState } from 'react';
-import { Moon, Sun, Settings2, Languages } from '@tamagui/lucide-icons';
+import {
+  Moon,
+  Sun,
+  Settings2,
+  Languages,
+  LogOut,
+  Inbox,
+} from '@tamagui/lucide-icons';
 import { Logo } from './Logo';
 import { useTranslation } from 'app/utils/i18n';
 import { useRouter } from 'solito/router';
 import { CustomPopOver } from './CustomPopover';
+import { useAuth } from 'app/utils/clerk';
+import { useLink } from 'solito/link';
 const disabledBtnStyle = {
   outlineWidth: '$0',
   bw: '$0',
 };
 
 export function AppBar() {
+  const { isLoaded, isSignedIn } = useAuth();
+  const signInLinkProps = useLink({
+    href: '/signin',
+  });
   const { theme, toggleTheme } = useContext(ThemeContext);
   const isDark = theme == 'dark';
   const { t, i18n } = useTranslation();
   const { push } = useRouter();
   const langDirection = i18n.dir(i18n.language);
+  if (!isLoaded) return null;
   return (
     <XStack
       w={'100%'}
@@ -59,6 +59,11 @@ export function AppBar() {
         </XStack>
 
         <XStack>
+          {!isSignedIn && (
+            <Button {...signInLinkProps} theme={'blue'}>
+              Sign-in
+            </Button>
+          )}
           <Separator
             borderColor={'$borderColorHover'}
             alignSelf="stretch"
@@ -68,6 +73,41 @@ export function AppBar() {
             marginVertical={10}
             marginHorizontal={5}
           />
+
+          {/* Notifications Tab */}
+          {isSignedIn && (
+            <CustomPopOver
+              isBouncy={true}
+              hideArrow={false}
+              contentProps={{
+                width: 300,
+                paddingVertical: '$5',
+                paddingHorizontal: '$5',
+              }}
+              sheetProps={{
+                fullScreen: false,
+                hideHandle: false,
+              }}
+              trigger={
+                <Button
+                  backgroundColor={'$backgroundTransparent'}
+                  outlineColor="transparent"
+                  focusStyle={disabledBtnStyle as any}
+                  pressStyle={disabledBtnStyle as any}
+                  icon={<Inbox />}
+                />
+              }
+            >
+              <H6 marginBottom={'$2'}>Notifications</H6>
+              <YGroup separator={<Separator marginVertical={'$2'} />}>
+                <YGroup.Item>AAA</YGroup.Item>
+                <YGroup.Item>AAA</YGroup.Item>
+                <YGroup.Item>AAA</YGroup.Item>
+              </YGroup>
+            </CustomPopOver>
+          )}
+
+          {/* Settings Tab */}
           <CustomPopOver
             isBouncy={true}
             trigger={
@@ -90,7 +130,7 @@ export function AppBar() {
             }}
           >
             <YStack w={'100%'} margin={'$0'}>
-              <YGroup>
+              <YGroup theme={'blue'}>
                 <YGroup.Item>
                   <CustomPopOver
                     placement="left"
@@ -127,7 +167,6 @@ export function AppBar() {
                 </YGroup.Item>
                 <YGroup.Item>
                   <Button
-                    theme={'blue'}
                     direction={langDirection}
                     hoverStyle={disabledBtnStyle as any}
                     focusStyle={disabledBtnStyle as any}
@@ -138,6 +177,19 @@ export function AppBar() {
                     {isDark ? t('lightMode') : t('darkMode')}
                   </Button>
                 </YGroup.Item>
+                {isSignedIn && (
+                  <YGroup.Item>
+                    <Button
+                      direction={langDirection}
+                      hoverStyle={disabledBtnStyle as any}
+                      focusStyle={disabledBtnStyle as any}
+                      pressStyle={disabledBtnStyle as any}
+                      icon={<LogOut />}
+                    >
+                      {t('logout')}
+                    </Button>
+                  </YGroup.Item>
+                )}
               </YGroup>
             </YStack>
           </CustomPopOver>

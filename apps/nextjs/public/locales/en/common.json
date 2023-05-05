@@ -8,5 +8,6 @@
   "latest_venues": "Check The Latest Venues",
   "search_venues": "Search for venues",
   "featured_categories": "Featured Categories",
-  "recommended_venues": "Recommended"
+  "recommended_venues": "Recommended",
+  "logout": "Sign Out"
 }
