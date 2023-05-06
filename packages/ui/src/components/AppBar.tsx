@@ -1,4 +1,12 @@
-import { XStack, YStack, Separator, Button, H6, YGroup } from '@my/ui';
+import {
+  XStack,
+  YStack,
+  Separator,
+  Button,
+  H6,
+  YGroup,
+  Paragraph,
+} from '@my/ui';
 import { Platform } from 'react-native';
 import { ThemeContext } from 'app/provider/theme/themeContext';
 import React, { useContext, useState } from 'react';
@@ -100,9 +108,15 @@ export function AppBar() {
             >
               <H6 marginBottom={'$2'}>Notifications</H6>
               <YGroup separator={<Separator marginVertical={'$2'} />}>
-                <YGroup.Item>AAA</YGroup.Item>
-                <YGroup.Item>AAA</YGroup.Item>
-                <YGroup.Item>AAA</YGroup.Item>
+                <YGroup.Item>
+                  <Paragraph>AAA</Paragraph>
+                </YGroup.Item>
+                <YGroup.Item>
+                  <Paragraph>AAA</Paragraph>
+                </YGroup.Item>
+                <YGroup.Item>
+                  <Paragraph>AAA</Paragraph>
+                </YGroup.Item>
               </YGroup>
             </CustomPopOver>
           )}

@@ -173,9 +173,7 @@ export function HomeScreen() {
           paddingHorizontal={'$4'}
           space={'$4'}
         >
-          <XStack>
-            <H2>{t('latest_venues')}</H2>
-          </XStack>
+          <H2>{t('latest_venues')}</H2>
           <XStack
             jc="space-between"
             $gtSm={{

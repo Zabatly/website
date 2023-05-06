@@ -88,6 +88,8 @@ module.exports = function () {
       'react-native-reanimated',
       'react-native-reanimated-carousel',
       '@shopify/flash-list',
+      '@tamagui-extras/core',
+      '@tamagui-extras/form',
       'js-cookie',
       /*
         leave these here, and enable if installing dependancies causes issues

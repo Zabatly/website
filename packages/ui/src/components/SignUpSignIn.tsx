@@ -11,7 +11,11 @@ import {
 } from 'tamagui';
 import { Link } from 'solito/link';
 import { OAuthStrategy } from '@clerk/types';
-
+import {
+  LmFormRhfProvider,
+  LmInputRhf,
+  LmSubmitButtonRhf,
+} from '@tamagui-extras/form';
 interface Props {
   type: 'sign-up' | 'sign-in';
   handleOAuthWithPress: (strategy: OAuthStrategy) => void;
@@ -86,42 +90,43 @@ export const SignUpSignInComponent: React.FC<Props> = ({
       </XStack>
 
       {/* email sign up option */}
-      <Input
-        textContentType="emailAddress"
-        placeholder="Email"
-        value={emailAddress}
-        onChangeText={setEmailAddress}
-      />
-      {type == 'sign-up' && (
+      <LmFormRhfProvider>
         <Input
-          placeholder="Username"
-          value={username}
-          onChangeText={setUsername}
-          textContentType="username"
+          textContentType="emailAddress"
+          placeholder="Email"
+          value={emailAddress}
+          onChangeText={setEmailAddress}
         />
-      )}
-      <Input
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        textContentType="password"
-        secureTextEntry
-      />
+        {type == 'sign-up' && (
+          <Input
+            placeholder="Username"
+            value={username}
+            onChangeText={setUsername}
+            textContentType="username"
+          />
+        )}
+        <Input
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          textContentType="password"
+          secureTextEntry
+        />
 
-      {/* sign up button */}
-      <Button
-        themeInverse
-        onPress={() => {
-          handleEmailWithPress(emailAddress, password);
-        }}
-        hoverStyle={{ opacity: 0.8 }}
-        onHoverIn={() => {}}
-        onHoverOut={() => {}}
-        focusStyle={{ scale: 0.975 }}
-      >
-        {type === 'sign-up' ? 'Sign up' : 'Sign in'}
-      </Button>
-
+        {/* sign up button */}
+        <Button
+          themeInverse
+          onPress={() => {
+            handleEmailWithPress(emailAddress, password);
+          }}
+          hoverStyle={{ opacity: 0.8 }}
+          onHoverIn={() => {}}
+          onHoverOut={() => {}}
+          focusStyle={{ scale: 0.975 }}
+        >
+          {type === 'sign-up' ? 'Sign up' : 'Sign in'}
+        </Button>
+      </LmFormRhfProvider>
       {/* or sign in, in small and less opaque font */}
       <XStack>
         <Paragraph size="$2" mr="$2" opacity={0.4}>

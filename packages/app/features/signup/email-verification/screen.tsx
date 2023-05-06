@@ -13,7 +13,7 @@ export function EmailVerificationScreen() {
   const { signUp, setSession } = useSignUp();
   const { isSignedIn } = useAuth();
   if (!signUp) return null;
-  if (isSignedIn) return push('/');
+  // if (isSignedIn) return push('/');
 
   const handleEmailVerificationOnPress = async () => {
     /* verify the email */

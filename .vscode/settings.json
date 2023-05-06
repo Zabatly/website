@@ -7,13 +7,11 @@
     ".yarn": true,
     ".gitignore": true,
     ".prettierignore": true,
-    ".prettierrc.json": true,
     ".git": true,
     ".yarnrc.yml": true,
     "LICENSE": true,
     "tsconfig.base.json": true,
     "tsconfig.json": true,
-    "turbo.json": true,
     "yarn.lock": true
   }
 }
