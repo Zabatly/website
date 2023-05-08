@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Home, Heart, User } from '@tamagui/lucide-icons';
 import { Link, Tabs } from 'expo-router';
 import { Pressable, useColorScheme } from 'react-native';
-import { ThemeContext } from 'app/provider/theme/themeContext';
+import { useThemeNameState } from 'app/utils/themeState';
 const colors = {
   light: {
     text: '#000',
@@ -20,8 +20,10 @@ const colors = {
   },
 };
 export default function TabLayout() {
+  const theme = useThemeNameState();
+  //const isDarkTheme = theme === 'dark';
   // const colorScheme = useColorScheme();
-  const { theme } = useContext(ThemeContext);
+  // const { theme } = useContext(ThemeContext);
   return (
     <Tabs
       screenOptions={{
@@ -35,15 +37,18 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
+          /*
           headerStyle: {
             backgroundColor: colors['dark'].background,
           },
+          */
           title: 'Discover',
           headerShown: false,
           tabBarIcon: ({ color }) => <Home color={color} />,
         }}
       />
-      <Tabs.Screen
+      {/*
+         <Tabs.Screen
         name="signin"
         options={{
           title: 'Wishlist',
@@ -59,6 +64,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <User color={color} />,
         }}
       />
+        */}
     </Tabs>
   );
 }

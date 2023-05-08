@@ -10,7 +10,9 @@ import {
   Separator,
 } from 'tamagui';
 import { Link } from 'solito/link';
+import { useTranslation } from 'app/utils/i18n';
 import { OAuthStrategy } from '@clerk/types';
+import { useThemeNameState } from 'app/utils/themeState';
 import {
   LmFormRhfProvider,
   LmInputRhf,
@@ -27,12 +29,18 @@ export const SignUpSignInComponent: React.FC<Props> = ({
   handleOAuthWithPress,
   handleEmailWithPress,
 }) => {
+  const theme = useThemeNameState();
   const [emailAddress, setEmailAddress] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const { t, i18n } = useTranslation();
+  const langDirection = i18n.dir(i18n.language);
 
   return (
     <YStack
+      theme={theme}
+      backgroundColor="$backgroundStrong"
+      direction={langDirection}
       borderRadius="$10"
       space
       px="$7"
@@ -41,10 +49,9 @@ export const SignUpSignInComponent: React.FC<Props> = ({
       shadowColor={'#00000020'}
       shadowRadius={26}
       shadowOffset={{ width: 0, height: 4 }}
-      bg="$background"
     >
       <Paragraph size="$5" fontWeight={'700'} opacity={0.8} mb="$1">
-        {type === 'sign-up' ? 'Create your account' : 'Log in to your account'}
+        {type === 'sign-up' ? t('auth.createAccount') : t('auth.loginAccount')}
       </Paragraph>
       {/* all the oauth sign up options */}
       <XStack jc={'space-around'}>
@@ -73,66 +80,61 @@ export const SignUpSignInComponent: React.FC<Props> = ({
           />
         </Button>
       </XStack>
-      <XStack ai="center" width="100%" alignItems="center">
-        <Separator
-          bc={'$borderColorHover'}
-          vertical={false}
-          marginRight={'$4'}
-        />
-        <Paragraph size="$3" opacity={0.5}>
-          OR
+      <XStack theme={'gray'} ai="center" width="100%" alignItems="center">
+        <Separator vertical={false} />
+        <Paragraph size="$3" opacity={0.5} marginHorizontal={'$4'}>
+          {t('auth.or')}
         </Paragraph>
-        <Separator
-          bc={'$borderColorHover'}
-          vertical={false}
-          marginLeft={'$4'}
-        />
+        <Separator vertical={false} />
       </XStack>
 
       {/* email sign up option */}
-      <LmFormRhfProvider>
+      <YStack theme={'gray'} space>
         <Input
+          direction={langDirection}
           textContentType="emailAddress"
-          placeholder="Email"
+          placeholder={t('auth.email') as string}
           value={emailAddress}
           onChangeText={setEmailAddress}
         />
         {type == 'sign-up' && (
           <Input
-            placeholder="Username"
+            direction={langDirection}
+            placeholder={t('auth.username') as string}
             value={username}
             onChangeText={setUsername}
             textContentType="username"
           />
         )}
         <Input
-          placeholder="Password"
+          direction={langDirection}
+          placeholder={t('auth.password') as string}
           value={password}
           onChangeText={setPassword}
           textContentType="password"
           secureTextEntry
         />
+      </YStack>
 
-        {/* sign up button */}
-        <Button
-          themeInverse
-          onPress={() => {
-            handleEmailWithPress(emailAddress, password);
-          }}
-          hoverStyle={{ opacity: 0.8 }}
-          onHoverIn={() => {}}
-          onHoverOut={() => {}}
-          focusStyle={{ scale: 0.975 }}
-        >
-          {type === 'sign-up' ? 'Sign up' : 'Sign in'}
-        </Button>
-      </LmFormRhfProvider>
+      {/* sign up button */}
+      <Button
+        direction={langDirection}
+        theme={'blue'}
+        onPress={() => {
+          handleEmailWithPress(emailAddress, password);
+        }}
+        hoverStyle={{ opacity: 0.8 }}
+        onHoverIn={() => {}}
+        onHoverOut={() => {}}
+        focusStyle={{ scale: 0.975 }}
+      >
+        {type === 'sign-up' ? t('auth.signup') : t('auth.signup')}
+      </Button>
+
       {/* or sign in, in small and less opaque font */}
       <XStack>
         <Paragraph size="$2" mr="$2" opacity={0.4}>
-          {type === 'sign-up'
-            ? 'Already have an account?'
-            : 'Don’t have an account?'}
+          {type === 'sign-up' ? t('auth.haveAccount') : t('auth.noAccount')}
         </Paragraph>
         <Link href={type === 'sign-up' ? '/signin' : '/signup'}>
           <Paragraph
@@ -141,8 +143,9 @@ export const SignUpSignInComponent: React.FC<Props> = ({
             fontWeight={'700'}
             opacity={0.5}
             hoverStyle={{ opacity: 0.4 }}
+            mr={'$1.5'}
           >
-            {type === 'sign-up' ? 'Sign in' : 'Sign up'}
+            {type === 'sign-up' ? t('auth.signin') : t('auth.signup')}
           </Paragraph>
         </Link>
       </XStack>

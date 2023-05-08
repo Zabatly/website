@@ -4,6 +4,12 @@ import { OAuthStrategy } from '@clerk/types';
 import { useRouter } from 'solito/router';
 import { SignUpSignInComponent } from '@my/ui/src/components/SignUpSignIn';
 import { handleOAuthSignIn } from 'app/utils/auth';
+import { ThemeContext } from 'app/provider/theme/themeContext';
+import { useContext } from 'react';
+import { Platform } from 'react-native';
+import { AppBar } from '@my/ui/src/components/AppBar';
+import { useThemeNameState } from 'app/utils/themeState';
+// import { useThemeNameState } from 'app/utils/themeState';
 
 const getBaseUrl = () => {
   if (typeof window !== 'undefined') return ''; // browser should use relative url
@@ -14,14 +20,22 @@ const getBaseUrl = () => {
 
 export function SignInScreen() {
   const { push } = useRouter();
-  const { isLoaded, signIn, setSession } = useSignIn();
+  // const theme = useThemeNameState();
+  const theme = useThemeNameState();
+  const { isLoaded, signIn, setSession, setActive } = useSignIn();
   const { isSignedIn } = useAuth();
-  if (!setSession) return null;
-  if (!isLoaded) return null;
-  if (isSignedIn) return push('/');
+  if (!setSession || !isLoaded) return null;
+  if (Platform.OS == 'web' && isSignedIn) push('/');
   const redirectIfSignedIn = async () => {
     if (signIn.status == 'complete') {
-      push('/');
+      const { createdSessionId } = signIn;
+      if (createdSessionId) {
+        setActive({ session: createdSessionId });
+        push('/');
+        console.log(isSignedIn);
+      } else {
+        console.log('Whats wrong??' + signIn);
+      }
     }
   };
 
@@ -35,16 +49,26 @@ export function SignInScreen() {
       identifier: emailAddress,
       password,
     });
+
     await redirectIfSignedIn();
   };
 
   return (
-    <YStack f={1} jc="center" ai="center" space>
-      <SignUpSignInComponent
-        type="sign-in"
-        handleOAuthWithPress={handleOAuthSignInWithPress}
-        handleEmailWithPress={handleEmailSignInWithPress}
-      />
+    <YStack
+      f={1}
+      // backgroundColor={theme == 'dark' ? '#00142F' : '#1363ff'}
+      space
+      theme={theme}
+      backgroundColor="$background"
+    >
+      {Platform.OS == 'web' && <AppBar />}
+      <YStack f={1} jc="center" ai="center">
+        <SignUpSignInComponent
+          type="sign-in"
+          handleOAuthWithPress={handleOAuthSignInWithPress}
+          handleEmailWithPress={handleEmailSignInWithPress}
+        />
+      </YStack>
     </YStack>
   );
 }

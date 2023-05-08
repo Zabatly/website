@@ -1,5 +1,4 @@
 import React from 'react';
-
 export type Theme = 'light' | 'dark';
 
 interface ThemeContextValue {
@@ -9,7 +8,7 @@ interface ThemeContextValue {
 }
 
 export const ThemeContext = React.createContext<ThemeContextValue>({
-  theme: 'light',
+  theme: 'dark',
   setTheme: () => {},
   toggleTheme: () => {},
 });

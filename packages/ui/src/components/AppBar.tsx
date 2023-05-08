@@ -9,7 +9,7 @@ import {
 } from '@my/ui';
 import { Platform } from 'react-native';
 import { ThemeContext } from 'app/provider/theme/themeContext';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   Moon,
   Sun,
@@ -22,24 +22,32 @@ import { Logo } from './Logo';
 import { useTranslation } from 'app/utils/i18n';
 import { useRouter } from 'solito/router';
 import { CustomPopOver } from './CustomPopover';
-import { useAuth } from 'app/utils/clerk';
+import { useAuth, SignedIn, SignedOut } from 'app/utils/clerk';
 import { useLink } from 'solito/link';
+import { useThemeToggle, useThemeNameState } from 'app/utils/themeState';
+import * as nextRouter from 'next/router';
+import * as expoRouter from 'expo-router';
 const disabledBtnStyle = {
   outlineWidth: '$0',
   bw: '$0',
 };
 
 export function AppBar() {
-  const { isLoaded, isSignedIn } = useAuth();
+  // TODO: Add expo router
+  const router = nextRouter.useRouter();
+  const { isLoaded, signOut } = useAuth();
   const signInLinkProps = useLink({
     href: '/signin',
   });
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const theme = useThemeNameState();
   const isDark = theme == 'dark';
+  const toggleTheme = useThemeToggle();
   const { t, i18n } = useTranslation();
   const { push } = useRouter();
+
   const langDirection = i18n.dir(i18n.language);
   if (!isLoaded) return null;
+
   return (
     <XStack
       w={'100%'}
@@ -67,11 +75,12 @@ export function AppBar() {
         </XStack>
 
         <XStack>
-          {!isSignedIn && (
+          <SignedOut>
             <Button {...signInLinkProps} theme={'blue'}>
-              Sign-in
+              {t('auth.signin')}
             </Button>
-          )}
+          </SignedOut>
+
           <Separator
             borderColor={'$borderColorHover'}
             alignSelf="stretch"
@@ -83,7 +92,7 @@ export function AppBar() {
           />
 
           {/* Notifications Tab */}
-          {isSignedIn && (
+          <SignedIn>
             <CustomPopOver
               isBouncy={true}
               hideArrow={false}
@@ -119,7 +128,7 @@ export function AppBar() {
                 </YGroup.Item>
               </YGroup>
             </CustomPopOver>
-          )}
+          </SignedIn>
 
           {/* Settings Tab */}
           <CustomPopOver
@@ -172,7 +181,7 @@ export function AppBar() {
                         if (Platform.OS !== 'web') {
                           return i18n.changeLanguage(lang);
                         }
-                        push('/', undefined, { locale: lang });
+                        push(router.pathname, undefined, { locale: lang });
                       }}
                     >
                       {i18n.language == 'en' ? t('arabic') : t('english')}
@@ -191,9 +200,11 @@ export function AppBar() {
                     {isDark ? t('lightMode') : t('darkMode')}
                   </Button>
                 </YGroup.Item>
-                {isSignedIn && (
+
+                <SignedIn>
                   <YGroup.Item>
                     <Button
+                      onPress={() => signOut()}
                       direction={langDirection}
                       hoverStyle={disabledBtnStyle as any}
                       focusStyle={disabledBtnStyle as any}
@@ -203,7 +214,7 @@ export function AppBar() {
                       {t('logout')}
                     </Button>
                   </YGroup.Item>
-                )}
+                </SignedIn>
               </YGroup>
             </YStack>
           </CustomPopOver>

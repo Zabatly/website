@@ -9,5 +9,17 @@
   "search_venues": "ابحث عن اي مكان",
   "featured_categories": "فئات مميزة",
   "recommended_venues": "الأماكن الموصى بها",
-  "logout": "خروج"
+  "auth": {
+    "createAccount": "أنشئ حسابك",
+    "loginAccount": "تسجيل الدخول إلى حسابك",
+    "haveAccount": "هل لديك حساب؟",
+    "noAccount": "ليس لديك حساب؟",
+    "signout": "خروج",
+    "signin": "تسجيل الدخول",
+    "signup": "اشترك",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة السر",
+    "username": "اسم المستخدم",
+    "or": "أو"
+  }
 }

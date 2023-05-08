@@ -6,7 +6,6 @@ import {
   Input,
   Image,
   Stack,
-  useThemeName,
   useMedia,
 } from 'tamagui';
 import { useLink } from 'solito/link';
@@ -16,14 +15,14 @@ const logoMediaQuery = (size: keyof typeof tokens.size) => ({
   height: tokens.size[size].val,
 });
 export const Logo: React.FC<{}> = function () {
-  const theme = useThemeName();
   const media = useMedia();
-  const linkProps = useLink({
+  const homeLink = useLink({
     href: '/',
   });
 
   return (
     <Image
+      {...homeLink}
       source={require('./img/logo.png')}
       resizeMode="contain"
       {...logoMediaQuery(4)}

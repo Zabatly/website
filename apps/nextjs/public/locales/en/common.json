@@ -9,5 +9,17 @@
   "search_venues": "Search for venues",
   "featured_categories": "Featured Categories",
   "recommended_venues": "Recommended",
-  "logout": "Sign Out"
+  "auth": {
+    "createAccount": "Create your own Account",
+    "loginAccount": "Login to your Account",
+    "haveAccount": "Already have an account?",
+    "noAccount": "Don’t have an account?",
+    "signout": "SignOut",
+    "signin": "SignIn",
+    "signup": "SignUp",
+    "email": "Email",
+    "password": "Password",
+    "username": "Username",
+    "or": "OR"
+  }
 }
