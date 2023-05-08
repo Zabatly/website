@@ -22,11 +22,10 @@ import { Logo } from './Logo';
 import { useTranslation } from 'app/utils/i18n';
 import { useRouter } from 'solito/router';
 import { CustomPopOver } from './CustomPopover';
-import { useAuth, SignedIn, SignedOut } from 'app/utils/clerk';
+import { useAuth } from 'app/utils/clerk';
 import { useLink } from 'solito/link';
 import { useThemeToggle, useThemeNameState } from 'app/utils/themeState';
 import * as nextRouter from 'next/router';
-import * as expoRouter from 'expo-router';
 const disabledBtnStyle = {
   outlineWidth: '$0',
   bw: '$0',
@@ -34,8 +33,8 @@ const disabledBtnStyle = {
 
 export function AppBar() {
   // TODO: Add expo router
-  const router = nextRouter.useRouter();
-  const { isLoaded, signOut } = useAuth();
+  const webRouter = Platform.OS == 'web' ? nextRouter.useRouter() : null;
+  const { isLoaded, signOut, isSignedIn } = useAuth();
   const signInLinkProps = useLink({
     href: '/signin',
   });
@@ -75,11 +74,11 @@ export function AppBar() {
         </XStack>
 
         <XStack>
-          <SignedOut>
+          {!isSignedIn && (
             <Button {...signInLinkProps} theme={'blue'}>
               {t('auth.signin')}
             </Button>
-          </SignedOut>
+          )}
 
           <Separator
             borderColor={'$borderColorHover'}
@@ -92,7 +91,7 @@ export function AppBar() {
           />
 
           {/* Notifications Tab */}
-          <SignedIn>
+          {isSignedIn && (
             <CustomPopOver
               isBouncy={true}
               hideArrow={false}
@@ -128,7 +127,7 @@ export function AppBar() {
                 </YGroup.Item>
               </YGroup>
             </CustomPopOver>
-          </SignedIn>
+          )}
 
           {/* Settings Tab */}
           <CustomPopOver
@@ -178,10 +177,12 @@ export function AppBar() {
                       pressStyle={disabledBtnStyle as any}
                       onPress={() => {
                         const lang = i18n.language == 'en' ? 'ar' : 'en';
-                        if (Platform.OS !== 'web') {
-                          return i18n.changeLanguage(lang);
-                        }
-                        push(router.pathname, undefined, { locale: lang });
+                        if (webRouter)
+                          return push(webRouter.pathname, undefined, {
+                            locale: lang,
+                          });
+
+                        i18n.changeLanguage(lang);
                       }}
                     >
                       {i18n.language == 'en' ? t('arabic') : t('english')}
@@ -201,7 +202,7 @@ export function AppBar() {
                   </Button>
                 </YGroup.Item>
 
-                <SignedIn>
+                {isSignedIn && (
                   <YGroup.Item>
                     <Button
                       onPress={() => signOut()}
@@ -211,10 +212,10 @@ export function AppBar() {
                       pressStyle={disabledBtnStyle as any}
                       icon={<LogOut />}
                     >
-                      {t('logout')}
+                      {t('signout')}
                     </Button>
                   </YGroup.Item>
-                </SignedIn>
+                )}
               </YGroup>
             </YStack>
           </CustomPopOver>

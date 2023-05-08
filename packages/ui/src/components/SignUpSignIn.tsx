@@ -39,7 +39,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
   return (
     <YStack
       theme={theme}
-      backgroundColor="$backgroundStrong"
+      backgroundColor="$backgroundSoft"
       direction={langDirection}
       borderRadius="$10"
       space
@@ -128,7 +128,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
         onHoverOut={() => {}}
         focusStyle={{ scale: 0.975 }}
       >
-        {type === 'sign-up' ? t('auth.signup') : t('auth.signup')}
+        {type === 'sign-up' ? t('auth.signup') : t('auth.signin')}
       </Button>
 
       {/* or sign in, in small and less opaque font */}

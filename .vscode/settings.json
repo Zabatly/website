@@ -1,6 +1,7 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
+  "yoavbls.pretty-ts-errors": 1,
   "files.exclude": {
     "node_modules": true,
     ".vscode": true,

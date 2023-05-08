@@ -4,12 +4,9 @@ import { OAuthStrategy } from '@clerk/types';
 import { useRouter } from 'solito/router';
 import { SignUpSignInComponent } from '@my/ui/src/components/SignUpSignIn';
 import { handleOAuthSignIn } from 'app/utils/auth';
-import { ThemeContext } from 'app/provider/theme/themeContext';
-import { useContext } from 'react';
 import { Platform } from 'react-native';
 import { AppBar } from '@my/ui/src/components/AppBar';
-import { useThemeNameState } from 'app/utils/themeState';
-// import { useThemeNameState } from 'app/utils/themeState';
+import { AppShell } from '@my/ui/src/components/AppShell';
 
 const getBaseUrl = () => {
   if (typeof window !== 'undefined') return ''; // browser should use relative url
@@ -20,8 +17,6 @@ const getBaseUrl = () => {
 
 export function SignInScreen() {
   const { push } = useRouter();
-  // const theme = useThemeNameState();
-  const theme = useThemeNameState();
   const { isLoaded, signIn, setSession, setActive } = useSignIn();
   const { isSignedIn } = useAuth();
   if (!setSession || !isLoaded) return null;
@@ -45,22 +40,19 @@ export function SignInScreen() {
   };
 
   const handleEmailSignInWithPress = async (emailAddress, password) => {
-    await signIn.create({
-      identifier: emailAddress,
-      password,
-    });
-
-    await redirectIfSignedIn();
+    try {
+      await signIn.create({
+        identifier: emailAddress,
+        password,
+      });
+      await redirectIfSignedIn();
+    } catch (e) {
+      console.log(e.errors[0].message);
+    }
   };
 
   return (
-    <YStack
-      f={1}
-      // backgroundColor={theme == 'dark' ? '#00142F' : '#1363ff'}
-      space
-      theme={theme}
-      backgroundColor="$background"
-    >
+    <AppShell>
       {Platform.OS == 'web' && <AppBar />}
       <YStack f={1} jc="center" ai="center">
         <SignUpSignInComponent
@@ -69,6 +61,6 @@ export function SignInScreen() {
           handleEmailWithPress={handleEmailSignInWithPress}
         />
       </YStack>
-    </YStack>
+    </AppShell>
   );
 }

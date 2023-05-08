@@ -7,6 +7,7 @@ import { SignUpSignInComponent } from '@my/ui/src/components/SignUpSignIn';
 // import { ThemeContext } from 'app/provider/theme/themeContext';
 import { Platform } from 'react-native';
 import { AppBar } from '@my/ui/src/components/AppBar';
+import { AppShell } from '@my/ui/src/components/AppShell';
 
 // TODO: React-form-hook
 export function SignUpScreen() {
@@ -33,11 +34,7 @@ export function SignUpScreen() {
   };
 
   return (
-    <YStack
-      f={1}
-      // backgroundColor={theme == 'dark' ? '#00142F' : '#1363ff'}
-      space
-    >
+    <AppShell>
       {Platform.OS == 'web' && <AppBar />}
       <YStack f={1} jc="center" ai="center">
         <SignUpSignInComponent
@@ -46,6 +43,6 @@ export function SignUpScreen() {
           handleEmailWithPress={handleEmailSignUpWithPress}
         />
       </YStack>
-    </YStack>
+    </AppShell>
   );
 }

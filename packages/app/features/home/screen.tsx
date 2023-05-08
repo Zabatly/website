@@ -132,15 +132,6 @@ export function HomeScreen() {
   );
 }
 */
-import {
-  SafeAreaView,
-  SafeAreaInsetsContext,
-} from 'react-native-safe-area-context';
-import { Logo } from '@my/ui/src/components/Logo';
-import ThemeSetter from 'app/utils/themeSetter';
-import { ThemeContext } from 'app/provider/theme/themeContext';
-// import { toggleTheme } from 'app/utils/setTheme';
-import { Platform } from 'react-native';
 import { useTranslation } from 'app/utils/i18n';
 import { AppBar } from '@my/ui/src/components/AppBar';
 import {
@@ -153,15 +144,15 @@ import {
   Star,
 } from '@tamagui/lucide-icons';
 import { CategoriesSlider } from '@my/ui/src/components/CategoriesSlider';
-import { useThemeNameState } from 'app/utils/themeState';
+// import { useThemeNameState } from 'app/utils/themeState';
+import { AppShell } from '@my/ui/src/components/AppShell';
 export function HomeScreen() {
-  const theme = useThemeNameState();
-  const isDarkTheme = theme === 'dark';
-  console.log(isDarkTheme);
+  //const theme = useThemeNameState();
+  // const isDarkTheme = theme === 'dark';
   const { t, i18n } = useTranslation();
   const langDirection = i18n.dir(i18n.language);
   return (
-    <YStack theme={theme} backgroundColor={'$backgroundStrong'} flex={1}>
+    <AppShell>
       <AppBar />
       <YStack
         direction={langDirection}
@@ -226,6 +217,6 @@ export function HomeScreen() {
           <H2>{t('recommended_venues')}</H2>
         </YStack>
       </YStack>
-    </YStack>
+    </AppShell>
   );
 }
