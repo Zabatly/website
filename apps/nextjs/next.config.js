@@ -87,7 +87,6 @@ module.exports = function () {
       'react-native-gesture-handler',
       'react-native-reanimated',
       'react-native-reanimated-carousel',
-      '@shopify/flash-list',
       '@tamagui-extras/core',
       '@tamagui-extras/form',
       'js-cookie',
