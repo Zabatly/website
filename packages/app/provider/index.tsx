@@ -3,13 +3,16 @@ import { AuthProvider } from './auth';
 import { TRPCProvider } from './trpc'; //mobile only
 import { SafeProvider } from './safeArea';
 import { GestureProvider } from './gestureHandler';
-import { Theme } from 'tamagui';
 import { Platform } from 'react-native';
-import { useContext } from 'react';
-import { ThemeContext } from './theme/themeContext';
-import { SuspenseBoundary } from './suspense';
 import { config } from '@my/ui/src';
 import { useThemeNameState } from 'app/utils/themeState';
+import {
+  ToastProvider,
+  ToastViewport,
+  Toast,
+  useToastController,
+  useToastState,
+} from '@tamagui/toast';
 const ConditionalWrap = ({ condition, wrap, children }) =>
   condition ? wrap(children) : children;
 
@@ -39,11 +42,14 @@ export function Provider({
         themeClassNameOnRoot
         {...rest}
       >
-        <TRPCProvider>
-          <SafeProvider>
-            <GestureProvider>{children}</GestureProvider>
-          </SafeProvider>
-        </TRPCProvider>
+        <ToastProvider>
+          <ToastViewport bottom={0} left={0} right={0} />
+          <TRPCProvider>
+            <SafeProvider>
+              <GestureProvider>{children}</GestureProvider>
+            </SafeProvider>
+          </TRPCProvider>
+        </ToastProvider>
       </TamaguiProvider>
     </AuthProvider>
   );

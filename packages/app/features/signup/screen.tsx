@@ -23,6 +23,7 @@ export function SignUpScreen() {
 
   const handleEmailSignUpWithPress = async (emailAddress, password) => {
     console.log('Email', emailAddress, 'Password', password);
+    /*
     await signUp
       .create({
         emailAddress,
@@ -31,6 +32,7 @@ export function SignUpScreen() {
       .catch((err) => console.error('error', err.errors[0].longMessage));
     await signUp.prepareEmailAddressVerification();
     push('/signup/email-verification');
+    */
   };
 
   return (

@@ -32,8 +32,7 @@ const disabledBtnStyle = {
 };
 
 export function AppBar() {
-  // TODO: Add expo router
-  // const webRouter = Platform.OS == 'web' ? nextRouter.useRouter() : null;
+  const webRouter = Platform.OS == 'web' ? nextRouter.useRouter() : null;
   const { isLoaded, signOut, isSignedIn } = useAuth();
   const signInLinkProps = useLink({
     href: '/signin',
@@ -177,10 +176,10 @@ export function AppBar() {
                       pressStyle={disabledBtnStyle as any}
                       onPress={() => {
                         const lang = i18n.language == 'en' ? 'ar' : 'en';
-                        //if (webRouter)
-                        //return push(webRouter.pathname, undefined, {
-                        //    locale: lang,
-                        // });
+                        if (webRouter)
+                          return push(webRouter.pathname, undefined, {
+                            locale: lang,
+                          });
 
                         i18n.changeLanguage(lang);
                       }}

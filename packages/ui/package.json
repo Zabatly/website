@@ -20,14 +20,18 @@
   "dependencies": {
     "@tamagui-extras/core": "^1.1.4",
     "@tamagui-extras/form": "^1.1.4",
-    "@tamagui/animations-react-native": "1.22.12",
-    "@tamagui/font-inter": "^1.22.12",
-    "@tamagui/react-native-media-driver": "^1.22.12",
-    "@tamagui/shorthands": "^1.22.12",
-    "@tamagui/theme-base": "^1.22.12",
-    "tamagui": "^1.22.12"
+    "@tamagui/animations-react-native": "1.27.1",
+    "@tamagui/font-inter": "^1.27.1",
+    "@tamagui/react-native-media-driver": "^1.27.1",
+    "@tamagui/shorthands": "^1.27.1",
+    "@tamagui/theme-base": "^1.27.1",
+    "@tamagui/toast": "^1.27.1",
+    "add": "^2.0.6",
+    "burnt": "^0.11.4",
+    "tamagui": "^1.27.1",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
-    "@tamagui/build": "^1.22.12"
+    "@tamagui/build": "^1.27.1"
   }
 }

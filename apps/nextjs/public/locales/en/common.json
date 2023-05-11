@@ -20,6 +20,23 @@
     "email": "Email",
     "password": "Password",
     "username": "Username",
-    "or": "OR"
+    "or": "OR",
+    "errors": {
+      "passwordValid": "Password should contain at least one Capital letter and one Number",
+      "passwordMax": "Maximum password length is 256 characters",
+      "passwordMin": "Minimum password length is 8 characters",
+      "passwordRequired": "Password is required",
+      "usernameRequired": "Username is required",
+      "usernameMin": "Minimum username length is 3 characters",
+      "usernameMax": "Maximum username length is 36 characters",
+      "emailValid": "Invalid Email",
+      "emailRequired": "Email is required",
+      "form_code_incorrect": "Incorrect Email verification code",
+      "form_password_pwned": "Your password is to weak",
+      "form_password_incorrect": "Your Email or password is incorrect",
+      "form_password_validation_failed": "Your Email or password is incorrect",
+      "form_identifier_exists": "Your Email is already registered in an account",
+      "form_identifier_not_found": "No registered account found with the provided Email"
+    }
   }
 }

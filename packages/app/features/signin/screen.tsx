@@ -7,6 +7,7 @@ import { handleOAuthSignIn } from 'app/utils/auth';
 import { Platform } from 'react-native';
 import { AppBar } from '@my/ui/src/components/AppBar';
 import { AppShell } from '@my/ui/src/components/AppShell';
+import { ToastComp } from '@my/ui/src/components/ToastComp';
 
 const getBaseUrl = () => {
   if (typeof window !== 'undefined') return ''; // browser should use relative url
@@ -45,15 +46,17 @@ export function SignInScreen() {
         identifier: emailAddress,
         password,
       });
-      await redirectIfSignedIn();
+
+      //await redirectIfSignedIn();
     } catch (e) {
-      console.log(e.errors[0].message);
+      console.log(e.errors);
     }
   };
 
   return (
     <AppShell>
       {Platform.OS == 'web' && <AppBar />}
+      <ToastComp />
       <YStack f={1} jc="center" ai="center">
         <SignUpSignInComponent
           type="sign-in"

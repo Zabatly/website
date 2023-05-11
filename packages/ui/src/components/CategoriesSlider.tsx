@@ -45,7 +45,7 @@ function DemoCard(props: CarouselCard) {
       pressStyle={{ scale: 0.875 }}
     >
       <Card.Header padded>
-        <H2 color={'#1363ff'}>{props.title}</H2>
+        <H2>{props.title}</H2>
         <Paragraph>{props.desc}</Paragraph>
       </Card.Header>
       <Card.Footer padded>
@@ -53,6 +53,7 @@ function DemoCard(props: CarouselCard) {
       </Card.Footer>
       <Card.Background>
         <Image
+          opacity={0.8}
           width={500}
           height={300}
           alignSelf="center"

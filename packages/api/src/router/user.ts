@@ -1,11 +1,11 @@
 /* create user */
 //grab the images for the corresponding user
-import { router, publicProcedure, protectedProcedure } from "../trpc";
-import { z } from "zod";
+import { router, publicProcedure, protectedProcedure } from '../trpc';
+import { z } from 'zod';
 
 export const userRouter = router({
   current: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.user.findFirst({ where: { id: ctx.user.id } });
+    return ctx.prisma.users.findFirst({ where: { id: ctx.user.id } });
   }),
   create: protectedProcedure
     .input(
@@ -14,9 +14,10 @@ export const userRouter = router({
         id: z.string(),
       })
     )
+    // TODO: FIX database schema after react-form-hook
     .mutation(({ ctx, input }) => {
       //create user and link it to the user
-      return ctx.prisma.user.create({
+      return ctx.prisma.users.create({
         data: {
           email: input.email,
           id: input.id,
