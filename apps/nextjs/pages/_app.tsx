@@ -9,7 +9,7 @@ import {
 } from '@tamagui/next-theme';
 import { Provider } from 'app/provider';
 import Head from 'next/head';
-import React, { Suspense, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import type { SolitoAppProps } from 'solito';
 import 'raf/polyfill';
 import { trpc } from 'app/utils/trpc.web';
@@ -28,9 +28,7 @@ function MyApp({ Component, pageProps }: SolitoAppProps) {
         <meta name="description" content="Online venue listing platform" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ThemeProvider>
-        <Suspense fallback={null}>{contents}</Suspense>
-      </ThemeProvider>
+      <ThemeProvider>{contents}</ThemeProvider>
     </>
   );
 }

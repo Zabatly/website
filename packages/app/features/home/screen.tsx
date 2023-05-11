@@ -151,6 +151,8 @@ import { useToastController } from '@tamagui/toast';
 import { AppShell } from '@my/ui/src/components/AppShell';
 import { ToastComp } from '@my/ui/src/components/ToastComp';
 import { StarFill } from '@tamagui-extras/core';
+import { VenueCard } from '@my/ui/src/components/VenueCard';
+/*
 function VenueCard() {
   return (
     //box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -218,7 +220,7 @@ function VenueCard() {
     </Card>
   );
 }
-
+*/
 export function HomeScreen() {
   //const theme = useThemeNameState();
   // const isDarkTheme = theme === 'dark';

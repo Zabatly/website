@@ -43,7 +43,7 @@ export function Provider({
         {...rest}
       >
         <ToastProvider>
-          <ToastViewport bottom={0} left={0} right={0} />
+          <ToastViewport top={2} left={0} right={0} />
           <TRPCProvider>
             <SafeProvider>
               <GestureProvider>{children}</GestureProvider>

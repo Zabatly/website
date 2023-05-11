@@ -9,6 +9,7 @@ import i18n from '../i18n';
 import { I18nextProvider } from 'react-i18next';
 import { useThemeNameState } from 'app/utils/themeState';
 // import { ThemeContext } from 'app/provider/theme/themeContext';
+// TODO: localize the headers
 export default function App() {
   const theme = useThemeNameState();
   const isDarkTheme = theme === 'dark';

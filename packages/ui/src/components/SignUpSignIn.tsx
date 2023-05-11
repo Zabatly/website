@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   YStack,
   Paragraph,
@@ -22,6 +22,7 @@ interface Props {
   type: 'sign-up' | 'sign-in';
   handleOAuthWithPress: (strategy: OAuthStrategy) => void;
   handleEmailWithPress: (emailAddress, password) => void;
+  isAuth: boolean;
 }
 
 interface signData {
@@ -34,18 +35,14 @@ export const SignUpSignInComponent: React.FC<Props> = ({
   type,
   handleOAuthWithPress,
   handleEmailWithPress,
+  isAuth: isAuthenticating,
 }) => {
   async function handleFormData(data: signData) {
-    setLoading(true);
-    const signResponse = await handleEmailWithPress(data.email, data.password);
-    console.log(signResponse);
+    handleEmailWithPress(data.email, data.password);
   }
   const theme = useThemeNameState();
-  const [formError, setFormError] = useState('');
-  const [loading, setLoading] = useState(false);
   const { t, i18n } = useTranslation();
   const langDirection = i18n.dir(i18n.language);
-
   return (
     <YStack
       theme={theme}
@@ -98,7 +95,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
         <Separator vertical={false} />
       </XStack>
 
-      {/* email sign up option */}
+      {/* email signin/signup option */}
       <LmFormRhfProvider
         shouldUseNativeValidation={false}
         defaultValues={{
@@ -115,10 +112,10 @@ export const SignUpSignInComponent: React.FC<Props> = ({
             placeholder={t('auth.email') as string}
             textContentType="emailAddress"
             rules={{
-              required: 'Email is required',
+              required: t('auth.errors.emailRequired') as string,
               pattern: {
                 value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                message: 'Email is not correct',
+                message: t('auth.errors.emailValid') as string,
               },
             }}
           />
@@ -126,18 +123,18 @@ export const SignUpSignInComponent: React.FC<Props> = ({
             <LmInputRhf
               direction={langDirection}
               name="username"
-              placeholder={t('auth.username') as string}
+              placeholder={t('authusername') as string}
               textContentType="username"
               required={true}
               rules={{
-                required: 'Username is required',
+                required: t('auth.errors.usernameRequired') as string,
                 minLength: {
                   value: 3,
-                  message: 'Minimum username length is 3 characters',
+                  message: t('auth.errors.usernameMin') as string,
                 },
                 maxLength: {
                   value: 36,
-                  message: 'Maximum username length is 36 characters',
+                  message: t('auth.errors.usernameMin') as string,
                 },
               }}
             />
@@ -149,19 +146,18 @@ export const SignUpSignInComponent: React.FC<Props> = ({
             isPassword={true}
             secureTextEntry={true}
             rules={{
-              required: 'Password is required',
+              required: t('auth.errors.passwordRequired') as string,
               minLength: {
                 value: 8,
-                message: 'Minimum password length is 8 characters',
+                message: t('auth.errors.passwordMin') as string,
               },
               maxLength: {
                 value: 256,
-                message: 'Maximum password length is 256 characters',
+                message: t('auth.errors.passwordMax') as string,
               },
               pattern: {
                 value: /^(?=.*[A-Z])(?=.*\d).+$/,
-                message:
-                  'Password should contain at least one Capital letter and one number',
+                message: t('auth.errors.passwordValid') as string,
               },
             }}
           />
@@ -206,7 +202,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
         </Button>
           */}
           <LmSubmitButtonRhf
-            loading={loading}
+            loading={isAuthenticating}
             direction={langDirection}
             theme={'blue'}
             hoverStyle={{ opacity: 0.8 }}
