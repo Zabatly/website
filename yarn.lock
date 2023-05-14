@@ -3799,7 +3799,7 @@ __metadata:
   resolution: "@my/ui@workspace:packages/ui"
   dependencies:
     "@tamagui-extras/core": ^1.1.4
-    "@tamagui-extras/form": ^1.1.4
+    "@tamagui-extras/form": latest
     "@tamagui/animations-react-native": 1.27.1
     "@tamagui/build": ^1.27.1
     "@tamagui/font-inter": ^1.27.1
@@ -4839,7 +4839,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tamagui-extras/core@npm:1.1.4, @tamagui-extras/core@npm:^1.1.4":
+"@tamagui-extras/core@npm:1.1.5":
+  version: 1.1.5
+  resolution: "@tamagui-extras/core@npm:1.1.5"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-svg: ^13.9.0
+    tamagui: 1.27.3
+  checksum: e6d4ac9d3c99f591c7f7d54202053f6dff49255f00ad5aa00a8a31d532eb984a6f7e64918b9f8b922b6abc8ab0689a9ed42937c8e460c49b8ddd077eb8c4f813
+  languageName: node
+  linkType: hard
+
+"@tamagui-extras/core@npm:^1.1.4":
   version: 1.1.4
   resolution: "@tamagui-extras/core@npm:1.1.4"
   peerDependencies:
@@ -4851,17 +4863,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tamagui-extras/form@npm:^1.1.4":
-  version: 1.1.4
-  resolution: "@tamagui-extras/form@npm:1.1.4"
+"@tamagui-extras/form@npm:latest":
+  version: 1.2.0
+  resolution: "@tamagui-extras/form@npm:1.2.0"
   dependencies:
-    "@tamagui-extras/core": 1.1.4
+    "@tamagui-extras/core": 1.1.5
     react-hook-form: ^7.43.9
   peerDependencies:
     react: "*"
     react-native: "*"
-    tamagui: 1.23.0
-  checksum: bb2b7e6a2d7d9aa23faafe522d38732162db68a28adcf248d5619e8f58d3da83f26c70b3a13b0333a936e923fbde48f1da9f0ed291ce1029c030799b55e1cab2
+    tamagui: 1.27.3
+  checksum: b6da8639796f9ca626ff4c3f279bc0da003ebb7093b73615a0e413bdda7e353c0849b4aa6d05a8e4f111e0b6244c2e756fdfa2d9f3d780b087b3a95d49ecad2e
   languageName: node
   linkType: hard
 

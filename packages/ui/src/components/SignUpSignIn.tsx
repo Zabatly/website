@@ -15,9 +15,16 @@ import { OAuthStrategy } from '@clerk/types';
 import { useThemeNameState } from 'app/utils/themeState';
 import {
   LmFormRhfProvider,
+  LmSubmitButtonRhf,
+  LmInputRhf,
+} from '@tamagui-extras/form';
+/*
+import {
+  LmFormRhfProvider,
   LmInputRhf,
   LmSubmitButtonRhf,
 } from '@tamagui-extras/form';
+*/
 interface Props {
   type: 'sign-up' | 'sign-in';
   handleOAuthWithPress: (strategy: OAuthStrategy) => void;
@@ -144,7 +151,6 @@ export const SignUpSignInComponent: React.FC<Props> = ({
             direction={langDirection}
             placeholder={t('auth.password') as string}
             isPassword={true}
-            secureTextEntry={true}
             rules={{
               required: t('auth.errors.passwordRequired') as string,
               minLength: {
@@ -161,6 +167,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
               },
             }}
           />
+
           {/* <Input
             direction={langDirection}
             textContentType="emailAddress"
@@ -200,7 +207,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
         >
           {type === 'sign-up' ? t('auth.signup') : t('auth.signin')}
         </Button>
-          */}
+        */}
           <LmSubmitButtonRhf
             loading={isAuthenticating}
             direction={langDirection}
@@ -217,17 +224,19 @@ export const SignUpSignInComponent: React.FC<Props> = ({
 
         {/* sign up button */}
       </LmFormRhfProvider>
+
       {/* or sign in, in small and less opaque font */}
       <XStack>
-        <Paragraph size="$2" mr="$2" opacity={0.4}>
+        <Paragraph size="$2" mr="$2" opacity={0.6}>
           {type === 'sign-up' ? t('auth.haveAccount') : t('auth.noAccount')}
         </Paragraph>
         <Link href={type === 'sign-up' ? '/signin' : '/signup'}>
           <Paragraph
+            color={'$blue9Light'}
             cursor={'pointer'}
             size="$2"
             fontWeight={'700'}
-            opacity={0.5}
+            opacity={0.8}
             hoverStyle={{ opacity: 0.4 }}
             mr={'$1.5'}
           >

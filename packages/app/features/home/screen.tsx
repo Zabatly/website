@@ -292,9 +292,8 @@ export function HomeScreen() {
             <Separator alignSelf="stretch" outlineColor={'white'} />
             <H2>{t('recommended_venues')}</H2>
             <XStack space>
-              <VenueCard />
-              <VenueCard />
-              <VenueCard />
+              <VenueCard key={1} />
+              <VenueCard key={2} />
             </XStack>
           </YStack>
         </YStack>

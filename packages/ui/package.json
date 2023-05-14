@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@tamagui-extras/core": "^1.1.4",
-    "@tamagui-extras/form": "^1.1.4",
+    "@tamagui-extras/form": "latest",
     "@tamagui/animations-react-native": "1.27.1",
     "@tamagui/font-inter": "^1.27.1",
     "@tamagui/react-native-media-driver": "^1.27.1",
