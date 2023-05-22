@@ -2,11 +2,7 @@ import '@tamagui/core/reset.css';
 import '@tamagui/font-inter/css/400.css';
 import '@tamagui/font-inter/css/700.css';
 
-import {
-  NextThemeProvider,
-  useRootTheme,
-  useThemeSetting,
-} from '@tamagui/next-theme';
+import { NextThemeProvider, useRootTheme } from '@tamagui/next-theme';
 import { Provider } from 'app/provider';
 import Head from 'next/head';
 import React, { useEffect, useMemo } from 'react';
@@ -15,7 +11,6 @@ import 'raf/polyfill';
 import { trpc } from 'app/utils/trpc.web';
 import { appWithTranslation } from 'next-i18next';
 import { useThemeState } from 'app/utils/themeState';
-import { useForceUpdate } from '@my/ui';
 
 function MyApp({ Component, pageProps }: SolitoAppProps) {
   const contents = useMemo(() => {
@@ -35,19 +30,15 @@ function MyApp({ Component, pageProps }: SolitoAppProps) {
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useRootTheme();
-  const forceUpdate = useForceUpdate();
-  const { set } = useThemeSetting();
   const { name } = useThemeState();
+
   useEffect(() => {
     if (name) {
       setTheme(name);
-      console.log(name);
-      set(name);
-      forceUpdate();
     }
   }, [name, setTheme]);
   return (
-    <NextThemeProvider onChangeTheme={setTheme as any}>
+    <NextThemeProvider onChangeTheme={setTheme as any} forcedTheme={theme}>
       <Provider disableRootThemeClass defaultTheme={theme}>
         {children}
       </Provider>

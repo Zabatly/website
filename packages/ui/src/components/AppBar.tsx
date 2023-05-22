@@ -8,8 +8,6 @@ import {
   Paragraph,
 } from '@my/ui';
 import { Platform } from 'react-native';
-import { ThemeContext } from 'app/provider/theme/themeContext';
-import React, { useContext, useEffect, useState } from 'react';
 import {
   Moon,
   Sun,

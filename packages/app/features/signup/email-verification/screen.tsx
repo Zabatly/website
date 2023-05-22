@@ -37,12 +37,11 @@ export function EmailVerificationScreen() {
         await setSession(createdSessionId);
       }
       /* add user id and email into our database */
-      /*
       createUserMutation.mutate({
-        id: signUp.createdUserId!,
+        username: signUp.username!,
+        clerkID: signUp.createdUserId!,
         email: signUp.emailAddress!,
       });
-      */
       push('/');
     } else alert('Invalid verification code');
   };

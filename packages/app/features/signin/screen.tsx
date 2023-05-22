@@ -2,7 +2,10 @@ import { YStack } from '@my/ui';
 import { useAuth, useSignIn } from 'app/utils/clerk';
 import { OAuthStrategy } from '@clerk/types';
 import { useRouter } from 'solito/router';
-import { SignUpSignInComponent } from '@my/ui/src/components/SignUpSignIn';
+import {
+  SignUpSignInComponent,
+  signData,
+} from '@my/ui/src/components/SignUpSignIn';
 import { handleOAuthSignIn } from 'app/utils/auth';
 import { Platform } from 'react-native';
 import { AppBar } from '@my/ui/src/components/AppBar';
@@ -34,13 +37,14 @@ export function SignInScreen() {
   const { t } = useTranslation();
   const { push } = useRouter();
   const toast = useToastController();
-  const { isLoaded, signIn, setSession, setActive } = useSignIn();
+  const { isLoaded, signIn, setActive } = useSignIn();
   const [isAuthenticating, setAuthenticating] = useState(false);
   const { isSignedIn } = useAuth();
-  if (!setSession || !isLoaded) return null;
+  if (!setActive || !isLoaded) return null;
   if (Platform.OS == 'web' && isSignedIn) push('/');
   const redirectIfSignedIn = async () => {
     if (signIn.status == 'complete') {
+      console.log('Im there..');
       const { createdSessionId } = signIn;
       if (createdSessionId) {
         setActive({ session: createdSessionId });
@@ -53,22 +57,26 @@ export function SignInScreen() {
   };
 
   const handleOAuthSignInWithPress = async (strategy: OAuthStrategy) => {
-    await handleOAuthSignIn(strategy, setSession, signIn);
+    await handleOAuthSignIn(strategy, setActive as any, signIn as any);
     redirectIfSignedIn();
   };
 
-  const handleEmailSignInWithPress = async (emailAddress, password) => {
+  const handleEmailSignInWithPress = async ({ email, password }: signData) => {
     try {
+      console.log(email, password);
       setAuthenticating(true);
       await signIn
         .create({
-          identifier: emailAddress,
+          identifier: email,
           password,
         })
         .catch((err: clerkAuthError) => {
           if (err && err.errors[0]?.code) {
+            console.log(err.errors);
             toast.show(t('auth.errors.' + err.errors[0].code), {
               toastType: 'error',
+              duration: 3000,
+              displayTime: new Date(),
             });
             setAuthenticating(false);
           }
@@ -76,7 +84,7 @@ export function SignInScreen() {
 
       await redirectIfSignedIn();
     } catch (e) {
-      console.log(e.errors);
+      console.log(e);
     }
   };
 

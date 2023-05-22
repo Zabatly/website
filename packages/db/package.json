@@ -14,6 +14,7 @@
     "clean": "rm -rf .turbo node_modules",
     "with-env": "dotenv -e ../../.env --",
     "dev": "yarn with-env prisma studio --port 5556 --browser=none",
+    "db-pull": "yarn with-env prisma db pull",
     "db-push": "yarn with-env prisma db push --accept-data-loss",
     "db-generate": "yarn with-env prisma generate"
   },

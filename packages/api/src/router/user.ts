@@ -5,22 +5,23 @@ import { z } from 'zod';
 
 export const userRouter = router({
   current: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.users.findFirst({ where: { id: ctx.user.id } });
+    return ctx.prisma.users.findFirst({ where: { clerkID: ctx.user.id } });
   }),
   create: protectedProcedure
     .input(
       z.object({
+        username: z.string(),
         email: z.string(),
-        id: z.string(),
+        clerkID: z.string(),
       })
     )
-    // TODO: FIX database schema after react-form-hook
     .mutation(({ ctx, input }) => {
       //create user and link it to the user
       return ctx.prisma.users.create({
         data: {
+          clerkID: input.clerkID,
+          username: input.username,
           email: input.email,
-          id: input.id,
         },
       });
     }),

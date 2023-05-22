@@ -1,19 +1,19 @@
-import * as AuthSession from "expo-auth-session";
+import * as AuthSession from 'expo-auth-session';
 import {
   OAuthStrategy,
-  SetSession,
+  type SetActive,
   SignUpResource,
   SignInResource,
-} from "@clerk/types";
+} from '@clerk/types';
 
 export const handleOAuthSignUp = async (
   strategy: OAuthStrategy,
-  setSession: SetSession,
+  setActive: SetActive,
   signUp: SignUpResource
 ) => {
   try {
     const redirectUrl = AuthSession.makeRedirectUri({
-      path: "/sso-oauth",
+      path: '/sso-oauth',
       //this isn't gonna work any since we are not using the *real url that starts with expo://
       //but that's okay, since we are going to handle the redirect ourselves
     });
@@ -37,8 +37,10 @@ export const handleOAuthSignUp = async (
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const { type, params } = result || {};
-    if (type !== "success") {
-      throw "Something went wrong during the OAuth flow. Try again.";
+    console.log(result, type, params);
+
+    if (type !== 'success') {
+      throw 'Something went wrong during the OAuth flow. Try again.';
     }
 
     // Get the rotatingTokenNonce from the redirect URL parameters
@@ -49,27 +51,25 @@ export const handleOAuthSignUp = async (
     const { createdSessionId } = signUp;
 
     if (!createdSessionId) {
-      throw "Something went wrong during the Sign up OAuth flow. Please ensure that all sign in requirements are met.";
+      throw 'Something went wrong during the Sign up OAuth flow. Please ensure that all sign in requirements are met.';
     }
 
-    await setSession(createdSessionId);
-
+    await setActive({ session: createdSessionId });
     return;
   } catch (err) {
     console.log(JSON.stringify(err, null, 2));
-    console.log("error signing up", err);
+    console.log('error signing up', err);
   }
 };
 export const handleOAuthSignIn = async (
   strategy: OAuthStrategy,
-  setSession: SetSession,
+  setActive: SetActive,
   signIn: SignInResource
 ) => {
   try {
     const redirectUrl = AuthSession.makeRedirectUri({
-      path: "/oauth-native-callback",
+      path: '/oauth-native-callback',
     });
-    //option is either discord, google, or apple
     //switch statement to handle each option
 
     await signIn.create({
@@ -90,8 +90,8 @@ export const handleOAuthSignIn = async (
     // @ts-ignore
     const { type, params } = result || {};
     console.log;
-    if (type !== "success") {
-      throw "Something went wrong during the OAuth flow. Try again.";
+    if (type !== 'success') {
+      throw 'Something went wrong during the OAuth flow. Try again.';
     }
 
     // Get the rotatingTokenNonce from the redirect URL parameters
@@ -102,14 +102,14 @@ export const handleOAuthSignIn = async (
     const { createdSessionId } = signIn;
 
     if (!createdSessionId) {
-      throw "Something went wrong during the Sign in OAuth flow. Please ensure that all sign in requirements are met.";
+      throw 'Something went wrong during the Sign in OAuth flow. Please ensure that all sign in requirements are met.';
     }
 
-    await setSession(createdSessionId);
+    await setActive({ session: createdSessionId });
 
     return;
   } catch (err) {
     console.log(JSON.stringify(err, null, 2));
-    console.log("error signing in", err);
+    console.log('error signing in', err);
   }
 };

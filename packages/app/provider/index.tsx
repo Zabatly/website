@@ -3,30 +3,13 @@ import { AuthProvider } from './auth';
 import { TRPCProvider } from './trpc'; //mobile only
 import { SafeProvider } from './safeArea';
 import { GestureProvider } from './gestureHandler';
-import { Platform } from 'react-native';
+import { Platform, useColorScheme } from 'react-native';
 import { config } from '@my/ui/src';
 import { useThemeNameState } from 'app/utils/themeState';
-import {
-  ToastProvider,
-  ToastViewport,
-  Toast,
-  useToastController,
-  useToastState,
-} from '@tamagui/toast';
+import { ToastProvider, ToastViewport } from '@tamagui/toast';
+
 const ConditionalWrap = ({ condition, wrap, children }) =>
   condition ? wrap(children) : children;
-
-const ThemeComp = ({ children }) => {
-  // const { theme } = useContext(ThemeContext);
-  return (
-    <ConditionalWrap
-      condition={Platform.OS !== 'web'}
-      wrap={(wrappedChildren) => ({ wrappedChildren })}
-    >
-      {children}
-    </ConditionalWrap>
-  );
-};
 
 export function Provider({
   children,

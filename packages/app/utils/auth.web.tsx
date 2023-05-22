@@ -1,38 +1,49 @@
 import {
   OAuthStrategy,
-  SetSession,
+  type SetSession,
   SignUpResource,
   SignInResource,
-} from "@clerk/types";
+} from '@clerk/types';
 
 const getBaseUrl = () => {
-  if (typeof window !== "undefined") return ""; // browser should use relative url
+  if (typeof window !== 'undefined') return ''; // browser should use relative url
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
-
+  console.log(`localhost:${process.env.PORT ?? 3000}`);
   return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 };
 
 export const handleOAuthSignUp = async (
   strategy: OAuthStrategy,
-  setSession: SetSession,
+  setActive: any,
   signUp: SignUpResource
 ) => {
   try {
     await signUp.authenticateWithRedirect({
       strategy,
-      redirectUrl: `${getBaseUrl()}/signup/sso-oauth/${strategy}`,
-      redirectUrlComplete: `${getBaseUrl()}/signup/sso-oauth/${strategy}`,
+      redirectUrl: `${getBaseUrl()}/signup/sso-oauth/${strategy}/?status=fail`,
+      redirectUrlComplete: `${getBaseUrl()}/signup/sso-oauth/${strategy}/?status=success`,
     });
 
+    // console.log(signUp.status);
+    /*
+    const { createdSessionId } = signUp;
+    console.log(createdSessionId);
+
+    if (!createdSessionId) {
+      throw 'Something went wrong during the Sign up flow. Please ensure that all sign up requirements are met.';
+    }
+    */
     //get session
+    /*
     const { createdSessionId } = signUp;
     if (!createdSessionId) {
       throw "Something went wrong during the Sign up flow. Please ensure that all sign up requirements are met.";
     }
     await setSession(createdSessionId);
+    */
   } catch (err) {
     console.log(JSON.stringify(err, null, 2));
-    console.log("error signing up with oauth on web", err);
+    console.log('error signing up with oauth on web', err);
   }
 };
 
@@ -44,11 +55,11 @@ export const handleOAuthSignIn = async (
   try {
     signIn.authenticateWithRedirect({
       strategy,
-      redirectUrl: `${getBaseUrl()}/signup`,
+      redirectUrl: `${getBaseUrl()}/signup/?status=fail&type=acc_unk`,
       redirectUrlComplete: `${getBaseUrl()}/`,
     });
   } catch (err) {
     console.log(JSON.stringify(err, null, 2));
-    console.log("error signing in with oauth on web", err);
+    console.log('error signing in with oauth on web', err);
   }
 };

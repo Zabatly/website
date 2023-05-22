@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Home, Heart, User } from '@tamagui/lucide-icons';
+import { Home, Heart, MessageCircle } from '@tamagui/lucide-icons';
 import { Link, Tabs } from 'expo-router';
 import { Pressable, useColorScheme } from 'react-native';
 import { useThemeNameState } from 'app/utils/themeState';
@@ -45,6 +45,14 @@ export default function TabLayout() {
           title: 'Discover',
           headerShown: false,
           tabBarIcon: ({ color }) => <Home color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="chat"
+        options={{
+          title: 'Chat',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <MessageCircle color={color} />,
         }}
       />
       {/*

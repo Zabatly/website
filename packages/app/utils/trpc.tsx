@@ -1,4 +1,4 @@
-import { createTRPCReact } from '@trpc/react-query';
+import { HTTPHeaders, createTRPCReact } from '@trpc/react-query';
 import type { AppRouter } from '@my/api';
 /**
  * Extend this function when going to production by
@@ -45,7 +45,7 @@ const getBaseUrl = () => {
   const localhost = Constants.manifest?.debuggerHost?.split(':')[0];
   if (!localhost)
     throw new Error('failed to get localhost, configure it manually');
-  return `http://${localhost}:3000`;
+  return `${localhost}:3000`;
 };
 
 export const TRPCProvider: React.FC<{
@@ -63,7 +63,7 @@ export const TRPCProvider: React.FC<{
             const authToken = await getToken();
             return {
               Authorization: authToken,
-            };
+            } as HTTPHeaders;
           },
           url: `${getBaseUrl()}/api/trpc`,
         }),

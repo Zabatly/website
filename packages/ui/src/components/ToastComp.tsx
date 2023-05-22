@@ -5,6 +5,7 @@ import { AlertTriangle, X, Check } from '@tamagui/lucide-icons';
 declare module '@tamagui/toast' {
   interface CustomData {
     toastType: 'error' | 'success' | 'warning';
+    displayTime: Date;
   }
 }
 const ToastStructure = () => {
@@ -23,8 +24,12 @@ const ToastStructure = () => {
       background: '#32CD32',
     },
   };
-  if (!currentToast || !currentToast.toastType) return null;
-
+  if (!currentToast) return null;
+  if (
+    new Date().getTime() - new Date(currentToast.displayTime).getTime() >=
+    currentToast.duration!
+  )
+    return null;
   return (
     <Toast
       key={currentToast.id}

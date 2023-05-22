@@ -62,7 +62,7 @@ export function VenueCard() {
               Trending
             </Button>
           </XStack>
-          <XStack w={'50%'} paddingHorizontal={'$2'} justifyContent="flex-end">
+          <XStack w={'50%'} paddingHorizontal={'$3'} justifyContent="flex-end">
             <Button
               size={'$2'}
               justifyContent="center"

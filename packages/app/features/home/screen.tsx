@@ -152,6 +152,8 @@ import { AppShell } from '@my/ui/src/components/AppShell';
 import { ToastComp } from '@my/ui/src/components/ToastComp';
 import { StarFill } from '@tamagui-extras/core';
 import { VenueCard } from '@my/ui/src/components/VenueCard';
+import { ChatWidget } from '@my/ui/src/components/ChatWidget';
+import { Platform } from 'react-native';
 /*
 function VenueCard() {
   return (
@@ -229,7 +231,8 @@ export function HomeScreen() {
   return (
     <AppShell>
       <AppBar />
-      <ScrollView>
+      {Platform.OS == 'web' && <ChatWidget />}
+      <ScrollView showsHorizontalScrollIndicator={false}>
         <YStack
           direction={langDirection}
           f={1}
@@ -243,6 +246,7 @@ export function HomeScreen() {
             w={'100%'}
             paddingHorizontal={'$4'}
             space={'$4'}
+            overflow="hidden"
           >
             <H2>{t('latest_venues')}</H2>
             <XStack

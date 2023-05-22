@@ -9,21 +9,26 @@ datasource db {
 }
 
 model categories {
-  id          Int    @id @default(autoincrement())
-  name        String @default("") @db.TinyText
-  description String @db.Text
+  id             Int    @id @default(autoincrement())
+  name           String @default("") @db.TinyText
+  ar_name        String @default("") @db.TinyText
+  description    String @default("") @db.Text
+  ar_description String @default("") @db.Text
 }
 
 model cities {
   id      Int    @id @default(autoincrement())
   name    String @default("") @db.TinyText
+  ar_name String @default("") @db.TinyText
   zipcode Int    @default(0) @db.MediumInt
 }
 
 model featurename {
-  id          Int     @id
-  name        String  @default("") @db.TinyText
-  description String? @db.Text
+  id             Int    @id
+  name           String @default("") @db.TinyText
+  ar_name        String @default("") @db.TinyText
+  description    String @default("") @db.Text
+  ar_description String @default("") @db.Text
 }
 
 model features {
@@ -76,32 +81,35 @@ model reviews {
 }
 
 model users {
-  id                Int       @id @default(autoincrement())
-  firstName         String    @db.Text
-  lastName          String    @db.Text
-  phoneNumber       String    @db.VarChar(16)
-  address           String    @db.Text
-  email             String    @db.TinyText
-  username          String    @db.VarChar(48)
-  password          String    @db.TinyText
-  registerationDate DateTime  @default(now()) @db.Timestamp(0)
-  country           String    @default("") @db.VarChar(56)
-  activation        Int?
-  activationDate    DateTime? @db.Timestamp(0)
+  id                Int      @id @default(autoincrement())
+  clerkID           String   @db.Text
+  firstName         String?  @default("") @db.Text
+  lastName          String?  @default("") @db.Text
+  phoneNumber       String?  @default("") @db.VarChar(16)
+  address           String?  @default("") @db.Text
+  email             String   @db.TinyText
+  username          String   @db.VarChar(48)
+  password          String?  @default("") @db.TinyText
+  registerationDate DateTime @default(now()) @db.Timestamp(0)
+  country           String?  @default("Egypt") @db.VarChar(56)
 }
 
 model venues {
-  id          Int    @id @default(autoincrement())
-  name        String @default("") @db.TinyText
-  category    Int
-  city        Int
-  capacity    Int    @default(0) @db.SmallInt
-  description String @default("") @db.Text
-  rating      Int    @default(0) @db.TinyInt
-  price       Int    @default(0)
-  space       Int?   @default(0) @db.SmallInt
-  rules       String @default("") @db.Text
-  policy      String @db.Text
+  id             Int     @id @default(autoincrement())
+  name           String? @default("") @db.TinyText
+  ar_name        String? @default("") @db.TinyText
+  category       Int
+  city           Int
+  capacity       Int?    @default(0) @db.SmallInt
+  description    String? @default("") @db.Text
+  ar_description String? @default("") @db.Text
+  rating         Int?    @default(0) @db.TinyInt
+  price          Int?    @default(0)
+  space          Int?    @default(0) @db.SmallInt
+  rules          String? @default("") @db.Text
+  ar_rules       String? @default("") @db.Text
+  policy         String? @default("") @db.Text
+  ar_policy      String? @default("") @db.Text
 
   @@index([category], map: "FK_venues_categories")
   @@index([city], map: "FK_venues_cities")

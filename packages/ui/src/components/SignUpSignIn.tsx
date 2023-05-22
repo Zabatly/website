@@ -1,14 +1,4 @@
-import { useEffect, useState } from 'react';
-import {
-  YStack,
-  Paragraph,
-  XStack,
-  Button,
-  Input,
-  Image,
-  Stack,
-  Separator,
-} from 'tamagui';
+import { YStack, Paragraph, XStack, Button, Image, Separator } from 'tamagui';
 import { Link } from 'solito/link';
 import { useTranslation } from 'app/utils/i18n';
 import { OAuthStrategy } from '@clerk/types';
@@ -18,24 +8,18 @@ import {
   LmSubmitButtonRhf,
   LmInputRhf,
 } from '@tamagui-extras/form';
-/*
-import {
-  LmFormRhfProvider,
-  LmInputRhf,
-  LmSubmitButtonRhf,
-} from '@tamagui-extras/form';
-*/
+
 interface Props {
   type: 'sign-up' | 'sign-in';
   handleOAuthWithPress: (strategy: OAuthStrategy) => void;
-  handleEmailWithPress: (emailAddress, password) => void;
+  handleEmailWithPress: (data: signData) => void;
   isAuth: boolean;
 }
 
-interface signData {
+export interface signData {
   email: string;
   password: string;
-  username: string;
+  username?: string;
 }
 
 export const SignUpSignInComponent: React.FC<Props> = ({
@@ -44,9 +28,6 @@ export const SignUpSignInComponent: React.FC<Props> = ({
   handleEmailWithPress,
   isAuth: isAuthenticating,
 }) => {
-  async function handleFormData(data: signData) {
-    handleEmailWithPress(data.email, data.password);
-  }
   const theme = useThemeNameState();
   const { t, i18n } = useTranslation();
   const langDirection = i18n.dir(i18n.language);
@@ -130,7 +111,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
             <LmInputRhf
               direction={langDirection}
               name="username"
-              placeholder={t('authusername') as string}
+              placeholder={t('auth.username') as string}
               textContentType="username"
               required={true}
               rules={{
@@ -167,47 +148,6 @@ export const SignUpSignInComponent: React.FC<Props> = ({
               },
             }}
           />
-
-          {/* <Input
-            direction={langDirection}
-            textContentType="emailAddress"
-            placeholder={t('auth.email') as string}
-            value={emailAddress}
-            onChangeText={setEmailAddress}
-          />
-
-          {type == 'sign-up' && (
-            <Input
-              direction={langDirection}
-              placeholder={t('auth.username') as string}
-              value={username}
-              onChangeText={setUsername}
-              textContentType="username"
-            />
-          )}
-
-          <Input
-            direction={langDirection}
-            placeholder={t('auth.password') as string}
-            value={password}
-            onChangeText={setPassword}
-            textContentType="password"
-            secureTextEntry
-          />
-          <Button
-          direction={langDirection}
-          theme={'blue'}
-          onPress={() => {
-            handleEmailWithPress(emailAddress, password);
-          }}
-          hoverStyle={{ opacity: 0.8 }}
-          onHoverIn={() => {}}
-          onHoverOut={() => {}}
-          focusStyle={{ scale: 0.975 }}
-        >
-          {type === 'sign-up' ? t('auth.signup') : t('auth.signin')}
-        </Button>
-        */}
           <LmSubmitButtonRhf
             loading={isAuthenticating}
             direction={langDirection}
@@ -216,7 +156,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
             onHoverIn={() => {}}
             onHoverOut={() => {}}
             focusStyle={{ scale: 0.975 }}
-            onSubmit={handleFormData}
+            onSubmit={handleEmailWithPress}
           >
             {type === 'sign-up' ? t('auth.signup') : t('auth.signin')}
           </LmSubmitButtonRhf>
