@@ -1,5 +1,5 @@
 import { Avatar, AvatarProps, Paragraph, TextProps } from 'tamagui';
-
+// TODO: Remove & update tamagui-extras when error is fixed
 export type LmAvatarProps = AvatarProps & {
   color?: AvatarProps['backgroundColor'];
   src?: string;

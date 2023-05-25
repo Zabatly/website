@@ -13,18 +13,19 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "noEmitOnError": false,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noImplicitReturns": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "experimentalDecorators": true,
     "useUnknownInCatchVariables": false,
     "preserveConstEnums": true,
+    "strictNullChecks": true,
     // DONT DO THIS so jsdoc will remain
     "removeComments": false,
     "skipLibCheck": true,
     "sourceMap": false,
-    "strictNullChecks": true,
+
     "target": "es2019",
     "types": ["node"],
     "lib": ["es2021", "dom", "esnext"]

@@ -206,7 +206,7 @@ export function AppBar() {
                       direction={langDirection}
                       icon={<LogOut />}
                     >
-                      {t('signout')}
+                      {t('auth.signout')}
                     </Button>
                   </YGroup.Item>
                 )}

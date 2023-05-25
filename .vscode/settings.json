@@ -4,15 +4,12 @@
   "yoavbls.pretty-ts-errors": 1,
   "files.exclude": {
     "node_modules": true,
-    ".vscode": true,
     ".yarn": true,
     ".gitignore": true,
     ".prettierignore": true,
     ".git": true,
     ".yarnrc.yml": true,
     "LICENSE": true,
-    "tsconfig.base.json": true,
-    "tsconfig.json": true,
     "yarn.lock": true
   }
 }

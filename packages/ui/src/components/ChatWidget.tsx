@@ -3,6 +3,7 @@ import { LmAvatar } from '@tamagui-extras/core';
 import { MessageSquare, X, Send } from '@tamagui/lucide-icons';
 import React, { useState } from 'react';
 import { Card, Input, ScrollView, YStack } from 'tamagui';
+import { ChatComp } from './ChatComp';
 interface ChatMessageInt {
   authorName: string;
   message: string;
@@ -94,64 +95,7 @@ export function ChatWidget() {
                 <Paragraph size={'$5'}>Zabatly Bot</Paragraph>
               </XStack>
             </Card.Header>
-            <YStack w={'100%'} f={0.8} padding={'$1'}>
-              <ScrollView>
-                <ChatMessage
-                  authorName="Zabatly Bot"
-                  side="left"
-                  message="Hello There!"
-                  date={new Date()}
-                />
-                <ChatMessage
-                  authorName="Youssef Elmarakshy"
-                  side="right"
-                  message="Hi"
-                  date={new Date()}
-                />
-                <ChatMessage
-                  authorName="Youssef Elmarakshy"
-                  side="right"
-                  message="Lorrem Ipsum Lorrem Ipsum Lorrem Ipsum Lorrem Ipsum Lorrem Ipsum Lorrem Ipsum"
-                  date={new Date()}
-                />
-                <ChatMessage
-                  authorName="Youssef Elmarakshy"
-                  side="right"
-                  message="Hi"
-                  date={new Date()}
-                />
-                <ChatMessage
-                  authorName="Youssef Elmarakshy"
-                  side="right"
-                  message="Hi"
-                  date={new Date()}
-                />
-              </ScrollView>
-            </YStack>
-            <Card.Footer>
-              <Input
-                w={'90%'}
-                theme={'gray'}
-                size={'$4'}
-                placeholder="Start Chatting.."
-                borderRadius={0}
-                focusStyle={{ outlineWidth: 0, borderWidth: 0 }}
-                onChangeText={setCurrentMessage}
-                value={currentMessage}
-              />
-              <Button
-                backgroundColor={'$gray2'}
-                size={'$4'}
-                borderRadius={0}
-                borderWidth={0}
-                focusStyle={{ outlineWidth: 0, borderWidth: 0 }}
-                icon={<Send />}
-                onPress={() => {
-                  if (currentMessage.length > 0) {
-                  }
-                }}
-              />
-            </Card.Footer>
+            <ChatComp />
           </Card>
         )}
       </Stack>

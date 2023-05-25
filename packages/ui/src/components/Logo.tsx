@@ -1,15 +1,6 @@
-import {
-  YStack,
-  Paragraph,
-  XStack,
-  Button,
-  Input,
-  Image,
-  Stack,
-  useMedia,
-} from 'tamagui';
+import { Image, useMedia } from 'tamagui';
 import { useLink } from 'solito/link';
-import { tokens } from '@tamagui/theme-base';
+import { tokens } from '@tamagui/themes';
 const logoMediaQuery = (size: keyof typeof tokens.size) => ({
   width: tokens.size[size].val,
   height: tokens.size[size].val,
