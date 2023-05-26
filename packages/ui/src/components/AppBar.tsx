@@ -35,6 +35,9 @@ export function AppBar() {
   const signInLinkProps = useLink({
     href: '/signin',
   });
+  const venuePageLink = useLink({
+    href: '/venue/123',
+  });
   const theme = useThemeNameState();
   const isDark = theme == 'dark';
   const toggleTheme = useThemeToggle();
@@ -198,7 +201,9 @@ export function AppBar() {
                     {isDark ? t('lightMode') : t('darkMode')}
                   </Button>
                 </YGroup.Item>
-
+                <YGroup.Item>
+                  <Button {...venuePageLink}>Venue</Button>
+                </YGroup.Item>
                 {isSignedIn && (
                   <YGroup.Item>
                     <Button

@@ -18,8 +18,8 @@
     "clean": "rm -rf dist types"
   },
   "dependencies": {
+    "@datepicker-react/hooks": "^2.8.4",
     "@tamagui-extras/core": "^1.1.7",
-    "@tamagui-extras/date": "^1.2.1",
     "@tamagui-extras/form": "^1.2.2",
     "@tamagui/animations-react-native": "1.30.0",
     "@tamagui/font-inter": "^1.30.0",
@@ -30,6 +30,7 @@
     "@tamagui/toast": "^1.30.0",
     "add": "^2.0.6",
     "burnt": "^0.11.4",
+    "intl": "^1.2.5",
     "tamagui": "^1.30.0",
     "yarn": "^1.22.19"
   },

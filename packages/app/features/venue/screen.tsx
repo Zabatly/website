@@ -12,7 +12,7 @@ import { AppBar } from '@my/ui/src/components/AppBar';
 import { AppShell } from '@my/ui/src/components/AppShell';
 import { VenueSlider } from '@my/ui/src/components/VenueSlider';
 import { MapPin, Users, Expand } from '@tamagui/lucide-icons';
-import { LmDatepicker } from '@tamagui-extras/date';
+import { LmDatepicker } from '@my/ui/src/components/datePicker/LmDatePicker';
 import React from 'react';
 import { createParam } from 'solito';
 
@@ -25,7 +25,19 @@ export function VenueScreen() {
     <AppShell>
       <AppBar />
       <YStack f={1} paddingVertical={10} alignItems="center">
-        <YStack
+        <LmDatepicker
+          isRangePicker
+          popoverProps={{
+            sheetProps: {
+              dismissOnOverlayPress: true,
+              hideHandle: false,
+              snapPoints: [85, 50, 25],
+              fullScreen: false,
+            },
+          }}
+        />
+        {/*
+               <YStack
           $gtSm={{
             w: '60%',
           }}
@@ -93,6 +105,7 @@ export function VenueScreen() {
                   </Card.Header>
                   <Stack alignItems="center" paddingVertical={'$2'}>
                     <Paragraph alignSelf="center">Checkin - Checkout</Paragraph>
+
                     <LmDatepicker
                       isRangePicker
                       popoverProps={{
@@ -110,6 +123,7 @@ export function VenueScreen() {
             </XStack>
           </ScrollView>
         </YStack>
+          */}
       </YStack>
     </AppShell>
   );

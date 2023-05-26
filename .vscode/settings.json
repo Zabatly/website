@@ -8,7 +8,6 @@
     ".gitignore": true,
     ".prettierignore": true,
     ".git": true,
-    ".yarnrc.yml": true,
     "LICENSE": true,
     "yarn.lock": true
   }

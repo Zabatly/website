@@ -3851,8 +3851,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@my/ui@workspace:packages/ui"
   dependencies:
+    "@datepicker-react/hooks": ^2.8.4
     "@tamagui-extras/core": ^1.1.7
-    "@tamagui-extras/date": ^1.2.1
     "@tamagui-extras/form": ^1.2.2
     "@tamagui/animations-react-native": 1.30.0
     "@tamagui/build": ^1.30.0
@@ -3864,6 +3864,7 @@ __metadata:
     "@tamagui/toast": ^1.30.0
     add: ^2.0.6
     burnt: ^0.11.4
+    intl: ^1.2.5
     tamagui: ^1.30.0
     yarn: ^1.22.19
   languageName: unknown
@@ -4618,21 +4619,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/datetimepicker@npm:6.5.2":
+  version: 6.5.2
+  resolution: "@react-native-community/datetimepicker@npm:6.5.2"
+  dependencies:
+    invariant: ^2.2.4
+  checksum: ff17fd22750ec825366c980c7505b94a16690ffe529e62cded2d8f1af3f1eaba8fe17ddb67cc5f98fa242b4b939b899c013271b49d44438540e5c7d1a96fee39
+  languageName: node
+  linkType: hard
+
 "@react-native-community/datetimepicker@npm:^7.0.1":
   version: 7.0.1
   resolution: "@react-native-community/datetimepicker@npm:7.0.1"
   dependencies:
     invariant: ^2.2.4
   checksum: 108724a239d086e165ab17fd39fac43a8daf91a852ea9fd40d5bf9a2dd984ad8a473079e6228bc7f9fed0d6cf5610b2f4438142765e228f25aef37f9c6c4f85f
-  languageName: node
-  linkType: hard
-
-"@react-native-community/datetimepicker@npm:^7.1.0":
-  version: 7.1.0
-  resolution: "@react-native-community/datetimepicker@npm:7.1.0"
-  dependencies:
-    invariant: ^2.2.4
-  checksum: c88d19213daec1dc5c6101ad8c694386d79167087e1058c44c2699585dc97c4630c18de214d0607a5e5acd84846a9bb1401fece04fa78b8a010a0290b715040d
   languageName: node
   linkType: hard
 
@@ -10536,7 +10537,7 @@ __metadata:
     "@clerk/clerk-expo": ^0.10.16
     "@expo/metro-config": ^0.5.2
     "@my/ui": "*"
-    "@react-native-community/datetimepicker": ^7.1.0
+    "@react-native-community/datetimepicker": 6.5.2
     "@tamagui-extras/date": ^1.2.1
     "@tamagui/babel-plugin": 1.30.0
     "@types/react-native": ~0.70.6
@@ -12518,6 +12519,13 @@ __metadata:
     has: ^1.0.3
     side-channel: ^1.0.4
   checksum: 8974588d06bab4f675573a3b52975370facf6486df51bc0567a982c7024fa29495f10b76c0d4dc742dd951d1b72024fdc1e31bb0bedf1678dc7aacacaf5a4f73
+  languageName: node
+  linkType: hard
+
+"intl@npm:^1.2.5":
+  version: 1.2.5
+  resolution: "intl@npm:1.2.5"
+  checksum: 54c2444ec334b4e7f501c1b988ccfdae96d62a6275a915b9c75a38fc42d611bfc7dd33447e94079b7a8fdb3fbf36b95afd13132af4bfd70e2ec4bf9c9e0935f9
   languageName: node
   linkType: hard
 

@@ -87,11 +87,10 @@ module.exports = function () {
       'react-native-gesture-handler',
       'react-native-reanimated',
       'react-native-reanimated-carousel',
-      '@react-native-community/datetimepicker',
-      'react-native-modal-datetime-picker',
       '@tamagui-extras/core',
       '@tamagui-extras/form',
-      '@tamagui-extras/date',
+      '@react-native-community/datetimepicker',
+      'react-native-modal-datetime-picker',
       'js-cookie',
       /*
         leave these here, and enable if installing dependancies causes issues
