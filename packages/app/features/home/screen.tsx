@@ -297,7 +297,6 @@ export function HomeScreen() {
             <H2>{t('recommended_venues')}</H2>
             <XStack space>
               <VenueCard key={1} />
-              <VenueCard key={2} />
             </XStack>
           </YStack>
         </YStack>

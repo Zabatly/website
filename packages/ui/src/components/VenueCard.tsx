@@ -76,7 +76,7 @@ export function VenueCard() {
         </XStack>
         <XStack w={'100%'} h={100}>
           <YStack w={'50%'} justifyContent="flex-end">
-            <H4>Weird Venue</H4>
+            <H4>Enchanting Gardens</H4>
             <XStack space={'$1.5'}>
               <MapPin size={'$1'} />
               <Paragraph fontWeight={'500'}>Cairo, Egypt</Paragraph>
@@ -124,13 +124,12 @@ export function VenueCard() {
             w={'100%'}
             marginVertical={'$2'}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-            laoreet tellus fringilla leo dignissim ultrices. Ut malesuada, justo
-            nec scelerisque efficitur, magna libero fringilla elit, eleifend
-            vulputate augue risus eu massa. Integer in posuere lorem. Quisque
-            laoreet metus nibh, eget sodales ante congue in. Aliquam malesuada
-            elementum elementum. Nullam diam dolor, varius ullamcorper eleifend
-            sed, auctor sit amet mauris
+            The enchanting atmosphere creates a magical setting for weddings and
+            special events, where guests can wander along winding paths,
+            discover hidden nooks, and gather under a canopy of twinkling stars.
+            With its natural beauty and ethereal ambiance, the Enchanted Gardens
+            promises an unforgettable experience for all who step foot within
+            its enchanting embrace.
           </Paragraph>
         </YStack>
       </YStack>

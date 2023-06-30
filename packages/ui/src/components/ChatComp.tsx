@@ -70,33 +70,15 @@ export function ChatComp() {
       <YStack f={1} padding={'$1'}>
         <ScrollView>
           <ChatMessage
+            authorName="Youssef Elmarakshy"
+            side="right"
+            message="Hi"
+            date={new Date()}
+          />
+          <ChatMessage
             authorName="Zabatly Bot"
             side="left"
-            message="Hello There!"
-            date={new Date()}
-          />
-          <ChatMessage
-            authorName="Youssef Elmarakshy"
-            side="right"
-            message="Hi"
-            date={new Date()}
-          />
-          <ChatMessage
-            authorName="Youssef Elmarakshy"
-            side="right"
-            message="Lorrem Ipsum Lorrem Ipsum Lorrem Ipsum Lorrem Ipsum Lorrem Ipsum Lorrem Ipsum"
-            date={new Date()}
-          />
-          <ChatMessage
-            authorName="Youssef Elmarakshy"
-            side="right"
-            message="Hi"
-            date={new Date()}
-          />
-          <ChatMessage
-            authorName="Youssef Elmarakshy"
-            side="right"
-            message="Hi"
+            message="Hello There, How can i help you?"
             date={new Date()}
           />
         </ScrollView>

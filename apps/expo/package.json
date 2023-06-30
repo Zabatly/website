@@ -16,7 +16,6 @@
     "@clerk/clerk-expo": "^0.10.16",
     "@my/ui": "*",
     "@react-native-community/datetimepicker": "6.5.2",
-    "@tamagui-extras/date": "^1.2.1",
     "@types/react-native": "~0.70.6",
     "app": "*",
     "babel-plugin-module-resolver": "^4.1.0",

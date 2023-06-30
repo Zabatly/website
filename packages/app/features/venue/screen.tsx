@@ -1,3 +1,5 @@
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 import {
   Paragraph,
   YStack,
@@ -12,7 +14,7 @@ import { AppBar } from '@my/ui/src/components/AppBar';
 import { AppShell } from '@my/ui/src/components/AppShell';
 import { VenueSlider } from '@my/ui/src/components/VenueSlider';
 import { MapPin, Users, Expand } from '@tamagui/lucide-icons';
-import { LmDatepicker } from '@my/ui/src/components/datePicker/LmDatePicker';
+import { LmDatepicker } from '@tamagui-extras/date';
 import React from 'react';
 import { createParam } from 'solito';
 
@@ -25,6 +27,7 @@ export function VenueScreen() {
     <AppShell>
       <AppBar />
       <YStack f={1} paddingVertical={10} alignItems="center">
+        {/*
         <LmDatepicker
           isRangePicker
           popoverProps={{
@@ -36,7 +39,7 @@ export function VenueScreen() {
             },
           }}
         />
-        {/*
+       
                <YStack
           $gtSm={{
             w: '60%',
@@ -103,9 +106,8 @@ export function VenueScreen() {
                       </Paragraph>
                     </XStack>
                   </Card.Header>
-                  <Stack alignItems="center" paddingVertical={'$2'}>
-                    <Paragraph alignSelf="center">Checkin - Checkout</Paragraph>
-
+                  <Stack paddingVertical={'$2'}>
+                    <Paragraph fontWeight={'bold'} paddingHorizontal="$8">Checkin - Checkout</Paragraph>
                     <LmDatepicker
                       isRangePicker
                       popoverProps={{
