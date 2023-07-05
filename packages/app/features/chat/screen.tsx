@@ -3,6 +3,7 @@ import { Paragraph, XStack } from '@my/ui';
 import React from 'react';
 import { ChatComp } from '@my/ui/src/components/ChatComp';
 
+// TODO: Wait API from AI team...
 export function ChatScreen() {
   return (
     <AppShell>
