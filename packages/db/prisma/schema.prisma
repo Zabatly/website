@@ -24,7 +24,7 @@ model cities {
 }
 
 model featurename {
-  id             Int    @id
+  id             Int    @id @default(autoincrement())
   name           String @default("") @db.TinyText
   ar_name        String @default("") @db.TinyText
   description    String @default("") @db.Text
@@ -32,12 +32,12 @@ model featurename {
 }
 
 model features {
-  id        Int  @id @default(autoincrement())
+  id        Int @id @default(autoincrement())
   venueID   Int
-  featureID Int?
+  featureID Int
 
-  @@index([featureID], map: "FK_features_featurename")
   @@index([venueID], map: "FK_features_venues")
+  @@index([featureID], map: "FK_featureID")
 }
 
 model payments {
@@ -98,8 +98,8 @@ model venues {
   id             Int     @id @default(autoincrement())
   name           String? @default("") @db.TinyText
   ar_name        String? @default("") @db.TinyText
-  category       Int
-  city           Int
+  categoryID     Int
+  cityID         Int
   capacity       Int?    @default(0) @db.SmallInt
   description    String? @default("") @db.Text
   ar_description String? @default("") @db.Text
@@ -111,6 +111,16 @@ model venues {
   policy         String? @default("") @db.Text
   ar_policy      String? @default("") @db.Text
 
-  @@index([category], map: "FK_venues_categories")
-  @@index([city], map: "FK_venues_cities")
+  @@index([categoryID], map: "FK_venues_categories")
+  @@index([cityID], map: "FK_venues_cities")
+}
+
+model visited_venues {
+  id        Int      @id @default(autoincrement())
+  venueID   Int
+  userID    Int
+  visitDate DateTime @default(now()) @db.Timestamp(0)
+
+  @@index([userID], map: "FK_user")
+  @@index([venueID], map: "FK_venue")
 }
