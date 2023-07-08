@@ -1,8 +1,6 @@
 import { AnimatePresence } from '@tamagui/animate-presence';
 import { ArrowLeft, ArrowRight } from '@tamagui/lucide-icons';
 import { useState } from 'react';
-import { Button, Image, XStack, YStack, styled, useMedia } from 'tamagui';
-
 // TODO: Add dynamaic images from database
 // @ts-ignore
 import photo1 from './img/birthday.jpg';
@@ -10,20 +8,100 @@ import photo1 from './img/birthday.jpg';
 import photo2 from './img/engagement.jpg';
 import { tokens } from '@tamagui/themes';
 export const images = [photo1, photo2];
+import {
+  Paragraph,
+  XStack,
+  Card,
+  H2,
+  Button,
+  Image,
+  Stack,
+  YStack,
+} from '@my/ui';
+import {
+  Dimensions,
+  PanResponder,
+  StyleSheet,
+  Animated,
+  Text,
+  View,
+} from 'react-native';
+import { PanGestureHandler } from 'react-native-gesture-handler';
+// import Carousel from 'react-native-reanimated-carousel';
+// import { Platform, ScrollView } from 'react-native';
+import { DraggableScrollView } from './draggableScroll';
+
 const wrap = (min: number, max: number, v: number) => {
   const rangeSize = max - min;
   return ((((v - min) % rangeSize) + rangeSize) % rangeSize) + min;
 };
 
+/*
 const YStackEnterable = styled(YStack, {
   variants: {
     isLeft: { true: { x: -300, opacity: 0 } },
     isRight: { true: { x: 300, opacity: 0 } },
   } as const,
 });
+*/
+interface CarouselCard {
+  title: string;
+  desc: string;
+  buttonName: string;
+  image: string;
+}
+
+function DemoCard(props: CarouselCard) {
+  return (
+    <Card
+      w={300}
+      h={200}
+      marginRight={'$3'}
+      elevate
+      size="$6"
+      bordered
+      animation={'bouncy'}
+      hoverStyle={{ scale: 0.925 }}
+      pressStyle={{ scale: 0.875 }}
+    >
+      <Card.Footer padded>
+        <XStack flex={1} />
+      </Card.Footer>
+      <Card.Background>
+        <Image
+          opacity={0.8}
+          width={500}
+          height={300}
+          alignSelf="center"
+          resizeMode="cover"
+          source={props.image as any}
+        />
+      </Card.Background>
+    </Card>
+  );
+}
+interface Item {
+  id: number;
+  title: string;
+  desc: string;
+  source: string;
+}
+
 export function VenueSlider() {
+  const data = [
+    { id: 1, title: 'Party', desc: '', source: require('./img/venue.jpg') },
+    {
+      id: 2,
+      title: 'Engagement',
+      desc: '',
+      source: require('./img/venue.jpg'),
+    },
+    { id: 3, title: 'Sports', desc: '', source: require('./img/venue.jpg') },
+    { id: 4, title: 'Formal', desc: '', source: require('./img/venue.jpg') },
+    { id: 5, title: 'View More', desc: '', source: require('./img/venue.jpg') },
+  ];
   const [[page, direction], setPage] = useState([0, 0]);
-  const media = useMedia();
+  //  const media = useMedia();
   const imageIndex = wrap(0, images.length, page);
 
   const paginate = (newDirection: number) => {
@@ -34,7 +112,29 @@ export function VenueSlider() {
     direction === 1 || direction === 0 ? 'isRight' : 'isLeft';
   const exitVariant = direction === 1 ? 'isLeft' : 'isRight';
   return (
-    <XStack
+    <XStack padding="$2" $gtSm={{ padding: '$6' }}>
+      <DraggableScrollView
+        data={data}
+        renderItem={({ item }: any) => (
+          <DemoCard
+            key={item.id}
+            title={item.title}
+            desc=""
+            buttonName="View"
+            image={item.source}
+          />
+        )}
+        keyExtractor={(item: Item): any => item.id}
+        removeClippedSubviews={true} // Unmount components when outside of window
+        initialNumToRender={3} // Render 3 items initially
+        maxToRenderPerBatch={1} // Render 1 item per batch
+        updateCellsBatchingPeriod={100} // Increase time between renders
+        windowSize={3} // Set window size to 3
+      />
+    </XStack>
+  );
+  /*
+          <XStack
       overflow="hidden"
       backgroundColor="red"
       position="relative"
@@ -89,5 +189,5 @@ export function VenueSlider() {
         onPress={() => paginate(1)}
       />
     </XStack>
-  );
+      */
 }

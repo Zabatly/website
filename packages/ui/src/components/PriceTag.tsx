@@ -14,7 +14,7 @@ export function PriceTag({ price, discount }: PriceTag) {
         fontWeight={'bold'}
         fontSize={'$5'}
       >
-        {price} EGP / DAY
+        {(price * (discount ? discount : 1)).toFixed(0)} EGP / DAY
       </Paragraph>
       {discount && (
         <>
@@ -24,7 +24,7 @@ export function PriceTag({ price, discount }: PriceTag) {
             fontSize={'$4'}
             marginHorizontal="$2"
           >
-            {(price * discount).toFixed(0)} EGP
+            {price} EGP
           </Paragraph>
           <Paragraph fontWeight={'bold'} color={'#DD1C1A'} fontSize={'$5'}>
             {discount * 100}% OFF

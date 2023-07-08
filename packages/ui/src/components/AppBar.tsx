@@ -36,7 +36,7 @@ export function AppBar() {
     href: '/signin',
   });
   const venuePageLink = useLink({
-    href: '/venue/123',
+    href: '/venue/Nile%20Palace',
   });
   const theme = useThemeNameState();
   const isDark = theme == 'dark';

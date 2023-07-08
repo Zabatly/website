@@ -18,8 +18,8 @@ import {
   View,
 } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
-import Carousel from 'react-native-reanimated-carousel';
-import { Platform, ScrollView } from 'react-native';
+// import Carousel from 'react-native-reanimated-carousel';
+//import { Platform, ScrollView } from 'react-native';
 import { DraggableScrollView } from './draggableScroll';
 import { ReactNode } from 'react';
 // const PAGE_WIDTH = Platform.OS == 'web' ? window.innerWidth : windowWidth;
