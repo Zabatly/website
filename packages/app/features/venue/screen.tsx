@@ -129,7 +129,6 @@ const HorizontalTabs = ({ venueData, venueFeatures }: any) => {
 };
 
 import { trpc } from 'app/utils/trpc';
-import { AppRouter } from '@my/api/index';
 
 export function VenueScreen() {
   const media = useMedia();
@@ -192,7 +191,7 @@ export function VenueScreen() {
               >
                 <XStack space={'$1'}>
                   <MapPin color={'#1363ff'} />
-                  <Paragraph fontWeight={'500'}>{data.city}</Paragraph>
+                  <Paragraph fontWeight={'500'}>{data.cityID}</Paragraph>
                 </XStack>
                 <XStack space={'$1'}>
                   <Users color={'#1363ff'} />
@@ -228,7 +227,7 @@ export function VenueScreen() {
                   >
                     <Card.Header>
                       <H2>Price</H2>
-                      <PriceTag price={data.price} discount={0.4} />
+                      <PriceTag price={data.price!} discount={0.4} />
                     </Card.Header>
                     <Stack paddingVertical={'$2'}>
                       <Paragraph
@@ -290,7 +289,7 @@ export function VenueScreen() {
                 >
                   <Card.Header>
                     <H2>Price</H2>
-                    <PriceTag price={data.price} discount={0.4} />
+                    <PriceTag price={data.price!} discount={0.4} />
                   </Card.Header>
                   <Stack paddingVertical={'$2'}>
                     <Paragraph

@@ -100,6 +100,7 @@ module.exports = function () {
     ],
     experimental: {
       // optimizeCss: true,
+      esmExternals: false,
       scrollRestoration: true,
       legacyBrowsers: false,
     },
