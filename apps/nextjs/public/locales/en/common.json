@@ -11,8 +11,9 @@
   "featured_venues": "Featured Venues",
   "similar_venues": "Similar Venues",
   "recommended_venues": "Recommended",
+  "profile": "Profile",
   "venuePage": {
-    "rules": "Hot Rules",
+    "rules": "Host Rules",
     "policy": "Cancellation Policy",
     "features": "Features",
     "reserve": "Reserve Now",

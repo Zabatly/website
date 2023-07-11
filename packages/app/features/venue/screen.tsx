@@ -15,6 +15,7 @@ import {
   Tabs,
   TabsContentProps,
   YGroup,
+  SizableText,
 } from '@my/ui';
 import { AppBar } from '@my/ui/src/components/AppBar';
 import { AppShell } from '@my/ui/src/components/AppShell';
@@ -69,13 +70,15 @@ const HorizontalTabs = ({ venueData }: VenueInfoTabs) => {
         aria-label="Venue Reservation Information"
       >
         <Tabs.Tab flex={1} value="tab1">
-          <Paragraph fontFamily="$body">{t('venuePage.features')}</Paragraph>
+          <SizableText fontFamily="$body">
+            {t('venuePage.features')}
+          </SizableText>
         </Tabs.Tab>
         <Tabs.Tab flex={1} value="tab2">
-          <Paragraph fontFamily="$body">{t('venuePage.rules')}</Paragraph>
+          <SizableText fontFamily="$body">{t('venuePage.rules')}</SizableText>
         </Tabs.Tab>
         <Tabs.Tab flex={1} value="tab3">
-          <Paragraph fontFamily="$body">{t('venuePage.policy')}</Paragraph>
+          <SizableText fontFamily="$body">{t('venuePage.policy')}</SizableText>
         </Tabs.Tab>
       </Tabs.List>
       <Separator />
@@ -119,7 +122,10 @@ const HorizontalTabs = ({ venueData }: VenueInfoTabs) => {
                   return (
                     <YGroup.Item>
                       <XStack alignItems="center" space="$1">
-                        <Dot /> <Paragraph>{rule}</Paragraph>
+                        <SizableText>
+                          <Dot />
+                        </SizableText>
+                        <Paragraph>{rule}</Paragraph>
                       </XStack>
                     </YGroup.Item>
                   );
@@ -195,7 +201,7 @@ const SimilarVenuesSlider = ({ similarVenues }: similarVenuesObject) => {
 import { trpc } from 'app/utils/trpc';
 import { RouterOutputs } from 'app/utils/trpc.web';
 import { VenueCard } from '@my/ui/src/components/VenueCard';
-import { useAuth } from 'app/utils/clerk';
+import { SignedIn, useAuth } from 'app/utils/clerk';
 import { Link } from 'solito/link';
 import { LmFormRhfProvider, LmSubmitButtonRhf } from '@tamagui-extras/form';
 import { useRouter } from 'solito/router';
@@ -219,7 +225,13 @@ export function VenueScreen() {
   const [id] = useParam('id');
   const currentDate = new Date();
   if (!id || parseInt(id)) return push('/');
-
+  const visitVenueMutation = trpc.venue.visitVenue.useMutation();
+  const { isLoading: userLoading, data: userData } = trpc.user.current.useQuery(
+    undefined,
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
   const { isLoading, isLoadingError, data } = trpc.venue.getVenue.useQuery(id, {
     refetchOnWindowFocus: false,
   });
@@ -257,15 +269,24 @@ export function VenueScreen() {
       },
     })
       .then((response) => response.json())
-      .then((data: number[]) => {
-        console.log(data);
-        setSimilarVenues(data);
+      .then((similarVenuesData: number[]) => {
+        console.log(similarVenuesData);
+        setSimilarVenues(similarVenuesData);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
+  useEffect(() => {
+    if (isSignedIn) {
+      console.log('Using Venue!');
+      visitVenueMutation.mutate({
+        userID: userData?.id!,
+        venueID: data?.id!,
+      });
+    }
+  }, [data?.id, userData?.id]);
   if (isLoading) return <H4>Loading Venue Data...</H4>;
   if (isLoadingError) return <H4>Loading Error....</H4>;
   if (!data) return <H4>Loading Error</H4>;
@@ -282,17 +303,17 @@ export function VenueScreen() {
         paddingHorizontal={0}
         alignItems="center"
       >
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <YStack
-            $gtSm={{
-              w: '60%',
-            }}
-            w={'100%'}
-            space={'$4'}
-            overflow="hidden"
-            paddingHorizontal={0}
-            direction={langDirection}
-          >
+        <YStack
+          $gtSm={{
+            w: '60%',
+          }}
+          w={'100%'}
+          space={'$4'}
+          overflow="hidden"
+          paddingHorizontal={0}
+          direction={langDirection}
+        >
+          <ScrollView showsVerticalScrollIndicator={false}>
             <VenueSlider image={data.categories.imageURL} />
             <XStack
               $gtSm={{ flexDirection: 'row', padding: '$6' }}
@@ -529,8 +550,8 @@ export function VenueScreen() {
               />
               <SimilarVenuesSlider similarVenues={similarVenues} />
             </YStack>
-          </YStack>
-        </ScrollView>
+          </ScrollView>
+        </YStack>
       </YStack>
     </AppShell>
   );

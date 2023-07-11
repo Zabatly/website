@@ -1,4 +1,4 @@
-import { reserveScreen } from 'app/features/reserve/screen';
+import { ReserveScreen } from 'app/features/reserve/screen';
 
-export default reserveScreen;
+export default ReserveScreen;
 export { getStaticProps } from 'util/getStaticProps';

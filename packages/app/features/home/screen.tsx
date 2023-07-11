@@ -15,7 +15,7 @@ import {
   ScrollView,
   H4,
 } from '@my/ui';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLink } from 'solito/link';
 import { trpc } from '../../utils/trpc';
 import { SignedIn, SignedOut, useAuth } from '../../utils/clerk';
@@ -224,16 +224,93 @@ function VenueCard() {
   );
 }
 */
+import Constants from 'expo-constants';
+
+interface RecVenuesObj {
+  venues: number[];
+}
+const RecommendVenuesSlider = ({ venues }: RecVenuesObj) => {
+  const { t, i18n } = useTranslation();
+  const { isLoading, data: RecommendedVenues } =
+    trpc.venue.getSimilarVenues.useQuery(venues!, {
+      refetchOnWindowFocus: false,
+    });
+
+  if (isLoading) return <H4>Recommended venues Loading...</H4>;
+  return (
+    <DraggableScrollView showsHorizontalScrollIndicator={false}>
+      <XStack space="$4">
+        {RecommendedVenues?.map((venue) => {
+          return (
+            <VenueCard
+              key={venue.id}
+              enName={venue.name!}
+              name={i18n.language == 'en' ? venue.name! : venue.ar_name!}
+              desc={
+                i18n.language == 'en'
+                  ? venue.description!
+                  : venue.ar_description!
+              }
+              price={venue.price!}
+              category={
+                i18n.language == 'en'
+                  ? venue.categories.name
+                  : venue.categories.ar_name
+              }
+              location={
+                i18n.language == 'en' ? venue.cities.name : venue.cities.ar_name
+              }
+              imageURL={venue.categories.imageURL}
+              rating={venue.rating!}
+              capacity={venue.capacity!}
+              language={i18n.language == 'en' ? 'en' : 'ar'}
+            />
+          );
+        })}
+      </XStack>
+    </DraggableScrollView>
+  );
+};
+//51, 52, 58
 export function HomeScreen() {
   //const theme = useThemeNameState();
   // const isDarkTheme = theme === 'dark';
+  const apiURL =
+    Platform.OS == 'web'
+      ? 'localhost'
+      : Constants.manifest?.debuggerHost?.split(':')[0];
+  const [recommendedVenues, setRecommendedVenues] = useState<number[]>([]);
   const { isLoading, data: featuredVenues } = trpc.venue.getVenues.useQuery(4, {
     refetchOnWindowFocus: false,
   });
-
+  const { isLoading: userLoading, data: userData } = trpc.user.current.useQuery(
+    undefined,
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
   const { t, i18n } = useTranslation();
   const langDirection = i18n.dir(i18n.language);
-  if (isLoading) return <H4>Loading...</H4>;
+
+  useEffect(() => {
+    fetch(`http://${apiURL}:5000/recommend`, {
+      method: 'POST',
+      body: JSON.stringify({ message: userData?.id }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((recommendVenuesData: number[]) => {
+        console.log(recommendVenuesData, 'YEAY');
+        setRecommendedVenues(recommendVenuesData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [userData?.id]);
+
+  if (isLoading || userLoading) return <H4>Loading...</H4>;
   // console.log(data);
   return (
     <AppShell>
@@ -276,7 +353,11 @@ export function HomeScreen() {
               <Button theme={'blue'} size={'$4.5'} icon={<Search />} />
             </XStack>
             <XStack theme={'blue'} space={'$2'}>
-              <ScrollView horizontal space={'$2'}>
+              <ScrollView
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                space={'$2'}
+              >
                 <Button icon={MapPin} size="$3">
                   Location
                 </Button>
@@ -337,6 +418,9 @@ export function HomeScreen() {
                 })}
               </XStack>
             </DraggableScrollView>
+            <Separator alignSelf="stretch" outlineColor={'white'} />
+            <H2>{t('recommended_venues')}</H2>
+            <RecommendVenuesSlider venues={recommendedVenues} />
           </YStack>
         </YStack>
       </ScrollView>

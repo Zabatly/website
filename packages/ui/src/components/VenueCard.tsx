@@ -12,6 +12,7 @@ import {
 } from '@tamagui/lucide-icons';
 import { PriceTag } from './PriceTag';
 import { useLink } from 'solito/link';
+import { useTranslation } from 'app/utils/i18n';
 const disabledBtnStyle = {
   outlineColor: 'none',
   outlineWidth: '$0',
@@ -33,6 +34,7 @@ interface venueCardDetails {
 }
 
 export function VenueCard(props: venueCardDetails) {
+  const { t } = useTranslation();
   const venueLink = useLink({
     href: '/venue/' + props.enName,
   });
@@ -163,7 +165,7 @@ export function VenueCard(props: venueCardDetails) {
         <XStack marginVertical={'$1.5'} justifyContent="space-between">
           <XStack space="$1">
             <Button theme={'blue'} size={'$2'} icon={<User />}>
-              {props.capacity + 'Guests'}
+              {props.capacity + ' ' + t('venuePage.people')}
             </Button>
             <Button theme={'blue'} size={'$2'} icon={<Hash />}>
               {props.category}

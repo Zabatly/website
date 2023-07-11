@@ -25,6 +25,29 @@ export const userRouter = router({
         },
       });
     }),
+  updateDetails: protectedProcedure
+    .input(
+      z.object({
+        userID: z.number(),
+        firstName: z.string(),
+        lastName: z.string(),
+        address: z.string(),
+        phoneNumber: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.users.update({
+        where: {
+          id: input.userID,
+        },
+        data: {
+          firstName: input.firstName,
+          lastName: input.lastName,
+          address: input.address,
+          phoneNumber: input.phoneNumber,
+        },
+      });
+    }),
 });
 
 //question: can we get the id from ctx instead of input?

@@ -58,4 +58,19 @@ export const venueRouter = router({
         },
       });
     }),
+  visitVenue: protectedProcedure
+    .input(
+      z.object({
+        userID: z.number(),
+        venueID: z.number(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.visited_venues.create({
+        data: {
+          userID: input.userID,
+          venueID: input.venueID,
+        },
+      });
+    }),
 });

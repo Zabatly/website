@@ -32,12 +32,12 @@ const disabledBtnStyle = {
 
 export function AppBar() {
   const webRouter = Platform.OS == 'web' ? nextRouter.useRouter() : null;
-  const { isLoaded, signOut, isSignedIn } = useAuth();
+  const { isLoaded, signOut, isSignedIn, userId } = useAuth();
   const signInLinkProps = useLink({
     href: '/signin',
   });
   const userProfileLink = useLink({
-    href: '/',
+    href: '/user/' + userId,
   });
   const theme = useThemeNameState();
   const isDark = theme == 'dark';
@@ -207,8 +207,12 @@ export function AppBar() {
                 {isSignedIn && (
                   <>
                     <YGroup.Item>
-                      <Button icon={<User />} {...userProfileLink}>
-                        Profile
+                      <Button
+                        direction={langDirection}
+                        icon={<User />}
+                        {...userProfileLink}
+                      >
+                        {t('profile')}
                       </Button>
                     </YGroup.Item>
                     <YGroup.Item>
