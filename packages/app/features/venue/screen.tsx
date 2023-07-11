@@ -6,7 +6,6 @@ import {
   XStack,
   H2,
   H4,
-  H5,
   Stack,
   Card,
   ScrollView,
@@ -16,9 +15,7 @@ import {
   Tabs,
   TabsContentProps,
   SizableText,
-  isWeb,
   YGroup,
-  ListItem,
 } from '@my/ui';
 import { AppBar } from '@my/ui/src/components/AppBar';
 import { AppShell } from '@my/ui/src/components/AppShell';
@@ -32,7 +29,7 @@ import {
   Check,
   Dot,
 } from '@tamagui/lucide-icons';
-import { LmDatepicker } from '@tamagui-extras/date';
+import { LmDatepicker, LmDateRangePickerRhf } from '@tamagui-extras/date';
 import React from 'react';
 import { createParam } from 'solito';
 import { PriceTag } from '@my/ui/src/components/PriceTag';
@@ -55,8 +52,11 @@ const TabsContent = (props: TabsContentProps) => {
     </Tabs.Content>
   );
 };
-
-const HorizontalTabs = ({ venueData, venueFeatures }: any) => {
+interface VenueInfoTabs {
+  venueData: RouterOutputs['venue']['getVenue'];
+}
+const HorizontalTabs = ({ venueData }: VenueInfoTabs) => {
+  const { t, i18n } = useTranslation();
   return (
     <Tabs
       defaultValue="tab1"
@@ -71,83 +71,97 @@ const HorizontalTabs = ({ venueData, venueFeatures }: any) => {
         aria-label="Venue Reservation Information"
       >
         <Tabs.Tab flex={1} value="tab1">
-          <SizableText fontFamily="$body">Features</SizableText>
+          <SizableText fontFamily="$body">
+            {t('venuePage.features')}
+          </SizableText>
         </Tabs.Tab>
         <Tabs.Tab flex={1} value="tab2">
-          <SizableText fontFamily="$body">Host Rules</SizableText>
+          <SizableText fontFamily="$body">{t('venuePage.rules')}</SizableText>
         </Tabs.Tab>
         <Tabs.Tab flex={1} value="tab3">
-          <SizableText fontFamily="$body">Cancellation Policy</SizableText>
+          <SizableText fontFamily="$body">{t('venuePage.policy')}</SizableText>
         </Tabs.Tab>
       </Tabs.List>
       <Separator />
-      <TabsContent value="tab1">
-        <Paragraph fontWeight={'600'}>
-          Amenities available on the venue.
-        </Paragraph>
+      <TabsContent value="tab1" direction={i18n.dir(i18n.language)}>
+        <Paragraph fontWeight={'600'}>{t('venuePage.features_desc')}</Paragraph>
         <XStack
           flexWrap={'wrap'}
           justifyContent="space-between"
           paddingTop={10}
         >
-          {/*venueFeatures.forEach((feature) => {
-            <Stack w={'50%'} paddingBottom={'$3'}>
-              <XStack space="$2">
-                <CheckCircle />
-                <Paragraph>{feature}</Paragraph>
-              </XStack>
-            </Stack>;
-          })}*/}
+          {venueData?.features.map((feature) => {
+            return (
+              <Stack
+                w={'50%'}
+                paddingBottom={'$3'}
+                direction={i18n.dir(i18n.language)}
+              >
+                <XStack space="$2">
+                  <CheckCircle />
+                  <Paragraph>
+                    {
+                      feature.featurename[
+                        i18n.language == 'en' ? 'name' : 'ar_name'
+                      ]
+                    }
+                  </Paragraph>
+                </XStack>
+              </Stack>
+            );
+          })}
         </XStack>
       </TabsContent>
 
-      <TabsContent value="tab2">
+      <TabsContent value="tab2" direction={i18n.dir(i18n.language)}>
         <YStack>
           <YGroup height={100}>
             <ScrollView showsVerticalScrollIndicator>
-              {venueData.rules}
-              <YGroup.Item>
-                <XStack alignItems="center" space="$1">
-                  <Dot /> <Paragraph>Rule#1</Paragraph>
-                </XStack>
-              </YGroup.Item>
-              <YGroup.Item>
-                <XStack alignItems="center" space="$1">
-                  <Dot /> <Paragraph>Rule#1</Paragraph>
-                </XStack>
-              </YGroup.Item>
+              {venueData?.[i18n.language == 'en' ? 'rules' : 'ar_rules']
+                ?.split('. ')
+                .map((rule) => {
+                  return (
+                    <YGroup.Item>
+                      <XStack alignItems="center" space="$1">
+                        <Dot /> <Paragraph>{rule}</Paragraph>
+                      </XStack>
+                    </YGroup.Item>
+                  );
+                })}
             </ScrollView>
           </YGroup>
         </YStack>
       </TabsContent>
 
-      <TabsContent value="tab3">
-        <Paragraph fontWeight={'500'}>{venueData.policy}</Paragraph>
+      <TabsContent value="tab3" direction={i18n.dir(i18n.language)}>
+        <Paragraph fontWeight={'500'}>
+          {venueData?.[i18n.language == 'en' ? 'policy' : 'ar_policy']}
+        </Paragraph>
       </TabsContent>
     </Tabs>
   );
 };
 
 import { trpc } from 'app/utils/trpc';
-
+import { RouterOutputs } from 'app/utils/trpc.web';
+import { VenueCard } from '@my/ui/src/components/VenueCard';
+import { useAuth } from 'app/utils/clerk';
+import { Link } from 'solito/link';
+import { LmFormRhfProvider } from '@tamagui-extras/form';
+import { useRouter } from 'solito/router';
+import { useTranslation } from 'app/utils/i18n';
 export function VenueScreen() {
+  const { t, i18n } = useTranslation();
+  const langDirection = i18n.dir(i18n.language);
   const media = useMedia();
-
+  const { push } = useRouter();
+  const { isSignedIn } = useAuth();
   const [id] = useParam('id');
-  if (!id) return null;
-  console.log(id);
-  {
-    /*
-    TODO: DO this for real... & translation...
- const firstQuery = useQuery(['getFirstData']);
+  if (!id || parseInt(id)) return push('/');
 
-  const secondQuery = useQuery(['getSecondData', firstQuery.data?.id], {
-    enabled: !!firstQuery.data?.id,
+  const { isLoading, isLoadingError, data } = trpc.venue.getVenue.useQuery(id, {
+    refetchOnWindowFocus: false,
   });
-  */
-  }
-  const { isLoading, isLoadingError, data } =
-    trpc.venue.getVenue.useQuery('Nile Palace');
   if (isLoading) return <H4>Loading Venue Data...</H4>;
   if (isLoadingError) return <H4>Loading Error....</H4>;
   if (!data) return <H4>Loading Error</H4>;
@@ -172,8 +186,9 @@ export function VenueScreen() {
           space={'$4'}
           overflow="hidden"
           paddingHorizontal={0}
+          direction={langDirection}
         >
-          <VenueSlider />
+          <VenueSlider image={data.categories.imageURL} />
           <XStack
             $gtSm={{ flexDirection: 'row', padding: '$6' }}
             flexDirection="column"
@@ -182,7 +197,7 @@ export function VenueScreen() {
             space="$2"
           >
             <YStack $gtSm={{ w: '50%' }} paddingHorizontal={'$2'}>
-              <H2>{data.name}</H2>
+              <H2>{data[i18n.language == 'en' ? 'name' : 'ar_name']}</H2>
               <XStack
                 justifyContent="flex-start"
                 flexWrap={'wrap'}
@@ -191,18 +206,20 @@ export function VenueScreen() {
               >
                 <XStack space={'$1'}>
                   <MapPin color={'#1363ff'} />
-                  <Paragraph fontWeight={'500'}>{data.cityID}</Paragraph>
+                  <Paragraph fontWeight={'500'}>
+                    {data.cities[i18n.language == 'en' ? 'name' : 'ar_name']}
+                  </Paragraph>
                 </XStack>
                 <XStack space={'$1'}>
                   <Users color={'#1363ff'} />
                   <Paragraph fontWeight={'500'}>
-                    {data.capacity} People
+                    {data.capacity} {t('venuePage.people')}
                   </Paragraph>
                 </XStack>
                 <XStack space={'$1'}>
                   <Expand color={'#1363ff'} />
                   <Paragraph fontWeight={'500'}>
-                    {data.space} {'m\u00B2'}
+                    {data.space} {t('venuePage.space')} {/*'m\u00B2'*/}
                   </Paragraph>
                 </XStack>
                 <XStack space={'$1'}>
@@ -226,7 +243,7 @@ export function VenueScreen() {
                     w={'100%'}
                   >
                     <Card.Header>
-                      <H2>Price</H2>
+                      <H2>{t('venuePage.price')}</H2>
                       <PriceTag price={data.price!} discount={0.4} />
                     </Card.Header>
                     <Stack paddingVertical={'$2'}>
@@ -234,7 +251,7 @@ export function VenueScreen() {
                         fontWeight={'bold'}
                         $gtSm={{ paddingHorizontal: '$8' }}
                       >
-                        Checkin - Checkout
+                        {t('venuePage.checkin')} - {t('venuePage.checkout')}
                       </Paragraph>
                       <LmDatepicker
                         isRangePicker
@@ -256,7 +273,7 @@ export function VenueScreen() {
                       theme="blue"
                       fontWeight={'bold'}
                     >
-                      Reserve Now
+                      {t('venuePage.reserve')}
                     </Button>
                   </Card>
                 </YStack>
@@ -265,11 +282,18 @@ export function VenueScreen() {
                 justifyContent="flex-start"
                 w={'100%'}
                 paddingVertical={'$2'}
+                direction={langDirection}
               >
                 <H4 fontWeight={'400'} color={'#1363ff'}>
-                  Description
+                  {t('venuePage.description')}
                 </H4>
-                <Paragraph fontWeight={'600'}>{data.description}</Paragraph>
+                <Paragraph fontWeight={'600'}>
+                  {
+                    data[
+                      i18n.language == 'en' ? 'description' : 'ar_description'
+                    ]
+                  }
+                </Paragraph>
                 <Separator
                   alignSelf="stretch"
                   outlineColor={'white'}
@@ -288,42 +312,78 @@ export function VenueScreen() {
                   w={'100%'}
                 >
                   <Card.Header>
-                    <H2>Price</H2>
+                    <H2>{t('venuePage.price')}</H2>
                     <PriceTag price={data.price!} discount={0.4} />
                   </Card.Header>
-                  <Stack paddingVertical={'$2'}>
-                    <Paragraph
-                      fontWeight={'bold'}
-                      $gtSm={{ paddingHorizontal: '$8' }}
+
+                  {isSignedIn ? (
+                    <LmFormRhfProvider
+                      shouldUseNativeValidation={false}
+                      mode="onSubmit"
                     >
-                      Checkin - Checkout
+                      <Stack paddingVertical={'$2'}>
+                        <Paragraph
+                          fontWeight={'bold'}
+                          $gtSm={{ paddingHorizontal: '$8' }}
+                        >
+                          {t('venuePage.checkin')} - {t('venuePage.checkout')}
+                        </Paragraph>
+                        <LmDatepicker
+                          isRangePicker
+                          inputProps={{
+                            alignSelf: 'center',
+                          }}
+                          popoverProps={{
+                            sheetProps: {
+                              dismissOnOverlayPress: true,
+                              hideHandle: false,
+                              snapPoints: [85, 50, 25],
+                              fullScreen: false,
+                            },
+                          }}
+                        />
+                      </Stack>
+                      <Button
+                        marginVertical={'$2'}
+                        theme="blue"
+                        fontWeight={'bold'}
+                      >
+                        {t('venuePage.reserve')}
+                      </Button>
+                    </LmFormRhfProvider>
+                  ) : (
+                    <Paragraph marginVertical={'$2'}>
+                      <XStack space="$1">
+                        {t('venuePage.please')}
+                        <Link href={'/signin'}>
+                          <Paragraph color={'$blue9Light'} fontWeight={'500'}>
+                            {t('venuePage.signin')}
+                          </Paragraph>
+                        </Link>
+                        {t('venuePage.reserveStart')}
+                      </XStack>
                     </Paragraph>
-                    <LmDatepicker
-                      isRangePicker
-                      inputProps={{
-                        alignSelf: 'center',
-                      }}
-                      popoverProps={{
-                        sheetProps: {
-                          dismissOnOverlayPress: true,
-                          hideHandle: false,
-                          snapPoints: [85, 50, 25],
-                          fullScreen: false,
-                        },
-                      }}
-                    />
-                  </Stack>
-                  <Button
-                    marginVertical={'$2'}
-                    theme="blue"
-                    fontWeight={'bold'}
-                  >
-                    Reserve Now
-                  </Button>
+                  )}
                 </Card>
               </YStack>
             )}
           </XStack>
+          <YStack paddingHorizontal="$6">
+            <H4>{t('similar_venues')}</H4>
+            <Separator
+              alignSelf="stretch"
+              outlineColor={'white'}
+              marginVertical={5}
+              marginBottom={10}
+            />
+            {/*
+            <XStack space>
+              <VenueCard />
+              <VenueCard />
+              <VenueCard />
+            </XStack>
+              */}
+          </YStack>
         </YStack>
       </YStack>
     </AppShell>

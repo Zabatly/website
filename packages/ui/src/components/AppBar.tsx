@@ -35,8 +35,8 @@ export function AppBar() {
   const signInLinkProps = useLink({
     href: '/signin',
   });
-  const venuePageLink = useLink({
-    href: '/venue/Nile%20Palace',
+  const userProfileLink = useLink({
+    href: '/',
   });
   const theme = useThemeNameState();
   const isDark = theme == 'dark';
@@ -177,10 +177,11 @@ export function AppBar() {
                       pressStyle={disabledBtnStyle as any}
                       onPress={() => {
                         const lang = i18n.language == 'en' ? 'ar' : 'en';
-                        if (webRouter)
-                          return push(webRouter.pathname, undefined, {
+                        if (webRouter) {
+                          return push(webRouter.asPath, undefined, {
                             locale: lang,
                           });
+                        }
 
                         i18n.changeLanguage(lang);
                       }}
@@ -201,19 +202,22 @@ export function AppBar() {
                     {isDark ? t('lightMode') : t('darkMode')}
                   </Button>
                 </YGroup.Item>
-                <YGroup.Item>
-                  <Button {...venuePageLink}>Venue</Button>
-                </YGroup.Item>
+
                 {isSignedIn && (
-                  <YGroup.Item>
-                    <Button
-                      onPress={() => signOut()}
-                      direction={langDirection}
-                      icon={<LogOut />}
-                    >
-                      {t('auth.signout')}
-                    </Button>
-                  </YGroup.Item>
+                  <>
+                    <YGroup.Item>
+                      <Button {...userProfileLink}>Profile</Button>
+                    </YGroup.Item>
+                    <YGroup.Item>
+                      <Button
+                        onPress={() => signOut()}
+                        direction={langDirection}
+                        icon={<LogOut />}
+                      >
+                        {t('auth.signout')}
+                      </Button>
+                    </YGroup.Item>
+                  </>
                 )}
               </YGroup>
             </YStack>

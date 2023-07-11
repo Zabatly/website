@@ -1,22 +1,15 @@
 import React, { ComponentProps } from 'react';
-import { FlatList } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useDraggableScroll } from 'app/utils/draggableScroll';
 
 export const DraggableScrollView = React.forwardRef<
-  FlatList,
-  ComponentProps<typeof FlatList>
+  ScrollView,
+  ComponentProps<typeof ScrollView>
 >(function DraggableScrollView(props, ref) {
-  const { refs } = useDraggableScroll<FlatList>({
+  const { refs } = useDraggableScroll<ScrollView>({
     outerRef: ref,
     cursor: 'grab', // optional, default
   });
 
-  return (
-    <FlatList
-      ref={refs}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      {...props}
-    />
-  );
+  return <ScrollView ref={refs} horizontal {...props} />;
 });

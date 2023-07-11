@@ -154,6 +154,7 @@ import { StarFill } from '@tamagui-extras/core';
 import { VenueCard } from '@my/ui/src/components/VenueCard';
 import { ChatWidget } from '@my/ui/src/components/ChatWidget';
 import { Platform } from 'react-native';
+import { DraggableScrollView } from '@my/ui/src/components/draggableScroll';
 /*
 function VenueCard() {
   return (
@@ -226,8 +227,14 @@ function VenueCard() {
 export function HomeScreen() {
   //const theme = useThemeNameState();
   // const isDarkTheme = theme === 'dark';
+  const { isLoading, data: featuredVenues } = trpc.venue.getVenues.useQuery(4, {
+    refetchOnWindowFocus: false,
+  });
+
   const { t, i18n } = useTranslation();
   const langDirection = i18n.dir(i18n.language);
+  if (isLoading) return <H4>Loading...</H4>;
+  // console.log(data);
   return (
     <AppShell>
       <AppBar />
@@ -294,10 +301,45 @@ export function HomeScreen() {
             <H2>{t('featured_categories')}</H2>
             <CategoriesSlider />
             <Separator alignSelf="stretch" outlineColor={'white'} />
-            <H2>{t('recommended_venues')}</H2>
-            <XStack space>
-              <VenueCard key={1} />
-            </XStack>
+            <H2>{t('featured_venues')}</H2>
+
+            <DraggableScrollView showsHorizontalScrollIndicator={false}>
+              <XStack space>
+                {featuredVenues?.map((venue) => {
+                  return (
+                    venue && (
+                      <VenueCard
+                        key={venue.id}
+                        enName={venue.name!}
+                        name={
+                          i18n.language == 'en' ? venue.name! : venue.ar_name!
+                        }
+                        desc={
+                          i18n.language == 'en'
+                            ? venue.description!
+                            : venue.ar_description!
+                        }
+                        price={venue.price!}
+                        category={
+                          i18n.language == 'en'
+                            ? venue.categories.name
+                            : venue.categories.ar_name
+                        }
+                        location={
+                          i18n.language == 'en'
+                            ? venue.cities.name
+                            : venue.cities.ar_name
+                        }
+                        imageURL={venue.categories.imageURL}
+                        rating={venue.rating!}
+                        capacity={venue.capacity!}
+                        language={i18n.language == 'en' ? 'en' : 'ar'}
+                      />
+                    )
+                  );
+                })}
+              </XStack>
+            </DraggableScrollView>
           </YStack>
         </YStack>
       </ScrollView>

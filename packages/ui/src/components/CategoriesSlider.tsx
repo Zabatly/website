@@ -1,29 +1,9 @@
-import {
-  Paragraph,
-  XStack,
-  Card,
-  H2,
-  Button,
-  Image,
-  Stack,
-  YStack,
-} from '@my/ui';
-import React, { Children, useRef, useState } from 'react';
-import {
-  Dimensions,
-  PanResponder,
-  StyleSheet,
-  Animated,
-  Text,
-  View,
-} from 'react-native';
-import { PanGestureHandler } from 'react-native-gesture-handler';
-// import Carousel from 'react-native-reanimated-carousel';
-//import { Platform, ScrollView } from 'react-native';
+import { Paragraph, XStack, Card, H2, Image } from '@my/ui';
+import React from 'react';
 import { DraggableScrollView } from './draggableScroll';
-import { ReactNode } from 'react';
-// const PAGE_WIDTH = Platform.OS == 'web' ? window.innerWidth : windowWidth;
-const COUNT = 3;
+import { trpc } from 'app/utils/trpc';
+import { H4 } from 'tamagui';
+import { useTranslation } from 'app/utils/i18n';
 
 interface CarouselCard {
   title: string;
@@ -64,47 +44,29 @@ function DemoCard(props: CarouselCard) {
     </Card>
   );
 }
-interface Item {
-  id: number;
-  title: string;
-  desc: string;
-  source: string;
-}
-const data = [
-  { id: 1, title: 'Party', desc: '', source: require('./img/venue.jpg') },
-  {
-    id: 2,
-    title: 'Engagement',
-    desc: '',
-    source: require('./img/venue.jpg'),
-  },
-  { id: 3, title: 'Sports', desc: '', source: require('./img/venue.jpg') },
-  { id: 4, title: 'Formal', desc: '', source: require('./img/venue.jpg') },
-  { id: 5, title: 'View More', desc: '', source: require('./img/venue.jpg') },
-];
-interface renderItemProps {
-  item: Item;
-}
 
 export function CategoriesSlider() {
+  console.log('re-render');
+  const { t, i18n } = useTranslation();
+  const { isLoading, isLoadingError, data } =
+    trpc.venue.getVenueCategories.useQuery(5, {
+      refetchOnWindowFocus: false,
+    });
+  if (isLoadingError || !data) return <H4>ERROR LOAD</H4>;
+  console.log(data);
   return (
-    <DraggableScrollView
-      data={data}
-      renderItem={({ item }: any) => (
-        <DemoCard
-          key={item.id}
-          title={item.title}
-          desc=""
-          buttonName="View"
-          image={item.source}
-        />
-      )}
-      keyExtractor={(item: Item): any => item.id}
-      removeClippedSubviews={true} // Unmount components when outside of window
-      initialNumToRender={3} // Render 3 items initially
-      maxToRenderPerBatch={1} // Render 1 item per batch
-      updateCellsBatchingPeriod={100} // Increase time between renders
-      windowSize={3} // Set window size to 3
-    />
+    <DraggableScrollView showsHorizontalScrollIndicator={false}>
+      {data.map((category) => {
+        return (
+          <DemoCard
+            key={category.id}
+            title={i18n.language == 'en' ? category.name : category.ar_name}
+            desc=""
+            buttonName=""
+            image={category.imageURL}
+          />
+        );
+      })}
+    </DraggableScrollView>
   );
 }

@@ -7,19 +7,112 @@ import {
   Flame,
   TrendingUp,
   Heart,
-  HeartOff,
+  Sparkles,
   User,
 } from '@tamagui/lucide-icons';
+import { PriceTag } from './PriceTag';
+import { useLink } from 'solito/link';
 const disabledBtnStyle = {
   outlineColor: 'none',
   outlineWidth: '$0',
   bw: '$0',
   borderColor: 'transparent',
 };
-export function VenueCard() {
+
+interface venueCardDetails {
+  enName: string;
+  name: string;
+  desc: string;
+  rating: number;
+  price: number;
+  category: string;
+  capacity: number;
+  imageURL: string;
+  location: string;
+  language: 'ar' | 'en';
+}
+
+export function VenueCard(props: venueCardDetails) {
+  const venueLink = useLink({
+    href: '/venue/' + props.enName,
+  });
+  const tagNames = {
+    hot: {
+      en: 'Hot',
+      ar: 'ساخن',
+    },
+    new: {
+      en: 'New',
+      ar: 'جديد',
+    },
+    trending: {
+      en: 'Trending',
+      ar: 'شائع',
+    },
+  };
+
+  const allTags = {
+    '0': <></>,
+    '1': (
+      <Button theme={'blue'} size={'$2'} icon={<Flame color={'orange'} />}>
+        {tagNames['hot'][props.language]}
+      </Button>
+    ),
+    '2': (
+      <Button theme={'blue'} size={'$2'} icon={<TrendingUp color={'green'} />}>
+        {tagNames['trending'][props.language]}
+      </Button>
+    ),
+    '3': (
+      <Button theme={'blue'} size={'$2'} icon={<Sparkles color={'gold'} />}>
+        {tagNames['new'][props.language]}
+      </Button>
+    ),
+    '4': (
+      <>
+        <Button theme={'blue'} size={'$2'} icon={<Flame color={'orange'} />}>
+          {tagNames['hot'][props.language]}
+        </Button>
+        <Button
+          theme={'blue'}
+          size={'$2'}
+          icon={<TrendingUp color={'green'} />}
+        >
+          {tagNames['trending'][props.language]}
+        </Button>
+      </>
+    ),
+    '5': (
+      <>
+        <Button theme={'blue'} size={'$2'} icon={<Flame color={'orange'} />}>
+          {tagNames['hot'][props.language]}
+        </Button>
+        <Button theme={'blue'} size={'$2'} icon={<Sparkles color={'gold'} />}>
+          {tagNames['new'][props.language]}
+        </Button>
+      </>
+    ),
+    '6': (
+      <>
+        <Button
+          theme={'blue'}
+          size={'$2'}
+          icon={<TrendingUp color={'green'} />}
+        >
+          {tagNames['trending'][props.language]}
+        </Button>
+        <Button theme={'blue'} size={'$2'} icon={<Sparkles color={'gold'} />}>
+          {tagNames['new'][props.language]}
+        </Button>
+      </>
+    ),
+  };
+  type tagIdx = '0' | '1' | '2' | '3' | '4' | '5' | '6';
+  const tagIndex: string = Math.floor(Math.random() * 7).toString();
   return (
     //box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     <Card
+      {...venueLink}
       w={300}
       h={350}
       size="$6"
@@ -28,8 +121,6 @@ export function VenueCard() {
       animation={'bouncy'}
       hoverStyle={{ scale: 0.925 }}
       pressStyle={{ scale: 0.875 }}
-      shadowRadius={'$0.2'}
-      shadowColor={'rgba(0, 0, 0, 0.24)'}
     >
       <Card.Background>
         <Image
@@ -39,79 +130,50 @@ export function VenueCard() {
           alignSelf="center"
           resizeMode="cover"
           source={{
-            uri: 'https://images.squarespace-cdn.com/content/v1/5ada74b8e17ba3c5359136a4/1599702204937-WOF9RU65Q89UHML5TITE/building-a-wedding-venue.jpg',
+            uri: props.imageURL,
           }}
           marginBottom={'$2'}
         />
       </Card.Background>
       <YStack f={1} padding={'$2'}>
-        <XStack w={'100%'} h={70}>
-          <XStack space={'$2'}>
-            <Button
-              theme={'blue'}
-              size={'$2'}
-              icon={<Flame color={'orange'} />}
-            >
-              Hot
-            </Button>
-            <Button
-              theme={'blue'}
-              size={'$2'}
-              icon={<TrendingUp color={'green'} />}
-            >
-              Trending
-            </Button>
-          </XStack>
-          <XStack w={'50%'} paddingHorizontal={'$3'} justifyContent="flex-end">
-            <Button
-              size={'$2'}
-              justifyContent="center"
-              outlineColor="transparent"
-              focusStyle={disabledBtnStyle as any}
-              pressStyle={disabledBtnStyle as any}
-              icon={<Heart size={'$1'} />}
-              unstyled
-            />
-          </XStack>
+        <XStack w={'100%'} h={70} justifyContent="space-between">
+          <XStack gap="$2">{allTags[tagIndex as tagIdx]}</XStack>
+          <Button
+            size={'$2'}
+            justifyContent="center"
+            outlineColor="transparent"
+            focusStyle={disabledBtnStyle as any}
+            pressStyle={disabledBtnStyle as any}
+            icon={<Heart size={'$1'} />}
+            unstyled
+          />
         </XStack>
         <XStack w={'100%'} h={100}>
           <YStack w={'50%'} justifyContent="flex-end">
-            <H4>Enchanting Gardens</H4>
+            <H4>{props.name}</H4>
             <XStack space={'$1.5'}>
               <MapPin size={'$1'} />
-              <Paragraph fontWeight={'500'}>Cairo, Egypt</Paragraph>
+              <Paragraph fontWeight={'500'}>{props.location}</Paragraph>
             </XStack>
           </YStack>
           <YStack justifyContent="flex-end" alignItems="flex-end">
-            <Paragraph fontWeight={'bold'} color={'#DD1C1A'} fontSize={'$5'}>
-              40% OFF
-            </Paragraph>
-            <Paragraph
-              color={'grey'}
-              textDecorationLine="line-through"
-              fontSize={'$4'}
-            >
-              1500 EGP
-            </Paragraph>
-            <Paragraph color={'#31D843'} fontWeight={'bold'} fontSize={'$5'}>
-              1000 EGP / DAY
-            </Paragraph>
+            <PriceTag price={props.price} />
           </YStack>
         </XStack>
         <XStack marginVertical={'$1.5'} justifyContent="space-between">
           <XStack space="$1">
             <Button theme={'blue'} size={'$2'} icon={<User />}>
-              100 Guests
+              {props.capacity} Guests
             </Button>
             <Button theme={'blue'} size={'$2'} icon={<Hash />}>
-              Wedding
+              {props.category}
             </Button>
           </XStack>
           <XStack>
             <Paragraph>
               <StarFill color={'#FFD700'} />
             </Paragraph>
-            <Paragraph fontWeight={'bold'}>4.8</Paragraph>
+            <Paragraph fontWeight={'bold'}>{props.rating}</Paragraph>
           </XStack>
         </XStack>
         <YStack f={1}>
@@ -124,12 +186,7 @@ export function VenueCard() {
             w={'100%'}
             marginVertical={'$2'}
           >
-            The enchanting atmosphere creates a magical setting for weddings and
-            special events, where guests can wander along winding paths,
-            discover hidden nooks, and gather under a canopy of twinkling stars.
-            With its natural beauty and ethereal ambiance, the Enchanted Gardens
-            promises an unforgettable experience for all who step foot within
-            its enchanting embrace.
+            {props.desc}
           </Paragraph>
         </YStack>
       </YStack>

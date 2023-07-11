@@ -9,11 +9,12 @@ datasource db {
 }
 
 model categories {
-  id             Int      @id
+  id             Int      @id @default(autoincrement())
   name           String   @default("") @db.TinyText
   ar_name        String   @default("") @db.TinyText
   description    String   @default("") @db.Text
   ar_description String   @default("") @db.Text
+  imageURL       String   @default("") @db.Text
   venues         venues[]
 }
 
@@ -129,16 +130,16 @@ model venues {
   policy         String?          @default("") @db.Text
   ar_policy      String?          @default("") @db.Text
   hostID         Int?
-  catID          Int
+  categoryID     Int
   features       features[]
   reservations   reservations[]
   reviews        reviews[]
-  categories     categories       @relation(fields: [catID], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_VENUE_CATID")
+  categories     categories       @relation(fields: [categoryID], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_VENUE_CATID")
   cities         cities           @relation(fields: [cityID], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_VENUE_CITYID")
   users          users?           @relation(fields: [hostID], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_VENUE_HOST")
   visited_venues visited_venues[]
 
-  @@index([catID], map: "FK_VENUE_CATID")
+  @@index([categoryID], map: "FK_VENUE_CATID")
   @@index([cityID], map: "FK_VENUE_CITYID")
   @@index([hostID], map: "FK_VENUE_HOST")
 }

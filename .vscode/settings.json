@@ -9,6 +9,11 @@
     ".prettierignore": true,
     ".git": true,
     "LICENSE": true,
-    "yarn.lock": true
+    "yarn.lock": true,
+    "turbo.json": true,
+    ".vscode": true,
+    ".env.example": true,
+    ".prettierrc.json": true,
+    ".yarnrc.yml": true
   }
 }

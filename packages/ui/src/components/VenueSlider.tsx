@@ -45,9 +45,6 @@ const YStackEnterable = styled(YStack, {
 });
 */
 interface CarouselCard {
-  title: string;
-  desc: string;
-  buttonName: string;
   image: string;
 }
 
@@ -80,14 +77,11 @@ function DemoCard(props: CarouselCard) {
     </Card>
   );
 }
-interface Item {
-  id: number;
-  title: string;
-  desc: string;
-  source: string;
+interface venueSlider {
+  image: string;
 }
 
-export function VenueSlider() {
+export function VenueSlider({ image }: venueSlider) {
   const data = [
     { id: 1, title: 'Party', desc: '', source: require('./img/venue.jpg') },
     {
@@ -113,7 +107,13 @@ export function VenueSlider() {
   const exitVariant = direction === 1 ? 'isLeft' : 'isRight';
   return (
     <XStack padding="$2" $gtSm={{ padding: '$6' }}>
-      <DraggableScrollView
+      <DraggableScrollView showsHorizontalScrollIndicator={false}>
+        {data.map((venueObject) => {
+          return <DemoCard image={image} />;
+        })}
+      </DraggableScrollView>
+      {/*
+<DraggableScrollView
         data={data}
         renderItem={({ item }: any) => (
           <DemoCard
@@ -131,6 +131,7 @@ export function VenueSlider() {
         updateCellsBatchingPeriod={100} // Increase time between renders
         windowSize={3} // Set window size to 3
       />
+        */}
     </XStack>
   );
   /*

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useMemo, ForwardedRef } from 'react';
-import { Platform, findNodeHandle } from 'react-native';
-import type { FlatList } from 'react-native';
+import { Platform, findNodeHandle, ScrollView } from 'react-native';
 
 // Credits: https://github.com/gregberge/react-merge-refs/blob/main/src/index.tsx
 function mergeRefs<T = any>(
@@ -18,12 +17,12 @@ function mergeRefs<T = any>(
 }
 
 // Credits: https://gist.github.com/nandorojo/92e7301a49a8b9575bb24b3b1ddc19bf#tldr
-type Props<Scrollable extends FlatList = FlatList> = {
+type Props<Scrollable extends ScrollView = ScrollView> = {
   cursor?: string;
   outerRef?: ForwardedRef<Scrollable>;
 };
 
-export function useDraggableScroll<Scrollable extends FlatList = FlatList>({
+export function useDraggableScroll<Scrollable extends ScrollView = ScrollView>({
   outerRef,
   cursor = 'grab',
 }: Props<Scrollable> = {}) {
