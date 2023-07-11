@@ -71,7 +71,7 @@ function DemoCard(props: CarouselCard) {
           height={300}
           alignSelf="center"
           resizeMode="cover"
-          source={props.image as any}
+          source={{ uri: props.image }}
         />
       </Card.Background>
     </Card>
@@ -109,7 +109,7 @@ export function VenueSlider({ image }: venueSlider) {
     <XStack padding="$2" $gtSm={{ padding: '$6' }}>
       <DraggableScrollView showsHorizontalScrollIndicator={false}>
         {data.map((venueObject) => {
-          return <DemoCard image={image} />;
+          return <DemoCard key={venueObject.id} image={image} />;
         })}
       </DraggableScrollView>
       {/*

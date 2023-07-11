@@ -1,13 +1,13 @@
 import { router } from '../trpc';
 import { entryRouter } from './entry';
-import { authRouter } from './auth';
+import { reserveRouter } from './reserve';
 import { userRouter } from './user';
 import { venueRouter } from './venue';
 
 export const appRouter = router({
   entry: entryRouter,
   user: userRouter,
-  auth: authRouter,
+  reserve: reserveRouter,
   venue: venueRouter,
 });
 

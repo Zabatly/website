@@ -72,7 +72,7 @@ export function SignInScreen() {
         })
         .catch((err: clerkAuthError) => {
           if (err && err.errors[0]?.code) {
-            console.log(err.errors);
+            console.log('auth.errors.' + err.errors[0].code);
             toast.show(t('auth.errors.' + err.errors[0].code), {
               toastType: 'error',
               duration: 3000,

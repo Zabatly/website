@@ -25,7 +25,8 @@
     "signin": "SignIn",
     "reserveStart": "to start reserving",
     "people": "People",
-    "space": "m²"
+    "space": "m²",
+    "date_select": "Please select a check-in and checkout dates to reserve"
   },
   "auth": {
     "createAccount": "Create your own Account",

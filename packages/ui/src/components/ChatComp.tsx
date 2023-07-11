@@ -44,7 +44,7 @@ export function ChatComp() {
           message: currentMessage,
         },
       ]);
-      console.log(apiURL);
+      // console.log(apiURL);
       fetch(`http://${apiURL}:5000/Chat`, {
         method: 'POST',
         body: JSON.stringify({ type: 'en', message: currentMessage }),

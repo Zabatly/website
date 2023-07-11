@@ -302,6 +302,109 @@ export function HomeScreen() {
             <CategoriesSlider />
             <Separator alignSelf="stretch" outlineColor={'white'} />
             <H2>{t('featured_venues')}</H2>
+            <DraggableScrollView showsHorizontalScrollIndicator={false}>
+              <XStack space>
+                {featuredVenues?.map((venue) => {
+                  return (
+                    <VenueCard
+                      key={venue.id}
+                      enName={venue.name!}
+                      name={
+                        i18n.language == 'en' ? venue.name! : venue.ar_name!
+                      }
+                      desc={
+                        i18n.language == 'en'
+                          ? venue.description!
+                          : venue.ar_description!
+                      }
+                      price={venue.price!}
+                      category={
+                        i18n.language == 'en'
+                          ? venue.categories.name
+                          : venue.categories.ar_name
+                      }
+                      location={
+                        i18n.language == 'en'
+                          ? venue.cities.name
+                          : venue.cities.ar_name
+                      }
+                      imageURL={venue.categories.imageURL}
+                      rating={venue.rating!}
+                      capacity={venue.capacity!}
+                      language={i18n.language == 'en' ? 'en' : 'ar'}
+                    />
+                  );
+                })}
+              </XStack>
+            </DraggableScrollView>
+          </YStack>
+        </YStack>
+      </ScrollView>
+      {/*
+ {Platform.OS == 'web' && <ChatWidget />}
+      <ScrollView showsHorizontalScrollIndicator={false}>
+        <YStack
+          direction={langDirection}
+          f={1}
+          paddingVertical={10}
+          alignItems="center"
+        >
+          <YStack
+            $gtSm={{
+              w: '60%',
+            }}
+            w={'100%'}
+            paddingHorizontal={'$4'}
+            space={'$4'}
+            overflow="hidden"
+          >
+            <H2>{t('latest_venues')}</H2>
+            <XStack
+              jc="space-between"
+              $gtSm={{
+                jc: 'flex-start',
+              }}
+              space={'$2'}
+            >
+              <Input
+                direction={langDirection}
+                theme={'gray'}
+                f={1}
+                $gtSm={{
+                  w: '100%',
+                }}
+                size={'$4.5'}
+                placeholder={t('search_venues') as any}
+              />
+              <Button theme={'blue'} size={'$4.5'} icon={<Search />} />
+            </XStack>
+            <XStack theme={'blue'} space={'$2'}>
+              <ScrollView horizontal space={'$2'}>
+                <Button icon={MapPin} size="$3">
+                  Location
+                </Button>
+                <Button icon={List} size="$3">
+                  Category
+                </Button>
+                <Button icon={Pencil} size="$3">
+                  Name
+                </Button>
+                <Button icon={Star} size="$3">
+                  Feature
+                </Button>
+                <Button icon={Hash} size="$3">
+                  Wedding
+                </Button>
+                <Button icon={Hash} size="$3">
+                  Sports
+                </Button>
+              </ScrollView>
+            </XStack>
+            <Separator alignSelf="stretch" outlineColor={'white'} />
+            <H2>{t('featured_categories')}</H2>
+            <CategoriesSlider />
+            <Separator alignSelf="stretch" outlineColor={'white'} />
+            <H2>{t('featured_venues')}</H2>
 
             <DraggableScrollView showsHorizontalScrollIndicator={false}>
               <XStack space>
@@ -343,6 +446,7 @@ export function HomeScreen() {
           </YStack>
         </YStack>
       </ScrollView>
+        */}
     </AppShell>
   );
 }

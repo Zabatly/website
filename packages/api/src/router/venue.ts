@@ -42,7 +42,20 @@ export const venueRouter = router({
       },
     });
   }),
-  getSecretMessage: protectedProcedure.query(() => {
-    return 'you can see this secret message!';
-  }),
+  getSimilarVenues: publicProcedure
+    .input(z.array(z.number()))
+    .query(async ({ ctx, input }) => {
+      console.log(input);
+      return ctx.prisma.venues.findMany({
+        where: {
+          id: {
+            in: input,
+          },
+        },
+        include: {
+          cities: true,
+          categories: true,
+        },
+      });
+    }),
 });

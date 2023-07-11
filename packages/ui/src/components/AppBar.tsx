@@ -15,6 +15,7 @@ import {
   Languages,
   LogOut,
   Inbox,
+  User,
 } from '@tamagui/lucide-icons';
 import { Logo } from './Logo';
 import { useTranslation } from 'app/utils/i18n';
@@ -206,7 +207,9 @@ export function AppBar() {
                 {isSignedIn && (
                   <>
                     <YGroup.Item>
-                      <Button {...userProfileLink}>Profile</Button>
+                      <Button icon={<User />} {...userProfileLink}>
+                        Profile
+                      </Button>
                     </YGroup.Item>
                     <YGroup.Item>
                       <Button

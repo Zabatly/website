@@ -48,18 +48,15 @@ export function SignUpScreen() {
 
   if (authStatus == 'fail') {
     console.log('Failed all day');
-    toast.show(
-      t(
-        'auth.errors.' + signupError
-          ? 'form_identifier_not_found'
-          : 'form_identifier_exists'
-      ),
-      {
-        toastType: 'error',
-        duration: 3000,
-        displayTime: new Date(),
-      }
-    );
+    const errorMessage =
+      'auth.errors.' +
+      (signupError ? 'form_identifier_not_found' : 'form_identifier_exists');
+    console.log(errorMessage);
+    toast.show(t(errorMessage), {
+      toastType: 'error',
+      duration: 3000,
+      displayTime: new Date(),
+    });
   }
 
   const handleEmailSignUpWithPress = async ({
@@ -76,6 +73,7 @@ export function SignUpScreen() {
       })
       .catch((err: clerkAuthError) => {
         if (err && err.errors[0]?.code) {
+          console.log('auth.errors.' + err.errors[0].code);
           toast.show(t('auth.errors.' + err.errors[0].code), {
             toastType: 'error',
             duration: 3000,

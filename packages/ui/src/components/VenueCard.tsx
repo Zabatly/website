@@ -163,7 +163,7 @@ export function VenueCard(props: venueCardDetails) {
         <XStack marginVertical={'$1.5'} justifyContent="space-between">
           <XStack space="$1">
             <Button theme={'blue'} size={'$2'} icon={<User />}>
-              {props.capacity} Guests
+              {props.capacity + 'Guests'}
             </Button>
             <Button theme={'blue'} size={'$2'} icon={<Hash />}>
               {props.category}
@@ -190,48 +190,6 @@ export function VenueCard(props: venueCardDetails) {
           </Paragraph>
         </YStack>
       </YStack>
-      {/* 
-        <YStack backgroundColor={'red'} flex={1} paddingHorizontal={'$1.5'}>
-        <XStack justifyContent="space-between" space>
-          <H4>Weird Venue</H4>
-          <XStack>
-            <Paragraph>
-              <StarFill color={'#FFD700'} />
-            </Paragraph>
-            <Paragraph fontWeight={'bold'}>4.8</Paragraph>
-          </XStack>
-        </XStack>
-        <XStack marginVertical={'$2'} space={'$1.5'}>
-          <MapPin />
-          <Paragraph fontWeight={'500'}>Cairo, Egypt</Paragraph>
-        </XStack>
-
-        <XStack space={'$1.5'}>
-          <Button theme={'blue'} size={'$2'} icon={<Hash />}>
-            Wedding
-          </Button>
-          <Button theme={'blue'} size={'$2'} icon={<Hash />}>
-            Engagement
-          </Button>
-        </XStack>
-        <XStack marginVertical={'$4'} justifyContent="space-evenly">
-          <Paragraph color={'$green9Light'} fontWeight={'bold'} fontSize={'$8'}>
-            1000 EGP
-          </Paragraph>
-          <Paragraph
-            color={'grey'}
-            textDecorationLine="line-through"
-            fontSize={'$4'}
-          >
-            1500 EGP
-          </Paragraph>
-          <Paragraph fontWeight={'bold'} color={'$red7Dark'} fontSize={'$5'}>
-            40% OFF
-          </Paragraph>
-        </XStack>
-      </YStack>
-      
-      */}
     </Card>
   );
 }

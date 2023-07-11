@@ -34,7 +34,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
   return (
     <YStack
       theme={theme}
-      backgroundColor="$backgroundSoft"
+      backgroundColor="$background"
       direction={langDirection}
       borderRadius="$10"
       space
@@ -131,6 +131,7 @@ export const SignUpSignInComponent: React.FC<Props> = ({
             name="password"
             direction={langDirection}
             placeholder={t('auth.password') as string}
+            required={true}
             isPassword={true}
             rules={{
               required: t('auth.errors.passwordRequired') as string,

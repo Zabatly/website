@@ -32,13 +32,16 @@ function DemoCard(props: CarouselCard) {
         <XStack flex={1} />
       </Card.Footer>
       <Card.Background>
+        {console.log(props.image)}
         <Image
           opacity={0.8}
           width={500}
           height={300}
           alignSelf="center"
           resizeMode="cover"
-          source={props.image as any}
+          source={{
+            uri: props.image,
+          }}
         />
       </Card.Background>
     </Card>
