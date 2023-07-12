@@ -42,6 +42,57 @@ export const venueRouter = router({
       },
     });
   }),
+  getVenuesByCity: publicProcedure
+    .input(z.string())
+    .query(async ({ ctx, input }) => {
+      const cityData = await ctx.prisma.cities.findFirst({
+        where: {
+          name: input,
+        },
+      });
+
+      return ctx.prisma.venues.findMany({
+        where: {
+          cityID: cityData?.id,
+        },
+        include: {
+          cities: true,
+          categories: true,
+        },
+      });
+    }),
+  getVenuesByCategoryName: publicProcedure
+    .input(z.string())
+    .query(async ({ ctx, input }) => {
+      const categoryData = await ctx.prisma.categories.findFirst({
+        where: {
+          name: input,
+        },
+      });
+
+      return ctx.prisma.venues.findMany({
+        where: {
+          categoryID: categoryData?.id,
+        },
+        include: {
+          cities: true,
+          categories: true,
+        },
+      });
+    }),
+  getVenuesByCategory: publicProcedure
+    .input(z.number())
+    .query(async ({ ctx, input }) => {
+      return ctx.prisma.venues.findMany({
+        where: {
+          categoryID: input,
+        },
+        include: {
+          categories: true,
+          cities: true,
+        },
+      });
+    }),
   getSimilarVenues: publicProcedure
     .input(z.array(z.number()))
     .query(async ({ ctx, input }) => {

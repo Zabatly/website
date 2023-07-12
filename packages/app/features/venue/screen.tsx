@@ -154,7 +154,7 @@ const SimilarVenuesSlider = ({ similarVenues }: similarVenuesObject) => {
     trpc.venue.getSimilarVenues.useQuery(similarVenues, {
       refetchOnWindowFocus: false,
     });
-  if (isLoading) return <H4>Loading Similar Venues...</H4>;
+  if (isLoading) return <LoadingSpinner />;
   if (isLoadingError) return <></>;
   // console.log(data);
   return (
@@ -210,6 +210,7 @@ import { useEffect } from 'react';
 import Constants from 'expo-constants';
 import { Platform } from 'react-native';
 import { DraggableScrollView } from '@my/ui/src/components/draggableScroll';
+import { LoadingSpinner } from '@my/ui/src/components/LoadingSpinner';
 export function VenueScreen() {
   const { t, i18n } = useTranslation();
   const langDirection = i18n.dir(i18n.language);
@@ -287,7 +288,7 @@ export function VenueScreen() {
       });
     }
   }, [data?.id, userData?.id]);
-  if (isLoading) return <H4>Loading Venue Data...</H4>;
+  if (isLoading) return <LoadingSpinner />;
   if (isLoadingError) return <H4>Loading Error....</H4>;
   if (!data) return <H4>Loading Error</H4>;
   return (

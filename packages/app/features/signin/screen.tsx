@@ -14,6 +14,7 @@ import { ToastComp } from '@my/ui/src/components/ToastComp';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useToastController } from '@tamagui/toast';
+import { LoadingSpinner } from '@my/ui/src/components/LoadingSpinner';
 
 const getBaseUrl = () => {
   if (typeof window !== 'undefined') return ''; // browser should use relative url
@@ -40,7 +41,7 @@ export function SignInScreen() {
   const { isLoaded, signIn, setActive } = useSignIn();
   const [isAuthenticating, setAuthenticating] = useState(false);
   const { isSignedIn } = useAuth();
-  if (!setActive || !isLoaded) return null;
+  if (!setActive || !isLoaded) return <LoadingSpinner />;
   if (Platform.OS == 'web' && isSignedIn) push('/');
   const redirectIfSignedIn = async () => {
     if (signIn.status == 'complete') {

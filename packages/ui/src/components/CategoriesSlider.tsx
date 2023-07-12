@@ -4,17 +4,29 @@ import { DraggableScrollView } from './draggableScroll';
 import { trpc } from 'app/utils/trpc';
 import { H4 } from 'tamagui';
 import { useTranslation } from 'app/utils/i18n';
+import { useLink } from 'solito/link';
 
 interface CarouselCard {
   title: string;
   desc: string;
   buttonName: string;
   image: string;
+  id: number;
 }
 
 function DemoCard(props: CarouselCard) {
+  const categoryLink = useLink({
+    href: {
+      pathname: '/category',
+      query: {
+        id: props.id,
+        name: props.title,
+      },
+    },
+  });
   return (
     <Card
+      {...categoryLink}
       w={300}
       marginRight={'$3'}
       elevate
@@ -67,6 +79,7 @@ export function CategoriesSlider() {
             desc=""
             buttonName=""
             image={category.imageURL}
+            id={category.id}
           />
         );
       })}

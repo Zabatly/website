@@ -32,85 +32,77 @@ interface venueCardDetails {
   location: string;
   language: 'ar' | 'en';
 }
+type tagIdx = '0' | '1' | '2' | '3' | '4' | '5' | '6';
+const tagNames = {
+  hot: {
+    en: 'Hot',
+    ar: 'ساخن',
+  },
+  new: {
+    en: 'New',
+    ar: 'جديد',
+  },
+  trending: {
+    en: 'Trending',
+    ar: 'شائع',
+  },
+};
 
+const allTags = {
+  '0': <></>,
+  '1': (
+    <Button theme={'blue'} size={'$2'} icon={<Flame color={'orange'} />}>
+      {tagNames['hot']['en']}
+    </Button>
+  ),
+  '2': (
+    <Button theme={'blue'} size={'$2'} icon={<TrendingUp color={'green'} />}>
+      {tagNames['trending']['en']}
+    </Button>
+  ),
+  '3': (
+    <Button theme={'blue'} size={'$2'} icon={<Sparkles color={'gold'} />}>
+      {tagNames['new']['en']}
+    </Button>
+  ),
+  '4': (
+    <>
+      <Button theme={'blue'} size={'$2'} icon={<Flame color={'orange'} />}>
+        {tagNames['hot']['en']}
+      </Button>
+      <Button theme={'blue'} size={'$2'} icon={<TrendingUp color={'green'} />}>
+        {tagNames['trending']['en']}
+      </Button>
+    </>
+  ),
+  '5': (
+    <>
+      <Button theme={'blue'} size={'$2'} icon={<Flame color={'orange'} />}>
+        {tagNames['hot']['en']}
+      </Button>
+      <Button theme={'blue'} size={'$2'} icon={<Sparkles color={'gold'} />}>
+        {tagNames['new']['en']}
+      </Button>
+    </>
+  ),
+  '6': (
+    <>
+      <Button theme={'blue'} size={'$2'} icon={<TrendingUp color={'green'} />}>
+        {tagNames['trending']['en']}
+      </Button>
+      <Button theme={'blue'} size={'$2'} icon={<Sparkles color={'gold'} />}>
+        {tagNames['new']['en']}
+      </Button>
+    </>
+  ),
+};
 export function VenueCard(props: venueCardDetails) {
   const { t } = useTranslation();
   const venueLink = useLink({
     href: '/venue/' + props.enName,
   });
-  const tagNames = {
-    hot: {
-      en: 'Hot',
-      ar: 'ساخن',
-    },
-    new: {
-      en: 'New',
-      ar: 'جديد',
-    },
-    trending: {
-      en: 'Trending',
-      ar: 'شائع',
-    },
-  };
 
-  const allTags = {
-    '0': <></>,
-    '1': (
-      <Button theme={'blue'} size={'$2'} icon={<Flame color={'orange'} />}>
-        {tagNames['hot'][props.language]}
-      </Button>
-    ),
-    '2': (
-      <Button theme={'blue'} size={'$2'} icon={<TrendingUp color={'green'} />}>
-        {tagNames['trending'][props.language]}
-      </Button>
-    ),
-    '3': (
-      <Button theme={'blue'} size={'$2'} icon={<Sparkles color={'gold'} />}>
-        {tagNames['new'][props.language]}
-      </Button>
-    ),
-    '4': (
-      <>
-        <Button theme={'blue'} size={'$2'} icon={<Flame color={'orange'} />}>
-          {tagNames['hot'][props.language]}
-        </Button>
-        <Button
-          theme={'blue'}
-          size={'$2'}
-          icon={<TrendingUp color={'green'} />}
-        >
-          {tagNames['trending'][props.language]}
-        </Button>
-      </>
-    ),
-    '5': (
-      <>
-        <Button theme={'blue'} size={'$2'} icon={<Flame color={'orange'} />}>
-          {tagNames['hot'][props.language]}
-        </Button>
-        <Button theme={'blue'} size={'$2'} icon={<Sparkles color={'gold'} />}>
-          {tagNames['new'][props.language]}
-        </Button>
-      </>
-    ),
-    '6': (
-      <>
-        <Button
-          theme={'blue'}
-          size={'$2'}
-          icon={<TrendingUp color={'green'} />}
-        >
-          {tagNames['trending'][props.language]}
-        </Button>
-        <Button theme={'blue'} size={'$2'} icon={<Sparkles color={'gold'} />}>
-          {tagNames['new'][props.language]}
-        </Button>
-      </>
-    ),
-  };
-  type tagIdx = '0' | '1' | '2' | '3' | '4' | '5' | '6';
-  const tagIndex: string = Math.floor(Math.random() * 7).toString();
+  const tagIndex: string = '2';
   return (
     //box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     <Card

@@ -14,6 +14,7 @@
     ".vscode": true,
     ".env.example": true,
     ".prettierrc.json": true,
-    ".yarnrc.yml": true
+    ".yarnrc.yml": true,
+    "packages\\app\\provider": true
   }
 }

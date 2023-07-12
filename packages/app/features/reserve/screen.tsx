@@ -25,6 +25,7 @@ import {
   LmSubmitButtonRhf,
   LmInputRhf,
 } from '@tamagui-extras/form';
+import { LoadingSpinner } from '@my/ui/src/components/LoadingSpinner';
 type reserveQuery = {
   startDate: string;
   endDate: string;
@@ -83,7 +84,7 @@ export function ReserveScreen() {
     }, 3000);
   };
 
-  if (isLoading || userDataLoading) return <H4>Loading Order Details...</H4>;
+  if (isLoading || userDataLoading) return <LoadingSpinner />;
   if (isLoadingError) return <H4>Error Has Occurred...</H4>;
   console.log(userData, 'USER DATA');
   return (
@@ -93,13 +94,16 @@ export function ReserveScreen() {
       <YStack
         padding="$2"
         f={1}
-        backgroundColor={'$background'}
+        backgroundColor={'$backgroundStrong'}
         alignItems="center"
       >
         <ScrollView
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
-          w={'50%'}
+          w={'100%'}
+          $gtSm={{
+            w: '50%',
+          }}
         >
           <XStack
             $gtSm={{

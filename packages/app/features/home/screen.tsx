@@ -225,6 +225,7 @@ function VenueCard() {
 }
 */
 import Constants from 'expo-constants';
+import { LoadingSpinner } from '@my/ui/src/components/LoadingSpinner';
 
 interface RecVenuesObj {
   venues: number[];
@@ -234,6 +235,7 @@ const RecommendVenuesSlider = ({ venues }: RecVenuesObj) => {
   const { isLoading, data: RecommendedVenues } =
     trpc.venue.getSimilarVenues.useQuery(venues!, {
       refetchOnWindowFocus: false,
+      refetchOnMount: false,
     });
 
   if (isLoading) return <H4>Recommended venues Loading...</H4>;
@@ -275,6 +277,28 @@ const RecommendVenuesSlider = ({ venues }: RecVenuesObj) => {
 export function HomeScreen() {
   //const theme = useThemeNameState();
   // const isDarkTheme = theme === 'dark';
+  const { push } = useRouter();
+  const weddingCategoryLink = useLink({
+    href: {
+      pathname: '/category',
+      query: {
+        id: 25,
+        name: 'Weddings',
+      },
+    },
+  });
+  const partyCategoryLink = useLink({
+    href: {
+      pathname: '/category',
+      query: {
+        id: 28,
+        name: 'Parties',
+      },
+    },
+  });
+  const [selectedSearch, setSelectedSearch] = useState('');
+  const [searchValue, setSearchValue] = useState('');
+  const [searchDisabled, setSearchDisabled] = useState(false);
   const apiURL =
     Platform.OS == 'web'
       ? 'localhost'
@@ -282,11 +306,13 @@ export function HomeScreen() {
   const [recommendedVenues, setRecommendedVenues] = useState<number[]>([]);
   const { isLoading, data: featuredVenues } = trpc.venue.getVenues.useQuery(4, {
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
   const { isLoading: userLoading, data: userData } = trpc.user.current.useQuery(
     undefined,
     {
       refetchOnWindowFocus: false,
+      refetchOnMount: false,
     }
   );
   const { t, i18n } = useTranslation();
@@ -310,7 +336,7 @@ export function HomeScreen() {
       });
   }, [userData?.id]);
 
-  if (isLoading || userLoading) return <H4>Loading...</H4>;
+  if (isLoading || userLoading) return <LoadingSpinner />;
   // console.log(data);
   return (
     <AppShell>
@@ -342,6 +368,8 @@ export function HomeScreen() {
             >
               <Input
                 direction={langDirection}
+                onChangeText={setSearchValue}
+                disabled={searchDisabled}
                 theme={'gray'}
                 f={1}
                 $gtSm={{
@@ -350,7 +378,27 @@ export function HomeScreen() {
                 size={'$4.5'}
                 placeholder={t('search_venues') as any}
               />
-              <Button theme={'blue'} size={'$4.5'} icon={<Search />} />
+              <Button
+                onPress={() => {
+                  if (
+                    searchValue.trim().toLowerCase() != '' &&
+                    !searchDisabled &&
+                    selectedSearch != ''
+                  ) {
+                    setSearchDisabled(true);
+                    push({
+                      pathname: '/search',
+                      query: {
+                        type: selectedSearch,
+                        value: searchValue,
+                      },
+                    });
+                  }
+                }}
+                theme={'blue'}
+                size={'$4.5'}
+                icon={<Search />}
+              />
             </XStack>
             <XStack theme={'blue'} space={'$2'}>
               <ScrollView
@@ -358,23 +406,40 @@ export function HomeScreen() {
                 horizontal
                 space={'$2'}
               >
-                <Button icon={MapPin} size="$3">
+                <Button
+                  onPress={() => {
+                    setSelectedSearch('location');
+                  }}
+                  icon={MapPin}
+                  size="$3"
+                  theme={selectedSearch == 'location' ? 'gray' : 'blue'}
+                >
                   Location
                 </Button>
-                <Button icon={List} size="$3">
+                <Button
+                  onPress={() => {
+                    setSelectedSearch('category');
+                  }}
+                  icon={List}
+                  size="$3"
+                >
                   Category
                 </Button>
-                <Button icon={Pencil} size="$3">
+                <Button
+                  onPress={() => {
+                    setSelectedSearch('name');
+                  }}
+                  icon={Pencil}
+                  size="$3"
+                  theme={selectedSearch == 'name' ? 'gray' : 'blue'}
+                >
                   Name
                 </Button>
-                <Button icon={Star} size="$3">
-                  Feature
-                </Button>
-                <Button icon={Hash} size="$3">
+                <Button {...weddingCategoryLink} icon={Hash} size="$3">
                   Wedding
                 </Button>
-                <Button icon={Hash} size="$3">
-                  Sports
+                <Button {...partyCategoryLink} icon={Hash} size="$3">
+                  Party
                 </Button>
               </ScrollView>
             </XStack>
@@ -419,7 +484,7 @@ export function HomeScreen() {
               </XStack>
             </DraggableScrollView>
             <Separator alignSelf="stretch" outlineColor={'white'} />
-            <H2>{t('recommended_venues')}</H2>
+            {recommendedVenues.length > 0 && <H2>{t('recommended_venues')}</H2>}
             <RecommendVenuesSlider venues={recommendedVenues} />
           </YStack>
         </YStack>
