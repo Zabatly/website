@@ -5,7 +5,7 @@
 <img src="./misc/zabatly.png" alt="universal application interface" /></p>
 <h4 align="center">An online marketplace platform to gather users, event organizers and venue owners to effortlessly search, view and reserve venues.</h4>
 <p align="center">
-<a href="https://github.com/Zabatly/website/blob/master/LICENSE">
+<a href="https://github.com/Zabatly/website/blob/main/LICENSE">
    <img src="https://img.shields.io/github/license/Zabatly/website?style=for-the-badge" alt="license gpl-3.0"/>
 </a>
 </p>
