@@ -1,141 +1,171 @@
-# 🌌 create-universal-app (CUA)
+<h1 align="center">
+  Zabatly
+</h1>
+<p align="center">
+<img src="./misc/zabatly.png" alt="universal application interface" /></p>
+<h4 align="center">An online marketplace platform to gather users, event organizers and venue owners to effortlessly search, view and reserve venues.</h4>
+<p align="center">
+<a href="https://github.com/Zabatly/website/blob/master/LICENSE">
+   <img src="https://img.shields.io/github/license/Zabatly/website?style=for-the-badge" alt="license gpl-3.0"/>
+</a>
+</p>
 
-<https://user-images.githubusercontent.com/36214945/211167187-347b87ce-1c03-4678-9904-542aa78ab131.mp4>
+## Table of Contents
 
-## 🌌 What is this?
+- [Objective](#objective)
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Technology Stack and Project Structure](#technology-stack-and-project-structure)
+- [Wishlist](#wishlist)
+- [Contributors](#contributors)
+- [Credits](#credits)
+- [Showcase](#showcase)
+- [FAQ](#faq)
 
-**create-universal-app (CUA)** is an opinionated template for creating full-stack universal (mobile + web codeshare) apps with built-in auth for both mobile and web using **Expo** (mobile), **NextJS** (web), **tRPC**, **Prisma**, **Tamagui** (UI + styling), and **Clerk** (mobile + web auth). A **demo** is live at <https://cua-demo.vercel.app/>.
+## Objective
 
-[Here's](https://youtu.be/aTEv0-ZBbWk) a 20 minute Youtube tutorial going over everything if that's more of your style!
+This project has driven us into an exciting journey through the development, implementation and the evaluation of an universal application for venue reservation system. Our goal was to create an online marketplace platform to gather users, event organizers and venue owners to effortlessly search, view and reserve venue. With the support of the cutting-edge web and mobile technologies, we aimed to facilitate the venue reservation process and make it accessible for anyone whom want to reserve a venue anytime and from any part of the world. For more information about our analysis of the project please click [here](https://tahahesham.com/zabatly-app)
 
-You can also run `npx create-t3-universal-app` to start your project! (by [albbus](https://github.com/albbus-stack/create-t3-universal-app))
+## Features
 
-If you have any question while using this, feel free to join our [👾Discord👾](https://discord.gg/5HvtckjyYb), we are all pretty active in there!
+- Universal application that works multi-platform based on the popular [CUA](https://github.com/chen-rn/CUA) template which tries to adapt the [T3 Stack](https://create.t3.gg/).
+- 9+ Shared screen codebase that runs on all platforms.
+- Localization system powered i18n that supports both EN/AR languages
+- AI support [chatbot](https://github.com/Zabatly/AI) widget that helps your through the process (Supports EN/AR languages).
+- AI [recommendation](https://github.com/Zabatly/AI) system that helps recommend your next venue reservation.
+- User accounts system based on the popular universal authentication library [Clerk](https://clerk.com/?utm_campaign=theo-dtc)
+- Customizable Search experience to find venues based on your preference.
+- Ability to reserve any venue based on your preferred time.
+- Fully normalized & optimized database design that can help handle huge data.
 
-**This repo is made on top of**:
+## Prerequisites
 
-- [create-t3-turbo](https://github.com/t3-oss/create-t3-turbo): expo, next, trpc, prisma, nextauth - no UI code share & no mobile auth.
-- [t3-turbo-and-clerk](https://github.com/clerkinc/t3-turbo-and-clerk): t3 turbo with auth for mobile + web - still no  UI code share.
-- [tamagui + solito starter](https://github.com/tamagui/tamagui/tree/master/starters/next-expo-solito): expo + next code share - no tRPC & no built-in auth.
+- Latest [Node.js LTS](https://nodejs.org/en/download)
+- Setting up React Native development [environment](https://reactnative.dev/docs/environment-setup)
+- [Clerk](https://clerk.com/docs/quickstarts/setup-clerk) account for the environment keys.
+- (optional) [Planetscale](https://planetscale.com/docs/tutorials/planetscale-quick-start-guide) account if you need to deploy the application.
+- (optional) [Vercel](https://vercel.com/docs/getting-started-with-vercel) account if you need to deploy the application.
 
-## 🌟 How it works
+## Installation
 
-### Folder Structure
+```bash
+# Clone repo
+git clone https://github.com/Zabatly/website.git
 
-- **apps**
-  - next
-  - expo
-- **packages**
-  - ui (your reusable components with tamagui)
-  - db (db schema & prisma stuff)
-  - app
-    - features (⭐️ all of your native frontend code will go here ⭐️)
-    - navigation (unifying web + mobile navigation)
-    - provider (unifying providers)
-    - utils (your utils like auth & tRPC)
-  - api (all of your tRPC & backend code)
+# Install the required packages
+## Using NPM
+npm install
 
-### In a bit more detail
+## Using yarn (preferred)
+yarn install
+```
 
-Your **frontend** code will be in React Native, meaning that you're going to write Views instead of divs. Since we are using Tamagui in particular, we're gonna write Stacks instead Views.
+### Configuration
 
-- `apps/expo` and `apps/next` are practically empty folders that are simply *referencing* your `packages/app` folder.
-- If you're familiar with React Native, it's going to feel as if you're writing a React Native app, that just happens to also run really well on the web (with SSR and all of those goodies).
-- Your code will get rendered as HTML/CSS on the NextJS side and normal React Native on the native side.
+- You can edit `.env.example` add the [Clerk](https://clerk.com/docs/quickstarts/setup-clerk) API keys in their respective places:
 
-Your **backend** code is gonna be in `packages/api`. NextJS is going to run this code in a serverless environment, if you're a little confused about how that works [here](https://www.youtube.com/watch?v=2cB5Fh46Vi4&t=1017s)'s a good video by Theo that talks about NextJS as a backend framework.
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_
+CLERK_SECRET_KEY=sk_test_
+```
 
-- Your backend and frontend will communicate with tRPC.
-- Your backend and your DB will communicate with Prisma (ORM).
-- Mobile auth is done with Clerk Expo, and web auth is done with Clerk React and Clerk Next.
+- Edit the `DATABASE_URL` field to add your own database connection. If you are planning to use a specific database type other than MySQL, then please make sure to edit [schema.prisma](https://github.com/Zabatly/website/blob/main/packages/db/prisma/schema.prisma) in [`provider`](https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#fields) field.
 
-*Note: you don't need to understand how everything works in detail before you can start using this template. As someone that wants to know how every bolt and nut works, I often get "blocked" by my own perfectionism, so I'm just throwing this out there in case you're feeling the same about something.*
+  - Database schema design is available in [`zabatly.sql`](https://github.com/Zabatly/website/blob/main/packages/db/zabatly.sql) with dummy data. Its already synced with the current `schema.prisma`. You can use prisma to [push](https://www.prisma.io/docs/reference/api-reference/command-reference#db-push) the schema directly to your database, so it can create the appropiate tables. Incase you want to do it manually by importing the `zabatly.sql` first, then you can use in prisma [introspection](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project/relational-databases/introspection-typescript-sqlserver#introspect-your-database-with-prisma) to synchronize your `schema.prisma` with your database design.
 
-## 💭 Behind the decisions
+  - Here is the complete database design in Entity Relation Diagram Form:
+    <img src="./misc/ERD_FINAL.png" />
 
-### Why Tamagui for UI & styling?
+- After configuring the database, you'll need to generate [Prisma Client](https://www.prisma.io/docs/reference/api-reference/command-reference#generate)
 
-#### *What is Tamagui?*
+```bash
+# Using NPM
+npm run generate
 
-*TLDR*: it's for making things look pretty on both web and mobile while being really really fast and easy to work with. In more detail, Tamagui has 3 things:
+# Using Yarn
+yarn generate
+```
 
-- **Compiler**: their unique way of turning your *"style related code"* into pure CSS faster. Most important thing here is probably the tree flattening thing they do.
-- **Core**: a small set of components they built aimed to replace View and Text that you use in React Native, with some advantages.
-- **UI**: a set of UI components that the Tama team built using Core.
+- You can add / edit data on your database using [Prisma Studio](https://www.prisma.io/studio)
 
-Check out their [docs](https://tamagui.dev/docs/intro/introduction) for more informations.
+```bash
+# Using NPM
+npm run studio
 
-#### *Why not Nativewind & Tailwind?*
+# Using Yarn
+yarn studio
 
-What I like about Tamagui is that it's simultaneously Tailwind and DaisyUI that's built from the ground up designed for universal apps with its own compiler and core components.
+# Usually Should run on localhost:5555
+```
 
-Feel free to use Nativewind & Tailwind instead of Tamagui, you should be able to set things up fairly easily (and if you do *please* contribute to this template creating a branch with the Nativewind installation).
+### Running the Project (Development mode)
 
-### Why Clerk for auth?
+- You can start by running the web version of the application. It is essential to access the web version of the application and also act as an server for the native (mobile) version of the application
 
-On a high level, clerk promises an overall user management solution instead of just authentication with things like the User Profile, Banning and Device management built-in. In practice, they have a very similar Expo/Next library with built in Hooks that are very nice to use! I've personally had an great time using Clerk compared to other solutions like Firebase or Supabase.
+```bash
+# Using NPM
+npm run web
 
-#### *Practical things*
+# Using Yarn
+yarn web
 
-- Really nice hooks & components (SignedIn/SignedOut) that work for both Expo and NextJS.
-- SDKs for all 3 platforms: Expo frontend, NextJS frontend, NextJS serverside.
-- Fantastic support and help from their team on Discord(from personal experience).
+# Usually Should run on localhost:3000
+```
 
-#### *Downsides*
+- You can also now run the native (mobile) version of the application. You'll need [Expo Go](https://expo.dev/client) application on your phone in-order to check your application.
 
-- Doesn't do SMS unless you pay: big negative for mobile but makes up for it with easy oauth.
-- Premium plan expensive compared to the alternatives.
-- Double edged sword of being a startup.
+```bash
+# Using NPM
+npm run native
 
-### Which DB?
+# Using Yarn
+yarn native
 
-I recommend you either spin up a Postgres instance on Railway or use Supabase, you can bring your own as it doesn't matter too much.
+# Should open an Expo menu to launch the application on IOS/Android
+```
 
-## 🔨 How to use this?
+<img src="./misc/native.png" />
 
-### 1. Set up project
+- Last step is to setup the [Zabatly AI](https://github.com/Zabatly/AI) which would be needed for the chatbot & the recommendation system
 
-- `yarn install` to install packages and build the project.
-- Set up your environment variables properly by duplicating the `.env.example` file, removing `.example`, and entering your environment variables.
-  - **CLERK_SECRET_KEY** & **NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY**: sign up on [clerk](https://clerk.dev/) to get your API keys
-  - **DATABASE_URL** (**optional**): spin up a Postgres instance with Railway or Supabase (we're using SQLlite by default now, so you don't have to do this unless you're ready for production!)
-- `yarn db-push` to push our Prisma schema to our DB.
+## Technology stack and Project structure
 
-### 2. Start up your project
+To know more about it, you can check the CUA template's [explanation](https://github.com/chen-rn/CUA#-how-it-works)
 
-- `yarn web` to start a web dev server.
-- `yarn native` to run on iOS or Android. **PS**: for this to work, you'll need your web app running on localhost:3000, remember that your NextJS app is also your backend!
-- `yarn studio` to start up your Prisma Studio. **PS**: the tRPC query will show nothing unless you manually open up Prisma and add a "post", or query an user info in the DB!
-- `yarn dev` to start up all packages and applications simultaneously.
+## Wishlist
 
-### 3. Adding a new screen
+- [ ] Update the project to use the all new [T4 Stack](https://github.com/timothymiller/t4-app/tree/main#--create-t4-app)
+- [ ] Enhance the interface further in terms of design
+- [ ] Payment API support such as [Stripe](https://stripe.com/docs)
+- [ ] Ability to host venues.
+- [ ] Reviews for venues and hosts
 
-To automate the process explained below you can use the VSCode extension [t3-cua-tools](https://github.com/albbus-stack/t3-cua-tools), also available on the [marketplace](https://marketplace.visualstudio.com/items?itemName=albbus-stack.t3-cua-tools). It will create the files and add the necessary imports and navigation code for you.
+## Contributors
 
-- Create new screens in `packages/app/features/`.
-- For smaller components feel free to put them in `packages/ui/`.
-- For new routes add a new `routeName.ts` in `packages/api/src/router/` and make sure to merge it in the `index.ts` app router.
-- When you add a new page or screen, you'll need to add the page into both Expo and NextJS:
-  - **Expo**
-     - Go to `apps/expo/app/` and create a new `routeName.tsx` that's importing your element from `/app/features/screenName/`.
-  - **Next**
-    - Go to `apps/next/pages/`, create a new folder with the name being your route and an `index.tsx` that's importing your element from `/app/features/screenName/`.
+Special thanks to the team for the help across the board
 
-## Deploying to Vercel
+- [Youssef Elmarakshy](https://github.com/Carbowix)
+- [Taha Hesham](https://github.com/tahahesham)
+- [Mostafa Awara](https://github.com/mostafavic)
+- [Mohammed Effat](https://github.com/bondo2boy)
 
-After you have created a new project on Vercel and linked it with your Github repo you'll have to enter your environment variables:
+## Credits
 
-- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
-- `CLERK_SECRET_KEY`
-- `DATABASE_URL`
+- [Create universal Application (CUA)](https://github.com/chen-rn/CUA) for the amazing template
+- [Tamagui](https://tamagui.dev/) for the incredible dynamic cross-platform UI
+- [T3 Stack](https://create.t3.gg/) which includes an amazing technology stack that helped form this project
+- [Solito](https://github.com/nandorojo/solito) which made cross platform totally possible due to the navigation unification of both platforms (web + native)
 
-<img width="704" alt="Screenshot 2023-01-14 at 12 06 17 AM" src="https://user-images.githubusercontent.com/36214945/212462681-f6cc448b-d24b-4541-a350-290a6985ad85.png">
-(ignore the install command one now)
+## Showcase
+
+<img src="./misc/preview_1.png" />
+<img src="./misc/preview_2.png" />
 
 ## FAQ
 
 1. **Where should I install the packages?**
-If it contains native code you must install it into the `/expo` folder.
+   If it contains native code you must install it into the `/expo` folder.
 
 2. **How do I know if it contains native code?**
-In general if it involves some interactions with the phone OS like the APIs to interact with storage, camera, gyro, notification, etc. it involves native code!
+   In general if it involves some interactions with the phone OS like the APIs to interact with storage, camera, gyro, notification, etc. it involves native code!

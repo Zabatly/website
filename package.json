@@ -1,6 +1,48 @@
 {
   "name": "zabatly-app",
-  "private": true,
+  "description": "An online marketplace platform to gather users, event organizers and venue owners to effortlessly search, view and reserve venues.",
+  "private": false,
+  "keywords": [
+    "reactjs",
+    "html",
+    "css",
+    "typescript",
+    "website",
+    "tamagui",
+    "solito",
+    "clerk",
+    "universal",
+    "prisma",
+    "mysql",
+    "nextjs",
+    "react native",
+    "expo"
+  ],
+  "contributors": [
+    {
+      "name": "Youssef Elmarakshy",
+      "url": "https://github.com/Carbowix"
+    },
+    {
+      "name": "Taha Hesham",
+      "url": "https://github.com/tahahesham"
+    },
+    {
+      "name": "Mohammed Effat",
+      "url": "https://github.com/bondo2boy"
+    },
+    {
+      "name": "Mostafa Awara",
+      "url": "https://github.com/mostafavic"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zabatly/website.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Zabatly/website/issues"
+  },
   "workspaces": [
     "apps/*",
     "packages/*"
