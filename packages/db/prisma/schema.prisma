@@ -1,0 +1,157 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "foreignKeys"
+}
+
+model categories {
+  id             Int      @id @default(autoincrement())
+  name           String   @default("") @db.TinyText
+  ar_name        String   @default("") @db.TinyText
+  description    String   @default("") @db.Text
+  ar_description String   @default("") @db.Text
+  imageURL       String   @default("") @db.Text
+  venues         venues[]
+}
+
+model cities {
+  id      Int      @id @default(autoincrement())
+  name    String   @default("") @db.TinyText
+  ar_name String   @default("") @db.TinyText
+  zipcode Int      @default(0) @db.MediumInt
+  venues  venues[]
+}
+
+model featurename {
+  id             Int        @id @default(autoincrement())
+  name           String     @default("") @db.TinyText
+  ar_name        String     @default("") @db.TinyText
+  description    String     @default("") @db.Text
+  ar_description String     @default("") @db.Text
+  features       features[]
+}
+
+model features {
+  id          Int         @id @default(autoincrement())
+  venueID     Int
+  featureID   Int
+  featurename featurename @relation(fields: [featureID], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_FEAT_FEATID")
+  venues      venues      @relation(fields: [venueID], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_FEAT_VENID")
+
+  @@index([featureID], map: "FK_FEAT_FEATID")
+  @@index([venueID], map: "FK_FEAT_VENID")
+}
+
+model payments {
+  id                                            Int            @id
+  userID                                        Int
+  reserveID                                     Int
+  paymentDate                                   DateTime       @default(now()) @db.Timestamp(0)
+  status                                        String         @default("pending") @db.VarChar(20)
+  amount                                        Int            @default(0) @db.SmallInt
+  reservations_payments_reserveIDToreservations reservations   @relation("payments_reserveIDToreservations", fields: [reserveID], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_RESERVE_ID")
+  users                                         users          @relation(fields: [userID], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_USER_ID")
+  reservations_reservations_paymentIDTopayments reservations[] @relation("reservations_paymentIDTopayments")
+
+  @@index([reserveID], map: "FK_RESERVE_ID")
+  @@index([userID], map: "FK_USER_ID")
+}
+
+model reservations {
+  id                                        Int        @id @default(autoincrement())
+  userID                                    Int?
+  venueID                                   Int?
+  paymentID                                 Int?
+  reserveDate                               DateTime   @default(now()) @db.Timestamp(0)
+  cost                                      Int        @default(0)
+  startTime                                 String     @db.Text
+  endTime                                   String     @db.Text
+  guestsNumber                              Int        @db.SmallInt
+  payments_payments_reserveIDToreservations payments[] @relation("payments_reserveIDToreservations")
+  payments_reservations_paymentIDTopayments payments?  @relation("reservations_paymentIDTopayments", fields: [paymentID], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_RES_PAYID")
+  users                                     users?     @relation(fields: [userID], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_RES_USERID")
+  venues                                    venues?    @relation(fields: [venueID], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_RES_VENID")
+
+  @@index([paymentID], map: "FK_RES_PAYID")
+  @@index([userID], map: "FK_RES_USERID")
+  @@index([venueID], map: "FK_RES_VENID")
+}
+
+model reviews {
+  id          Int    @id @default(autoincrement())
+  venueID     Int
+  userID      Int
+  rating      Int    @default(0) @db.TinyInt
+  heading     String @default("") @db.TinyText
+  description String @default("") @db.Text
+  users       users  @relation(fields: [userID], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_REV_USERID")
+  venues      venues @relation(fields: [venueID], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_REV_VENUEID")
+
+  @@index([userID], map: "FK_REV_USERID")
+  @@index([venueID], map: "FK_REV_VENUEID")
+}
+
+model users {
+  id                Int              @id @default(autoincrement())
+  clerkID           String           @db.Text
+  firstName         String?          @default("") @db.Text
+  lastName          String?          @default("") @db.Text
+  phoneNumber       String?          @default("") @db.VarChar(16)
+  address           String?          @default("") @db.Text
+  email             String           @db.TinyText
+  username          String           @db.VarChar(48)
+  password          String?          @default("") @db.TinyText
+  registerationDate DateTime         @default(now()) @db.Timestamp(0)
+  country           String?          @default("Egypt") @db.VarChar(56)
+  payments          payments[]
+  reservations      reservations[]
+  reviews           reviews[]
+  venues            venues[]
+  visited_venues    visited_venues[]
+}
+
+model venues {
+  id             Int              @id @default(autoincrement())
+  name           String?          @default("") @db.TinyText
+  ar_name        String?          @default("") @db.TinyText
+  cityID         Int
+  capacity       Int?             @default(0) @db.SmallInt
+  description    String?          @default("") @db.Text
+  ar_description String?          @default("") @db.Text
+  rating         Int?             @default(0) @db.TinyInt
+  price          Int?             @default(0)
+  space          Int?             @default(0) @db.SmallInt
+  rules          String?          @default("") @db.Text
+  ar_rules       String?          @default("") @db.Text
+  policy         String?          @default("") @db.Text
+  ar_policy      String?          @default("") @db.Text
+  hostID         Int?
+  categoryID     Int
+  features       features[]
+  reservations   reservations[]
+  reviews        reviews[]
+  categories     categories       @relation(fields: [categoryID], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_VENUE_CATID")
+  cities         cities           @relation(fields: [cityID], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_VENUE_CITYID")
+  users          users?           @relation(fields: [hostID], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_VENUE_HOST")
+  visited_venues visited_venues[]
+
+  @@index([categoryID], map: "FK_VENUE_CATID")
+  @@index([cityID], map: "FK_VENUE_CITYID")
+  @@index([hostID], map: "FK_VENUE_HOST")
+}
+
+model visited_venues {
+  id        Int      @id @default(autoincrement())
+  venueID   Int
+  userID    Int
+  visitDate DateTime @default(now()) @db.Timestamp(0)
+  users     users    @relation(fields: [userID], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_VISITED_USERID")
+  venues    venues   @relation(fields: [venueID], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_VISITED_VENID")
+
+  @@index([userID], map: "FK_VISITED_USERID")
+  @@index([venueID], map: "FK_VISITED_VENID")
+}

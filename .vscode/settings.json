@@ -1,0 +1,20 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "yoavbls.pretty-ts-errors": 1,
+  "files.exclude": {
+    "node_modules": true,
+    ".yarn": true,
+    ".gitignore": true,
+    ".prettierignore": true,
+    ".git": true,
+    "LICENSE": true,
+    "yarn.lock": true,
+    "turbo.json": true,
+    ".vscode": true,
+    ".env.example": true,
+    ".prettierrc.json": true,
+    ".yarnrc.yml": true,
+    "packages\\app\\provider": true
+  }
+}
